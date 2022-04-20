@@ -1,60 +1,78 @@
 --- 
-title: "A Minimal Book Example"
-author: "John Doe"
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Arango Sabogal"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+output:
+  html_document: 
+    fig_caption: yes
+    toc: yes
+    toc_float: yes
+    number_sections: yes
+  word_document: default
+  pdf_document: default
+description: Exercises for the Dx test - LCM workshop 
 documentclass: book
-bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
-# cover-image: path to the social sharing image like images/cover.jpg
-description: |
-  This is a minimal example of using the bookdown package to write a book.
-  The HTML output format for this example is bookdown::gitbook,
-  set in the _output.yml file.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+bibliography:
+- book.bib
+- packages.bib
+site: bookdown::bookdown_site
+biblio-style: apalike
 ---
 
-# About
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+# About this document
+In this document you will find indications on how to use various `R` libraries and functions for estimating true disease prevalence and accuracy of diagnostic tests in a Bayesian framework, along with various exercises. We suppose that you do have some basic `R` skills. If you have not worked with `R` before or feel a bit rusty, here are some resources to help you to prepare:  
+  
+- Chapters 1, 2, and 4 of the [CodeCademy "Learn R" course](https://www.codecademy.com/learn/learn-r) will provide a good overview of the basic concepts required for this workshop.  
+  
+- If you are familiar with `R` and want to do some further reading, [Hadley Wickham's "R for Data Science"](https://r4ds.had.co.nz/) is a great resource.  
+  
+Remember, there are often many different ways to conduct a given piece of work in `R`. Throughout this document, we tried to stick with the simpler approaches (e.g., the shortest code, the minimal number of `R` libraries). 
+   
+## Some notation
 
-## Usage 
+Throughout the document,  you will find examples of `R` code along with comments. **The `R` code used always appear in grey boxes** (see the following example). This is the code that you will be able to use for your own analyses. **Lines that are preceded by a # sign are comments**, they are skipped when `R` reads them. Following each grey box with `R` code, a **white box with results from the analysis is presented**.  
+  
+For instance, this is a `R` code where I am simply asking to show main descriptive statistics for the *speed* variable of the *cars* dataset (note that this dataset is already part of `R`).
+```{r cars, warning=FALSE, message=FALSE}
+#This is a comment. R will ignore this line
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
-
-Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
-
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
-
-## Render book
-
-You can render the HTML version of this example book without changing anything:
-
-1. Find the **Build** pane in the RStudio IDE, and
-
-1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
-
-Or build the book from the R console:
-
+#The summary() function can be use to ask for a summary of various R objects. For a variable (here the variable speed), it shows descriptive statistics.
+summary(cars$speed)
+```
+  
+Throughout the document, in the text I will use:  
+- Italics for datasets or variables. For instance, the *speed* variable of the dataset *cars*.  
+- Shaded boxes for `R` libraries (e.g., `episensr`) and functions (e.g., `summary()`).  
+  
+In `R` we can first call a given library and then use the functions related to each library or we can name the library followed by `::` and then the function. For instance the two following pieces of code are equivalent:
 ```{r, eval=FALSE}
-bookdown::render_book()
+library(ggplot2)
+ggplot(data=cars, mapping=(aes(x=speed)))+
+  geom_histogram()
+
+##OR##
+
+ggplot2::ggplot(data=cars, mapping=(aes(x=speed)))+
+  geom_histogram()
 ```
+  
+The latter may improve reproducibility, but to the expense of longer codes. Throughout the document, we will always first call the library and then run the functions to keep codes shorter. 
 
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+One last thing, when using a given function, it is not mandatory to name all the arguments, as long as they are presented in the sequence expected by this function. For instance, the `ggplot()` function that we used in the previous chunk of code is expecting to see first a dataset (`data=`) and then a mapping attribute (`mapping=`) and, within that mapping attribute a x variable (`x=`). We could shorten the code by omitting all of these. The two following pieces of code are, therefore, equivalent: 
+```{r, eval=FALSE}
+library(ggplot2)
+ggplot(data=cars, mapping=(aes(x=speed)))+
+  geom_histogram()
 
-## Preview book
+##OR##  
 
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
-
-```{r eval=FALSE}
-bookdown::serve_book()
+library(ggplot2)
+ggplot(cars, (aes(speed)))+
+  geom_histogram()
 ```
-
-
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+  
+Throughout the document, however, we will use the longer code with all the arguments being named. Since you are learning these new functions, it would be quite a challenge to use the shorter code right from the start. But you could certainly adopt the shorter codes later on.
+  
+**LET'S GET STARTED!**
