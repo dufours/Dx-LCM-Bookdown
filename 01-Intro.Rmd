@@ -21,7 +21,10 @@ knitr::write_bib(c(
 ```
 
 
-# Generating prior distributions
+# Distributions  
+When using latent class models (LCM) to estimate disease prevalence or diagnostic test accuracy, we will need to use various distributions. There are two situations where we will use distributions: 1) as prior distribution to describe our <i>a priori</i> knowledge on a given unknown parameter; and 2) as a part of the likelihood function that will be used to linked observed data with unknown parameters. Some distributions will more often be used for the first objective, others will mainly be used for the latter objective. In he following sections, we will cover the most usefull distributions.
+
+## Prior distributions
 One of the first thing that you will need for any Bayesian analysis is a way to generate and visualize a prior distribution corresponding to some scientific knowledge that you have about an unknown parameter. Generally, you will use information such as the mean and variance or the mode and the 2.5th (or 97.5th) percentile to find a corresponding distribution. You will use various distributions. Here is a list of the most important ones, we will give more details on each of them in the following sections:  
   
 **- Normal distribution:** defined by a mean (mu) and its standard deviation (SD) or variance (tau). In some packages and software, `rjags` and OpenBUGS for instance, the inverse of the variance (1/tau) is used to specify a given normal distribution.   
@@ -33,16 +36,8 @@ One of the first thing that you will need for any Bayesian analysis is a way to 
 **- Beta distribution:** bounded between 0 and 1, beta distributions are defined by two shape parameters (a) and (b).  
 **Notation: dBeta(a, b)**    
   
-**- Bernoulli distribution:** For variables that can take the value 0 or 1. Bernoulli distributions are defined very simply by a single probability, P, which is the probability that the variable takes the value 1.  
-**Notation: dBern(P)**   
-  
-**- Binomial distribution:** Also for variables that can take the value 0 or 1. Binomial distributions are defined by a probability, P, which is the probability that the variable takes the value 1, and a number of "trials", n. Thus, binomial distributions can be used to describe the number of individuals that will have the outcome, based on an expected prevalence (P) and a number of tested individuals (n).  
-**Notation: dBin(P, n)**   
-  
-**- Multinomial distribution:** made up of a number of probabilities, all bounded between 0 and 1, and that, together, will sum up to 1. Multinomial distributions are defined by k probabilities (P1, P2, ..., Pk) and a number of observation (n).  
-**Notation: dmulti(P[1:k], n)**     
-  
-## Normal distribution
+
+### Normal distribution
 The `dnorm()` function can be used to generate a given Normal distribution and the `curve()` function can be used to visualize the generated distribution. These functions are already part of `R`, there is no need to upload a `R` package.  
 
 ```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of a Normal distribution."}
@@ -61,7 +56,7 @@ curve(dnorm(x, mean=0.0, sd=10000000000),
 
 ```
   
-## Uniform distribution
+### Uniform distribution
 In the same manner, we could visualize an uniform distribution using the `dunif()` function. In the following example, we assumed that any values between -5.0 and 5.0 are equally probable.
 ```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of an Uniform distribution."}
 curve(dunif(x, min=-5.0, max=5.0),                                    
@@ -72,7 +67,7 @@ curve(dunif(x, min=-5.0, max=5.0),
 
 ```
   
-## Beta distribution
+### Beta distribution
 Beta distributions are another type of distributions that will specifically be used for parameters that are proportions (i.e., bounded between 0.0 and 1.0). <b>For this specific workshop, they will be very handy, since a sensitivity, specificity, or a prevalence are all proportions </b>. The `epi.betabuster()` function from the `epiR` library can be used to define a given prior distribution based on previous knowledge. When you use the `epi.betabuster()` function, it creates a new `R` object containing different elements. Among these, one element will be named *shape1* and another *shape2*. These correspond to the a and b shape parameters of the corresponding Beta distribution.   
   
 For instance we may know that the most likely value for the sensitivity of a given test is 0.85 and that we are 97.5% certain that it is greater than 0.75. With these values, we will be able to find the a and b shape parameters of the corresponding Beta distribution.
@@ -97,19 +92,27 @@ curve(dbeta(x, shape1=1.0, shape2=1.0), from=0, to=1,
       main="A Beta(1.0, 1.0) or flat distribution", xlab = "Proportion", ylab = "Density")
 ```
   
-## Bernoulli distribution
-To complete  
+## Distributions for likelihood function  
+In many situations, a distribution will be used as a part of the likelihood function to link observed data to unknown parameters. The ones we will most frequently used here are:
   
-## Binomial distribution  
-To complete  
+**- Binomial distribution:** For variables that can take the value 0 or 1. Binomial distributions are defined by a probability, P, which is the probability that the variable takes the value 1, and a number of "trials", n.   
+**Notation: dBin(P, n)**   
+  
+**- Multinomial distribution:** made up of a number of probabilities, all bounded between 0 and 1, and that, together, will sum up to 1. Multinomial distributions are defined by k probabilities (P1, P2, ..., Pk) and a number of observation (n).  
+**Notation: dmulti(P[1:k], n)**     
     
-## Multinomial distribution
-A last type of distribution that we will not address in great details here, but that we will use later in our LCM is the multinomial distribution. When an outcome is categorical with >2 categories, we could use a multinomial distribution to describe the probability that an individual has the value "A", or "B", or "C", etc. In this workshop, the main application of this distribution will be for describing the combined results of two (or more than two) diagnostic tests. For instance, if we cross-tabulate the results of Test A and Test B, we have four potential outcomes:  
+### Binomial distribution  
+If we have a variable that can take only two values, healthy or diseased (0 or 1), we can estimates an unknown parameter such as the proportion (P) of diseased individuals (i.e., the disease prevalence), based on the observed data (a number of positive individuals, T+ AND a total number of individuals, n). For instance, if we had 30 diseased (T+ = 30) out of 100 tested individuals (n=100) we could estimate the unknown parameter P using this very simple likelihood function:  
   
--Test A+ and Test B+ (lets call n1 the number of individual in that cell)  
--Test A+ and Test B- (n2)  
--Test A- and Test B+ (n3)  
--Test A- and Test B- (n4) 
+$T+ \sim dbin(P, n)$
+    
+### Multinomial distribution
+A last type of distribution that we will use in our LCM is the multinomial distribution. When an outcome is categorical with >2 categories, we could use a multinomial distribution to describe the probability that an individual has the value "A", or "B", or "C", etc. In our context, the main application of this distribution will be for describing the combined results of two (or more than two) diagnostic tests. For instance, if we cross-tabulate the results of Test A and Test B, we have four potential outcomes:  
+  
+-Test A+ and Test B+ (lets call n1 the number of individuals in that cell and P1 the probability of falling in that cell)  
+-Test A+ and Test B- (n2 and P2)  
+-Test A- and Test B+ (n3 and P3)  
+-Test A- and Test B- (n4 and P4) 
   
 We can illustrate this as follow:  
   
@@ -127,16 +130,9 @@ kable(dp_data2, col.names=c(" ", "Test A+", "Test A-"), caption="Cross-classifie
   kable_styling()
 ```
   
-Thus we could describe the probabilities of an individual falling into one of these cells of the 2x2 table as a multinomial distribution. In this specific case, we would say that the combined results of the 2 tests can be determined by the total number of individual tested (n) and the 4 probabilities:   
+Thus we could describe the probabilities (P1 to P4) of an individual falling into one of these cells of the 2x2 table as a multinomial distribution. In this specific case, we would say that the combined results of the 2 tests (n1 to n4) and the total number of individual tested (n), which are the observed data, are linked as follow to the 4 probabilities (P1 to P4; the unknown parameters):   
   
--P(Test A+ and Test B+) (let's call it P1)   
--P(Test A+ and Test B-) (P2)    
--P(Test A- and Test B+) (P3)   
--P(Test A- and Test B-) (P4)  
+$n[1:4] \sim dmulti(P[1:4], n)$  
   
-Thus n1 can be determined if we know P1 and n. This can be written, more generally, as:  
-  
-$n[1:4] ~ dmulti(P[1:4], n)$  
-
-Which means: the values of n1 (or n2, n3, or n4) is determined by the probability of falling into the "Test A+ and Test B+" cell, which is P1 (or P2, P3, or P4 for the other cells), and by the total number of individuals tested (n). Nothing too surprising here... If I have a probability of 0.30 to fall in a given cell, and I have tested 100 individuals, I should find 30 individuals in that cell. Wow! Still, the multinomial distribution is nice because it will ensure that all our probabilities will sum up to exactly 1.0.    
+Which means: the values of n1 (or n2, n3, or n4) is determined by the probability of falling into the "Test A+ and Test B+" cell, which is P1 (or P2, P3, or P4 for the other cells), and by the total number of individuals tested (n). Nothing too surprising here... If I have a probability of 0.30 to fall in a given cell, and I have tested 100 individuals, I should find 30 individuals in that cell. Wow! Still, the multinomial distribution is nice because it will ensure that all our probabilities (P1 to P4) will sum up to exactly 1.0.    
   
