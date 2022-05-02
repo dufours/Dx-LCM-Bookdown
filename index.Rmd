@@ -20,6 +20,7 @@ site: bookdown::bookdown_site
 biblio-style: apalike
 ---
 
+![Credit: National Cancer Institute on Unsplash](Figures\national-cancer-institute-NFvdKIhxYlU-unsplash.jpg) 
 
 # About this document
 In this document you will find indications on how to use various `R` libraries and functions for estimating true disease prevalence and accuracy of diagnostic tests in a Bayesian framework, along with various exercises. We suppose that you do have some basic `R` skills. If you have not worked with `R` before or feel a bit rusty, here are some resources to help you to prepare:  

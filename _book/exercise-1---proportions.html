@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Exercise 1 - Proportions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
+  <meta name="description" content="Chapitre 4" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Exercise 1 - Proportions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapitre 4" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Exercise 1 - Proportions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  
+  <meta name="twitter:description" content="Chapitre 4" />
+  
+
+<meta name="author" content="Simon Dufour and Juan Arango Sabogal" />
+
+
+<meta name="date" content="2022-05-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="running-bayesian-models.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian latent class models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#prior-distributions"><i class="fa fa-check"></i><b>2.1</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.1.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
+<li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-function"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood function</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html"><i class="fa fa-check"></i><b>3</b> Running Bayesian models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-data"><i class="fa fa-check"></i><b>3.1</b> The data</a></li>
+<li class="chapter" data-level="3.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-model"><i class="fa fa-check"></i><b>3.2</b> The model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-likelihood-function"><i class="fa fa-check"></i><b>3.2.1</b> The likelihood function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#priors-for-unkown-parameters"><i class="fa fa-check"></i><b>3.2.2</b> Priors for unkown parameters</a></li>
+<li class="chapter" data-level="3.2.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#creating-the-jags-model"><i class="fa fa-check"></i><b>3.2.3</b> Creating the JAGS model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#generating-initial-values"><i class="fa fa-check"></i><b>3.3</b> Generating initial values</a></li>
+<li class="chapter" data-level="3.4" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#running-a-model-in-jags"><i class="fa fa-check"></i><b>3.4</b> Running a model in JAGS</a></li>
+<li class="chapter" data-level="3.5" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#model-diagnostic"><i class="fa fa-check"></i><b>3.5</b> Model diagnostic</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#convergence-and-burn-in"><i class="fa fa-check"></i><b>3.5.1</b> Convergence and burn-in</a></li>
+<li class="chapter" data-level="3.5.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#number-of-iterations"><i class="fa fa-check"></i><b>3.5.2</b> Number of iterations</a></li>
+<li class="chapter" data-level="3.5.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#auto-correlation"><i class="fa fa-check"></i><b>3.5.3</b> Auto-correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#getting-our-estimates"><i class="fa fa-check"></i><b>3.6</b> Getting our estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#exercises"><i class="fa fa-check"></i><b>4.2</b> Exercises</a></li>
+<li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exercise-1---proportions" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Exercise 1 - Proportions<a href="exercise-1---proportions.html#exercise-1---proportions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="data" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Data<a href="exercise-1---proportions.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The data used for the following exercises came from a study aiming at estimating diagnostic accuracy of a milk pregnancy associated glycoprotein (PAG) ELISA and of transrectal ultrasonographic (US) exam when used for determining pregnancy status of individual dairy cows 28 to 45 days post-insemination. In that study, the new test under investigation was the PAG test and US was used for comparison, but was considered as an imperfect reference test.</p>
+<p>In the original study, data from 519 cows from 18 commercial dairy herds were used. For the following exercises, the dataset was modified so that we have data from 519 cows from 3 herds (i.e., the data from 16 herds were collapsed together so they appear to be from one large herd). The complete original publication can be found here: <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?casa_token=jmHY9HiOdEYAAAAA:kGdiIujRzrAQjjFRbGqtUxIBalDGvXllp6ja9w4T2s6c7yPbgc0asnak79bJ5GWWXI8InhCg0sg">Dufour et al., 2017</a>.</p>
+<p>The dataset <em>Preg.xlsx</em> contains the results from the study. However, <strong>for the exercises we will always simply used the cross-tabulated data and these will be already organized for you and presented at the beginning of each exercise</strong>. The dataset is still provided so you can further explore additional comparisons. The list of variables in the <em>Preg.xlsx</em> dataset are described in the table below.</p>
+<p><strong>Table</strong>. List of variables in the <em>Preg.xlsx</em> dataset.</p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="50%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Variable</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Range</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Obs</td>
+<td>An observation unique ID number</td>
+<td>1 to 519</td>
+</tr>
+<tr class="even">
+<td>Herd</td>
+<td>Herd ID number</td>
+<td>1 to 3</td>
+</tr>
+<tr class="odd">
+<td>Cow</td>
+<td>Cow ID number</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>T1_DOP</td>
+<td>Number of days since insemination at testing</td>
+<td>28 to 45</td>
+</tr>
+<tr class="odd">
+<td>PAG_DX</td>
+<td>Results from the PAG test</td>
+<td>0 (not pregnant); 1 (pregnant)</td>
+</tr>
+<tr class="even">
+<td>US_DX</td>
+<td>Results from the ultrasound test</td>
+<td>0 (not pregnant); 1 (pregnant)</td>
+</tr>
+<tr class="odd">
+<td>TRE_DX</td>
+<td>Results from the transrectal exam (TRE) test</td>
+<td>0 (not pregnant); 1 (pregnant)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exercises" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Exercises<a href="exercise-1---proportions.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the study, we had the following proportion of apparently pregnant cows (based on the US exam).</p>
+<p><strong>257 US+/497 exams</strong></p>
+<p>Open up the <code>R</code> project for Exercise 1 (i.e., the R project file named <em>Exercise 1 - Intro Bayesian.Rproj</em>).</p>
+<p>In the Question 1 folder, you will find a partially completed <code>R</code> script named <em>Question 1.R</em>. To answer the following questions, try to complete the missing parts (they are highlighted by a <strong>#TO COMPLETE#</strong> comment). We also provided complete R scripts, but try to work it out on your own first!</p>
+<p><strong>Start from the partially completed <em>Question 1.R</em> <code>R</code> script located in Question 1 folder.</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (<em>CI</em>). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (<strong>ESS</strong>), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?</p></li>
+<li><p>If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why? As a refresher, the formula for a frequentist 95%CI for a proportion is below (where <em>P</em> is the actual observed proportion and n is the denominator for that proportion):</p></li>
+</ol>
+<p>$ 95CI = P * $</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?</p></li>
+<li><p>When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table.</p></li>
+</ol>
+<p><strong>Table.</strong> Cross-classified results of the PAG and TUS tests.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>TUS+</strong></th>
+<th><strong>TUS-</strong></th>
+<th><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>PAG+</strong></td>
+<td>255</td>
+<td>21</td>
+<td>276</td>
+</tr>
+<tr class="even">
+<td><strong>PAG-</strong></td>
+<td>2</td>
+<td>219</td>
+<td>497</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td>257</td>
+<td>240</td>
+<td>497</td>
+</tr>
+</tbody>
+</table>
+<p>Assuming that TUS is a gold-standard test could you compute PAG sensitivity (<strong>Se</strong>) and specificity (<strong>Sp</strong>)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).</p>
+</div>
+<div id="answers" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Answers<a href="exercise-1---proportions.html#answers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (<em>CI</em>). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (<strong>ESS</strong>), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?</li>
+</ol>
+<p><strong>Answer:</strong></p>
+<ol start="2" style="list-style-type: decimal">
+<li>If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why?</li>
+</ol>
+<p><strong>Answer:</strong></p>
+<ol start="3" style="list-style-type: decimal">
+<li>In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?</li>
+</ol>
+<p><strong>Answer:</strong></p>
+<ol start="4" style="list-style-type: decimal">
+<li>When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table. Assuming that TUS is a gold-standard test could you compute PAG sensitivity (<strong>Se</strong>) and specificity (<strong>Sp</strong>)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).</li>
+</ol>
+<p><strong>Answer:</strong></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="running-bayesian-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-Ex.1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

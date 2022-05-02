@@ -1,0 +1,99 @@
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 4
+output: html_document
+---
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Exercise 1 - Proportions
+## Data
+The data used for the following exercises came from a study aiming at estimating diagnostic accuracy of a milk pregnancy associated glycoprotein (PAG) ELISA and of transrectal ultrasonographic (US) exam when used for determining pregnancy status of individual dairy cows 28 to 45 days post-insemination. In that study, the new test under investigation was the PAG test and US was used for comparison, but was considered as an imperfect reference test.  
+  
+In the original study, data from 519 cows from 18 commercial dairy herds were used. For the following exercises, the dataset was modified so that we have data from 519 cows from 3 herds (i.e., the data from 16 herds were collapsed together so they appear to be from one large herd). Note that there are some cows with missing values for one of the tests, so we will not always work with 519 cows. The complete original publication can be found here: [Dufour et al., 2017](https://www.sciencedirect.com/science/article/pii/S016758771630527X?casa_token=jmHY9HiOdEYAAAAA:kGdiIujRzrAQjjFRbGqtUxIBalDGvXllp6ja9w4T2s6c7yPbgc0asnak79bJ5GWWXI8InhCg0sg).  
+  
+The dataset *Preg.xlsx* contains the results from the study. However, **for the exercises we will always simply used the cross-tabulated data and these will be already organized for you and presented at the beginning of each exercise**. The dataset is still provided so you can further explore additional comparisons. The list of variables in the *Preg.xlsx* dataset are described in the table below.  
+  
+**Table**. List of variables in the *Preg.xlsx* dataset.  
+
+| **Variable** | **Description**                               | **Range**                      |
+|--------------|-----------------------------------------------|--------------------------------|
+| Obs          | An observation unique ID number               | 1 to 519                       |
+| Herd         | Herd ID number                                | 1 to 3                         |
+| Cow          | Cow ID number                                 | NA                             |
+| T1_DOP       | Number of days since insemination at testing  | 28 to 45                       |
+| PAG_DX       | Results from the PAG test                     | 0 (not pregnant); 1 (pregnant) |
+| US_DX        | Results from the ultrasound test              | 0 (not pregnant); 1 (pregnant) |
+| TRE_DX       | Results from the transrectal exam (TRE) test  | 0 (not pregnant); 1 (pregnant) |
+  
+## Exercises
+In the study, we had the following proportion of apparently pregnant cows (based on the US exam).  
+  
+**257 US+/497 exams**  
+  
+Open up the `R` project for Exercise 1 (i.e., the R project file named *Exercise 1 - Intro Bayesian.Rproj*).   
+  
+In the Question 1 folder, you will find a partially completed `R` script named *Question 1.R*. To answer the following questions, try to complete the missing parts (they are highlighted by a **#TO COMPLETE#** comment). We also provided complete R scripts, but try to work it out on your own first! 
+  
+**Start from the partially completed *Question 1.R* `R` script located in Question 1 folder.**
+  
+1. What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (**CI**). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (**ESS**), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?  
+  
+2. If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why? As a refresher, the formula for a frequentist 95%CI for a proportion is below (where *P* is the actual observed proportion and *n* is the denominator for that proportion):  
+  
+$95CI=P \pm 1.96* \sqrt{\frac{P*(1-P)}{n}}$  
+  
+3. In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?  
+  
+4. When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table.  
+  
+**Table.** Cross-classified results of the PAG and TUS tests.  
+  
+|           | **TUS+** | **TUS-** | **Total** |
+|-----------|----------|----------|-----------|
+| **PAG+**  | 255      | 21       | 276       |
+| **PAG-**  | 2        | 219      | 221       |
+| **Total** | 257      | 240      | 497       |
+  
+Assuming that TUS is a gold-standard test could you compute PAG sensitivity (**Se**) and specificity (**Sp**)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).  
+  
+## Answers
+1. What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (**CI**). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (**ESS**), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?  
+  
+**Answer:**  
+  
+2. If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why?   
+  
+**Answer:**  
+  
+3. In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?  
+  
+**Answer:**  
+    
+4. When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table. Assuming that TUS is a gold-standard test could you compute PAG sensitivity (**Se**) and specificity (**Sp**)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).  
+  
+**Answer:**  
+  
+
+
+  
+  
+
+  
+
