@@ -1,6 +1,6 @@
 ---
 title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
-author: "Simon Dufour and Juan Arango Sabogal"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -178,8 +178,8 @@ The `R2jags` function that we will use for that is the `jags()` function. Here a
 - The names of the parameters which should be monitored using `parameters.to.save=`.  
 - The number of Markov chains using `n.chains=`. The default is 3.  
 - The sets of initial values using `inits=`. If inits is NULL, JAGS will randomly generate values.  
-- The number of total iterations per chain (including burn in; default: 2000) using `n.iter=`. 
-- The length of burn in (i.e., number of iterations to discard at the beginning) using `n.burnin=`.
+- The number of total iterations per chain (including burn-in; default: 2000) using `n.iter=`. 
+- The length of burn-in (i.e., number of iterations to discard at the beginning) using `n.burnin=`.
 - The thinning rate, which represent how many of the values sampled by the MCMC will be retained. The default is 5 (1 out of 5). Since there is no *a priori* need for thinning, you can specify n.thin=1, in most situations.
 - The last argument `DIC=TRUE` or `DIC=FALSE` will determine whether to compute the deviance, pD, and deviance information criteria (DIC). These could sometimes be useful for model selection/comparison. We could leave that to `DIC=FALSE` since we will not be using these values in the workshop.   
     
@@ -205,7 +205,7 @@ As you can see, we received a few messages. It looks good, don't you think?
 ## Model diagnostic
 Before jumping to the results, you should first check:  
 - Whether the chains have converged,  
-- whether the burnin period was long enough,  
+- whether the burn-in period was long enough,  
 - Whether you have a large enough sample of values to describe the posterior distribution with sufficient precision,  
 - Whether the Markov chains behaved well (mainly their auto-correlation).  
   
@@ -229,11 +229,11 @@ When you do that, a HTML document will be created an your web browser will autom
 ### Convergence and burn-in  
 To check whether convergence of the Markov chains was obtained you can inspect the "running mean" (right middle figure) and "trace plot" (the bottom figure) presenting the values that were picked by each chain on each iteration. The different chains that you used (three in the preceding example) will be overlaid on the trace plot. You should inspect the trace plot to **evaluate whether the different chains all converged in the same area**. If so, after a number of iterations they should be moving in a relatively restricted area and this area should be the same for all chains.  
   
-The plots above would be a good example of the trace plot of three "nice" Markov chains (lucky us!). In this preceding example, we can see on the running mean plot that the chains started from different initial values, but they very quickly converged (after less than a 1000 iterations) toward the same area. On the trace plot, we can see the values that were stored after the burn in period. The chains were then moving freely within this limited area (thus sampling from the posterior distribution).  
+The plots above would be a good example of the trace plot of three "nice" Markov chains (lucky us!). In this preceding example, we can see on the running mean plot that the chains started from different initial values, but they very quickly converged (after less than a 1000 iterations) toward the same area. On the trace plot, we can see the values that were stored after the burn-in period. The chains were then moving freely within this limited area (thus sampling from the posterior distribution).  
   
 We could conclude based on the trace plot that:  
 - The Markov chains did converged  
-- A short burn in period of less than a 1000 iterations would have been sufficient. Note that we will often use a longer burn in (e.g., 5,000 or even more) just to be sure and because it only costs a few more seconds on your computer...  
+- A short burn-in period of less than a 1000 iterations would have been sufficient. Note that we will often use a longer burn-in (e.g., 5,000 or even more) just to be sure and because it only costs a few more seconds on your computer...  
   
 Here is another example where two chains (the red and green) converged in the same area, but a third one (the blue) also converged, but in a different area.  **We should be worry in such case**. We will see later the reason for such behavior.
 ![**Figure.** Trace plot - chains converging in different areas.](Figures\2 nice 1 bad chain.png)
@@ -264,7 +264,7 @@ Here is another example that should be worrying.
 When such a behavior is observed, running the chains for more iterations will help achieve the desire ESS. In some situations, specifying different priors (i.e., increasing the amount of information in priors) may also help.  
   
 ## Getting our estimates
-Now, if you are happy with the behavior of your Markov chains, the number of iterations, and burn in period, you can summarize your results (i.e., report the median, 2.5th and 97.5th percentiles) very easily with the `print()` function. Below, I have also indicated `digits.summary=3` to adjust the precision of the estimates that are reported (the default is 1). 
+Now, if you are happy with the behavior of your Markov chains, the number of iterations, and burn-in period, you can summarize your results (i.e., report the median, 2.5th and 97.5th percentiles) very easily with the `print()` function. Below, I have also indicated `digits.summary=3` to adjust the precision of the estimates that are reported (the default is 1). 
 ```{r}
 print(bug.out,                  #Asking to see the mean, median, etc of the unknown parameters that were monitored
       digits.summary=3)         #Requiring a precision of 3 digits

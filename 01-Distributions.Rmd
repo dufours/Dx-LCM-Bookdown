@@ -1,6 +1,6 @@
 ---
 title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
-author: "Simon Dufour and Juan Arango Sabogal"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
