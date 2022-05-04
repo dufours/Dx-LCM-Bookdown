@@ -97,7 +97,7 @@ curve(dbeta(x, shape1=1.0, shape2=1.0), from=0, to=1,
       main="A Beta(1.0, 1.0) or flat distribution", xlab = "Proportion", ylab = "Density")
 ```
   
-## Distributions for likelihood function  
+## Distributions for likelihood functions  
 In many situations, a distribution will be used as a part of the likelihood function to link observed data to unknown parameters. The ones we will most frequently used here are:
   
 **- Binomial distribution:** For variables that can take the value 0 or 1. Binomial distributions are defined by a probability, P, which is the probability that the variable takes the value 1, and a number of "trials", n.   

@@ -1,0 +1,655 @@
+--- 
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  html_document: 
+    fig_caption: yes
+    toc: yes
+    toc_float: yes
+    number_sections: yes
+  pdf_document: default
+description: Exercises for the Dx test - LCM workshop 
+documentclass: book
+link-citations: yes
+bibliography:
+- book.bib
+- packages.bib
+site: bookdown::bookdown_site
+biblio-style: apalike
+---
+
+![Credit: National Cancer Institute on Unsplash](Figures\national-cancer-institute-NFvdKIhxYlU-unsplash.jpg) 
+
+# About this document
+In this document you will find indications on how to use various `R` libraries and functions for estimating true disease prevalence and accuracy of diagnostic tests in a Bayesian framework, along with various exercises. We suppose that you do have some basic `R` skills. If you have not worked with `R` before or feel a bit rusty, here are some resources to help you to prepare:  
+  
+- Chapters 1, 2, and 4 of the [CodeCademy "Learn R" course](https://www.codecademy.com/learn/learn-r) will provide a good overview of the basic concepts required for this workshop.  
+  
+- If you are familiar with `R` and want to do some further reading, [Hadley Wickham's "R for Data Science"](https://r4ds.had.co.nz/) is a great resource.  
+  
+Remember, there are often many different ways to conduct a given piece of work in `R`. Throughout this document, we tried to stick with the simpler approaches (e.g., the shortest code, the minimal number of `R` libraries). 
+   
+## Some notation
+
+Throughout the document,  you will find examples of `R` code along with comments. **The `R` code used always appear in grey boxes** (see the following example). This is the code that you will be able to use for your own analyses. **Lines that are preceded by a # sign are comments**, they are skipped when `R` reads them. Following each grey box with `R` code, a **white box with results from the analysis is presented**.  
+  
+For instance, this is a `R` code where I am simply asking to show main descriptive statistics for the *speed* variable of the *cars* dataset (note that this dataset is already part of `R`).
+```{r cars, warning=FALSE, message=FALSE}
+#This is a comment. R will ignore this line
+
+#The summary() function can be use to ask for a summary of various R objects. For a variable (here the variable speed), it shows descriptive statistics.
+summary(cars$speed)
+```
+  
+Throughout the document, in the text I will use:  
+- Italics for datasets or variables. For instance, the *speed* variable of the dataset *cars*.  
+- Shaded boxes for `R` libraries (e.g., `episensr`) and functions (e.g., `summary()`).  
+  
+In `R` we can first call a given library and then use the functions related to each library or we can name the library followed by `::` and then the function. For instance the two following pieces of code are equivalent:
+```{r, eval=FALSE}
+library(ggplot2)
+ggplot(data=cars, mapping=(aes(x=speed)))+
+  geom_histogram()
+
+##OR##
+
+ggplot2::ggplot(data=cars, mapping=(aes(x=speed)))+
+  geom_histogram()
+```
+  
+The latter may improve reproducibility, but to the expense of longer codes. Throughout the document, we will always first call the library and then run the functions to keep codes shorter. 
+
+One last thing, when using a given function, it is not mandatory to name all the arguments, as long as they are presented in the sequence expected by this function. For instance, the `ggplot()` function that we used in the previous chunk of code is expecting to see first a dataset (`data=`) and then a mapping attribute (`mapping=`) and, within that mapping attribute a x variable (`x=`). We could shorten the code by omitting all of these. The two following pieces of code are, therefore, equivalent: 
+```{r, eval=FALSE}
+library(ggplot2)
+ggplot(data=cars, mapping=(aes(x=speed)))+
+  geom_histogram()
+
+##OR##  
+
+library(ggplot2)
+ggplot(cars, (aes(speed)))+
+  geom_histogram()
+```
+  
+Throughout the document, however, we will use the longer code with all the arguments being named. Since you are learning these new functions, it would be quite a challenge to use the shorter code right from the start. But you could certainly adopt the shorter codes later on.
+  
+**LET'S GET STARTED!**
+
+<!--chapter:end:index.Rmd-->
+
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 2
+output: html_document
+---
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Distributions  
+When using latent class models (LCM) to estimate disease prevalence or diagnostic test accuracy, we will need to use various distributions. There are two situations where we will use distributions:  
+  
+1) as prior distribution to describe our <i>a priori</i> knowledge on a given unknown parameter.  
+2) as a part of the likelihood function that will be used to linked observed data with unknown parameters.  
+  
+Some distributions will more often be used for the first objective, others will mainly be used for the latter objective. In he following sections, we will cover the most usefull distributions.
+
+## Prior distributions
+One of the first thing that you will need for any Bayesian analysis is a way to generate and visualize a prior distribution corresponding to some scientific knowledge that you have about an unknown parameter. Generally, you will use information such as the mean and variance or the mode and the 2.5th (or 97.5th) percentile to find a corresponding distribution. You will use various distributions. Here is a list of the most important ones, we will give more details on each of them in the following sections:  
+  
+**- Normal distribution:** defined by a mean (mu) and its standard deviation (SD) or variance (tau). In some packages and software, `rjags` and JAGS for instance, the inverse of the variance (1/tau) is used to specify a given normal distribution.   
+**Notation: dNorm(mu, 1/tau)**  
+  
+**- Uniform distribution:** defined by a minimum (min) and maximum (max).  
+**Notation: dUnif(min, max)**     
+  
+**- Beta distribution:** bounded between 0 and 1, beta distributions are defined by two shape parameters (a) and (b).  
+**Notation: dBeta(a, b)**    
+  
+
+### Normal distribution
+The `dnorm()` function can be used to generate a given Normal distribution and the `curve()` function can be used to visualize the generated distribution. These functions are already part of `R`, there is no need to upload a `R` package.  
+
+```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of a Normal distribution."}
+curve(dnorm(x, mean=2.0, sd=0.5),                                    # I indicate mean and SD of the distribution
+      from=-2, to=7,                                                 # I indicate limits for the plot
+      main="Normal distribution with mean of 2.0 and SD of 0.5",     #Adding a title
+      xlab = "Value", ylab = "Density")                              #Adding titles for axes
+
+```
+Note that a Normal distribution with mean of zero and a very large SD provides very little information. Such distribution would be referred to as a **uniform or flat distribution** (A.K.A.; a vague distribution).
+```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of a flat Normal distribution."}
+curve(dnorm(x, mean=0.0, sd=10000000000),                                    
+      from=-100, to=100,                                                 
+      main="A flat Normal distribution",     
+      xlab = "Value", ylab = "Density")                              
+
+```
+  
+### Uniform distribution
+In the same manner, we could visualize an uniform distribution using the `dunif()` function. In the following example, we assumed that any values between -5.0 and 5.0 are equally probable.
+```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of an Uniform distribution."}
+curve(dunif(x, min=-5.0, max=5.0),                                    
+      from=-10, to=10,                                                 
+      main="Uniform distribution with -5.0 and 5.0 limits",    
+      xlab = "Value", ylab = "Density")                              
+
+
+```
+  
+### Beta distribution
+Beta distributions are another type of distributions that will specifically be used for parameters that are proportions (i.e., bounded between 0.0 and 1.0). <b>For this specific workshop, they will be very handy, since a sensitivity, specificity, or a prevalence are all proportions </b>. The `epi.betabuster()` function from the `epiR` library can be used to define a given prior distribution based on previous knowledge. When you use the `epi.betabuster()` function, it creates a new `R` object containing different elements. Among these, one element will be named *shape1* and another *shape2*. These correspond to the a and b shape parameters of the corresponding Beta distribution.   
+  
+For instance we may know that the most likely value for the sensitivity of a given test is 0.85 and that we are 97.5% certain that it is greater than 0.75. With these values, we will be able to find the a and b shape parameters of the corresponding Beta distribution.
+```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of a Beta distribution for a test sensitivity."}
+library(epiR) 
+
+# Sensitivity of a test as Mode=0.85, and we are 97.5% sure >0.75 
+rval <- epi.betabuster(mode=0.85, conf=0.975, greaterthan=T, x=0.75)  # I create a new object named rval
+
+rval$shape1                #View the a shape parameter in rval
+rval$shape2                #View the b shape parameter in rval  
+
+#plot the prior distribution
+curve(dbeta(x, shape1=rval$shape1, shape2=rval$shape2), from=0, to=1, 
+      main="Prior for test's sensitivity", xlab = "Proportion", ylab = "Density")
+```
+  
+Note that a dBeta(1.0, 1.0) is a uniform beta distribution.
+```{r, message=FALSE, warning=FALSE, fig.cap="Density curve of a Beta(1.0, 1.0) distribution."}
+#plot the prior distribution
+curve(dbeta(x, shape1=1.0, shape2=1.0), from=0, to=1, 
+      main="A Beta(1.0, 1.0) or flat distribution", xlab = "Proportion", ylab = "Density")
+```
+  
+## Distributions for likelihood functions  
+In many situations, a distribution will be used as a part of the likelihood function to link observed data to unknown parameters. The ones we will most frequently used here are:
+  
+**- Binomial distribution:** For variables that can take the value 0 or 1. Binomial distributions are defined by a probability, P, which is the probability that the variable takes the value 1, and a number of "trials", n.   
+**Notation: dBin(P, n)**   
+  
+**- Multinomial distribution:** made up of a number of probabilities, all bounded between 0 and 1, and that, together, will sum up to 1. Multinomial distributions are defined by k probabilities (P1, P2, ..., Pk) and a number of observation (n).  
+**Notation: dmulti(P[1:k], n)**     
+    
+### Binomial distribution  
+If we have a variable that can take only two values, healthy or diseased (0 or 1), we can estimates an unknown parameter such as the proportion (P) of diseased individuals (i.e., the disease prevalence), based on the observed data (a number of positive individuals, T AND a total number of individuals, n). For instance, if we had 30 diseased (T = 30) out of 100 tested individuals (n=100) we could estimate the unknown parameter P using this very simple likelihood function:  
+  
+$T \sim dbin(P, n)$
+    
+### Multinomial distribution
+A last type of distribution that we will use in our LCM is the multinomial distribution. When an outcome is categorical with >2 categories, we could use a multinomial distribution to describe the probability that an individual has the value "A", or "B", or "C", etc. In our context, the main application of this distribution will be for describing the combined results of two (or more than two) diagnostic tests. For instance, if we cross-tabulate the results of Test A and Test B, we have four potential outcomes:  
+  
+-Test A+ and Test B+ (lets call n1 the number of individuals in that cell and P1 the probability of falling in that cell)  
+-Test A+ and Test B- (n2 and P2)  
+-Test A- and Test B+ (n3 and P3)  
+-Test A- and Test B- (n4 and P4) 
+  
+We can illustrate this as follow:  
+  
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#Créer une table
+Results <- c("Test B+", "Test B-")
+TestA_positive <- c("n1","n2")
+TestA_negative <- c("n3","n4")
+dp_data2 <- data.frame(Results, TestA_positive, TestA_negative)
+```
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(kableExtra)
+kable(dp_data2, col.names=c(" ", "Test A+", "Test A-"), caption="Cross-classified results from two diagnostic tests")%>%
+  kable_styling()
+```
+  
+Thus we could describe the probabilities (P1 to P4) of an individual falling into one of these cells of the 2x2 table as a multinomial distribution. In this specific case, we would say that the combined results of the 2 tests (n1 to n4) and the total number of individual tested (n), which are the observed data, are linked as follow to the 4 probabilities (P1 to P4; the unknown parameters):   
+  
+$n[1:4] \sim dmulti(P[1:4], n)$  
+  
+Which means: the values of n1 (or n2, n3, or n4) is determined by the probability of falling into the "Test A+ and Test B+" cell, which is P1 (or P2, P3, or P4 for the other cells), and by the total number of individuals tested (n). Nothing too surprising here... If I have a probability of 0.30 to fall in a given cell, and I have tested 100 individuals, I should find 30 individuals in that cell. Wow! Still, the multinomial distribution is nice because it will ensure that all our probabilities (P1 to P4) will sum up to exactly 1.0.    
+  
+
+<!--chapter:end:01-Distributions.Rmd-->
+
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 3
+output: html_document
+---
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Running Bayesian models
+Different software and `R` packages can be used to run Bayesian models. Whether it is a LCM or a more conventional regression model is not very important at this stage. In this document we will mainly use a software called JAGS and the `R2jags` package. So, if not already done, you will have to download JAGS [here](https://sourceforge.net/projects/mcmc-jags/files/) and install it on your computer. Once installed, we will be able to use `R2jags` to operate JAGS through `R`.   
+  
+Basically, to run any Bayesian model, we will always need the same three things:  
+  
+* Data
+* A model containing:
+  + A likelihood function linking observed data to unknown parameters
+  + A prior distribution for each unknown parameter
+* An initial value for each unknown parameters to start the Markov chains
+  + These values can also be generated randomly by the software, but specifying them will improve reproducibility
+  
+## The data
+This is the easy part. If we were to run, for instance, a "conventional" regression analysis, we would have to import in  `R` a complete dataset (e.g., a CSV file) with a row for each observation and a column for each variable. However, when using LCM to estimate a disease prevalence or diagnostic accuracy, the dataset is simply made up of the number of individuals in each category. For instance, for estimating a simple prevalence (*Prev*), we could have 30 individuals that tested positive (variable *T*) out of a total of 100 individuals (variable *n*). In such case, the dataset could be created as follow:      
+  
+```{r}
+#Creating a dataset
+datalist <- list(T=30, n=100)
+```
+  
+If you want to check that it works, you could ask to see this new `R` object.  
+  
+```{r}
+datalist
+```
+  
+## The model
+### The likelihood function
+Lets start with a simple example, estimating a single proportion. For estimating a proportion we could describe the likelihood function linking unknown parameters to observed data as follow:  
+  
+$T \sim dbin(Prev, n)$
+
+In other words: the disease prevalence (*Prev*), an unknown parameter, can be linked to the observed number of positive individuals (*T*) and the total number of tested individual (*n*) through the binomial function.  
+  
+In this case, the values of *T* and *n* are the observed data and *Prev* is the only unknown parameter.  
+  
+### Priors for unkown parameters
+We will have to specify a prior distribution for each unknown parameter (using the $\sim$ sign).  
+    
+In the preceding example, we only have one unkown parameter, *Prev*, which is a proportion. Theoretically such parameter could take values from 0 to 1, so a beta distribution would be one way to describe its prior distribution. We could use the `epi.betabuster()` function from the `epiR` library to define a given beta distribution based on previous knowledge, as described in the preceding sections. Moreover, if we want to use a flat prior, we could simply choose the value 1.0 for the a and b shape parameters.   
+  
+In the following code, I am creating `R` objects for a and b for *Prev* beta prior distributions.
+```{r}
+Prev.shapea <- 1         #a shape parameter for Prev    
+Prev.shapeb <- 1         #b shape parameter for Prev 
+
+```
+  
+With informative priors, for instance, if we know from the literature that the prevalence is expected to be 0.25 with 95CI of (0.20, 0.30), we could  instead use the following code and assign these values to *Prev.shapea* and *Prev.shapeb*:  
+  
+```{r, message=FALSE, warning=FALSE}
+library(epiR) 
+
+# Prevalence as Mode=0.25, and we are 97.5% sure >0.20 
+rval <- epi.betabuster(mode=0.25, conf=0.975, greaterthan=T, x=0.20)  # I create a new object named rval
+
+rval$shape1                #View the a shape parameter in rval
+rval$shape2                #View the b shape parameter in rval
+
+#I left them as comments, but the two lines below would be used to assign the generated values for later usage
+#Prev.shapea <- rval$shape1
+#Prev.shapeb <- rval$shape2
+
+```
+
+  
+
+### Creating the JAGS model
+Our Bayesian model has to be presented to JAGS as a text file (i.e., a .txt document).  To create this text file, we will use the `paste0()` function to write down the model and then the `write.table()` function to save it as a .txt file.  
+  
+**An interesting feature of the `paste0()` function is the possibility to include `R` objects in the text.** For instance, you may want to have a general model that will not be modified, but to change the values used to describe the priors. Within your `paste0()` function you could call these "external" values. Thus, you just have to change the value of the `R` object that your model is using, rather than rewriting a new model. For instance, we just created these two `R` objects called *Prev.shapea* and *Prev.shapeb* (which were the a and b shape parameters for the prior distribution of our proportion *Prev*). To describe our prior distribution, we can ignore this previous work that we have done and directly create a short text as follow:
+```{r}
+text1 <- paste0("Prev ~ dbeta(1, 1)")       #Creating a short text named "text1"
+text1                                       #Asking to see the text1 object
+```
+  
+However, if the same model is to be applied later with a different prior distribution, it may be more convenient to leave the a and b shape parameters as `R` objects. Thus, if we change the prior distribution and run the script again, you would run the entire analyses with the new distribution. 
+```{r}
+text2 <- paste0("Prev ~ dbeta(",Prev.shapea,", ",Prev.shapeb,")")            #Creating a short text named "text2" and containing other already created R objects
+text2                                                                        #Asking to see the text2 object
+```
+  
+When using `paste0()`, any text appearing between sets of quotations marks and within commas (i.e.," ",bla-bla," ") will be considered as a `R` object that need to be included between the pieces of text included in each quotation. Thus, later, I could just change the values for *Prev.shapea* and *Prev.shapeb* and my model will be automatically modified.   
+  
+**Some important notes about the text file containing the model before we start with `R2jags`:**  
+  
+- JAGS is expecting to see the word "model" followed by curly brackets { }. The curly brackets will contain the likelihood function AND the priors.  
+  
+- Similarly to `R`, any line starting with a # will be ignored (these are comments).  
+  
+- Similarly to `R`, <- means equal.  
+  
+- The ~ symbol means "follow a distribution".  
+  
+- Similarly to `R`, JAGS is case sensitive (i.e., *P* does not equal *p*).
+  
+- Loops can be used with keyword "for" followed by curly brackets.  
+  
+- Array can be indicated using squared brackets [ ].  
+
+In the example below, I create a `R` object called *model_single_prop* using the `paste0()` function and then save it as a text file using the `write.table()` function. We will check this text file below and then explain the code for the model. 
+```{r}
+# Specify the model
+model_single_prop <- paste0("model{
+
+#=== LIKELIHOOD	===#
+
+  T ~ dbin(Prev, n)
+
+
+#=== PRIOR	===#
+
+  Prev ~ dbeta(",Prev.shapea,", ",Prev.shapeb,") 	## Prior for Prev
+
+}")
+
+#write as a text (.txt) file
+write.table(model_single_prop, 
+            file="model_single_prop.txt", 
+            quote=FALSE, 
+            sep="", 
+            row.names=FALSE,
+             col.names=FALSE)
+```
+  
+Here is a snapshot of the final result (i.e., the text file):  
+
+![Text file with the model for estimating a single proportion.](Figures\Model_single_prop.png)
+  
+## Generating initial values
+The initial value is the first value where each Markov chain will start.  
+- You have to specify one initial value for each unknown parameter in the model.  
+- If you decide to ran three Markov chains, you will need three different sets of initial values.  
+  
+For instance, in our preceding example we have one unknown parameter (*Prev*). If we were to run three Markov chains, we could generate three sets of initial values for this parameter as follow. Of course, the chosen values could be changed. In the case of a proportion, you can specify any value between 0 and 1.
+```{r}
+#Initializing values for the parameter "Prev" for the 3 chains
+inits <- list(
+  list(Prev=0.10),
+  list(Prev=0.50),
+  list(Prev=0.90)
+  )
+```
+  
+We know have a `R` object that I have called *inits* and it contains the values where each of the three Markov chains will start.  
+
+## Running a model in JAGS
+We now have the three elements that we needed: data, a model, and a set of initial values. We can now use the `R2jags` library to run our Bayesian analysis. The `R2jags` package provides an interface from `R` to the JAGS software for Bayesian data analysis. JAGS uses Markov Chain Monte Carlo (MCMC) to generate a sample from the posterior distribution of the parameters.  
+  
+The `R2jags` function that we will use for that is the `jags()` function. Here are the arguments that we need to specify:  
+  
+- The dataset using `data=`  
+- The text file containing the model written in JAGS code using `model.file=`.  
+- The names of the parameters which should be monitored using `parameters.to.save=`.  
+- The number of Markov chains using `n.chains=`. The default is 3.  
+- The sets of initial values using `inits=`. If inits is NULL, JAGS will randomly generate values.  
+- The number of total iterations per chain (including burn-in; default: 2000) using `n.iter=`. 
+- The length of burn-in (i.e., number of iterations to discard at the beginning) using `n.burnin=`.
+- The thinning rate, which represent how many of the values sampled by the MCMC will be retained. The default is 5 (1 out of 5). Since there is no *a priori* need for thinning, you can specify n.thin=1, in most situations.
+- The last argument `DIC=TRUE` or `DIC=FALSE` will determine whether to compute the deviance, pD, and deviance information criteria (DIC). These could sometimes be useful for model selection/comparison. We could leave that to `DIC=FALSE` since we will not be using these values in the workshop.   
+    
+With the following code, we will create a `R` object called *bug.out*. This object will contains the results of running our model, with the specified priors, using the available data, and the sets of initial values that we have created. For this analysis, we have asked to run 3 Markov chains, each for 6000 iterations and we discarded the first 1000 iterations for each chain. Finally, we will monitor our only unknown parameter, *Prev* and nothing else.
+```{r, message=FALSE, warning=FALSE}
+library(R2jags)
+library(coda)
+
+#Run the Bayesian model
+bug.out <- jags(data=datalist,                             #Specifying the R object containing the data
+               model.file="model_single_prop.txt",         #Specifying the .txt file containing the model
+               parameters.to.save=c("Prev"),               #Specifying the parameters to monitor. When >1 parameter, it will be a list, ex: c("Prev", "Se", "Sp")
+               n.chains=3,                                 #Number of chains
+               inits=inits,                                #Specifying the R object containing the initial values  
+               n.iter=6000,                                #Specifying the number of iterations
+               n.burnin=1000,                              #Specifying the number of iterations to remove at the begining
+               n.thin=1,                                   #Specifying the thinning rate
+               DIC=FALSE)                                  #Indicating that we do not request the deviance, pD, nor DIC 
+```
+  
+As you can see, we received a few messages. It looks good, don't you think?  
+  
+## Model diagnostic
+Before jumping to the results, you should first check:  
+- Whether the chains have converged,  
+- whether the burn-in period was long enough,  
+- Whether you have a large enough sample of values to describe the posterior distribution with sufficient precision,  
+- Whether the Markov chains behaved well (mainly their auto-correlation).  
+  
+There are many diagnostic methods available for Bayesian analyses, but, for this workshop, we will mainly use basic methods relying on plots.  
+  
+Diagnostics are available when you convert your model output into a MCMC object using the `as.mcmc()` function of the `mcmcplot` library. 
+```{r, message=FALSE, warning=FALSE}
+library(mcmcplots)
+bug.mcmc <- as.mcmc(bug.out)          #Converting the model output into a MCMC object (for diagnostic plots)
+```
+  
+You can then use the `mcmcplot()` function on this newly created MCMC object.
+```{r, message=FALSE, warning=FALSE, results="hide"}
+mcmcplot(bug.mcmc, title="Diagnostic plots")        #Asking for the diagnostic plots
+```
+  
+When you do that, a HTML document will be created an your web browser will automatically open it. Here is a snapshot of the HTML file in my browser:  
+
+![**Figure.** Diagnostic plots.](Figures\Nice chains RM.png)
+  
+### Convergence and burn-in  
+To check whether convergence of the Markov chains was obtained you can inspect the "running mean" (right middle figure) and "trace plot" (the bottom figure) presenting the values that were picked by each chain on each iteration. The different chains that you used (three in the preceding example) will be overlaid on the trace plot. You should inspect the trace plot to **evaluate whether the different chains all converged in the same area**. If so, after a number of iterations they should be moving in a relatively restricted area and this area should be the same for all chains.  
+  
+The plots above would be a good example of the trace plot of three "nice" Markov chains (lucky us!). In this preceding example, we can see on the running mean plot that the chains started from different initial values, but they very quickly converged (after less than a 1000 iterations) toward the same area. On the trace plot, we can see the values that were stored after the burn-in period. The chains were then moving freely within this limited area (thus sampling from the posterior distribution).  
+  
+We could conclude based on the trace plot that:  
+- The Markov chains did converged  
+- A short burn-in period of less than a 1000 iterations would have been sufficient. Note that we will often use a longer burn-in (e.g., 5,000 or even more) just to be sure and because it only costs a few more seconds on your computer...  
+  
+Here is another example where two chains (the red and green) converged in the same area, but a third one (the blue) also converged, but in a different area.  **We should be worry in such case**. We will see later the reason for such behavior.
+![**Figure.** Trace plot - chains converging in different areas.](Figures\2 nice 1 bad chain.png)
+  
+Finally, here is a last example with just one Markov chain and it clearly did not converged, even after 25,000 iterations. **You should be terrified by that!!! ;-)**.  
+![**Figure.** Trace plot - chains converging in different areas.](Figures\non-conv chain.png)
+  
+### Number of iterations
+Next, you can inspect the posterior distributions to determine if you have a large enough sample of independent values to describe with enough precision the median estimate and the 2.5th and 97.5th percentiles. The effective sample size (EES) takes into account the number of values generated by the Markov chains **AND** whether these values were auto-correlated, to compute the number of "effective" independent values that are used to described the posterior distribution. Chains that are auto-correlated will generate a smaller number of "effective values" than chains that are not auto-correlated.  
+  
+The `effectiveSize()` function of the `coda` library provide a way to appraise whether you add enough iterations. In the current example, we already created a `mcmc` object named `bug.mcmc`. We can ask for the effective sample size as follow:  
+```{r}
+effectiveSize(bug.mcmc)         #Asking for the ESS
+```
+  
+So we see here that, despite having stored 3 times 5,000 values (15,000 values), we have the equivalent of a bit more than 9,000 independent values. What to do with this information? Well, you could, for instance, decide on an arbitrary rule for ESS (say 10,000 values) and then adapt the length of the chains to achieve such an ESS (for each of the selected parameters, because the effective sample sizes will not be the same for all parameters).
+  
+  
+### Auto-correlation
+Remember, a feature of Markov chains is to have some auto-correlation between two immediately subsequent iterations and then a correlation that quickly goes down to zero (i.e., they have a short memory). The auto-correlation plot can be used to assess if this feature is respected.  
+  
+From our previous example (check the upper right figure in the plot below), it seems that it is the case.  
+![**Figure.** Autocorrelation plot with Markov chains exhibiting a short memory.](Figures\Nice chains RM.png)
+  
+Here is another example that should be worrying.  
+![**Figure.** Autocorrelation plot with Markov chains exhibiting a long memory.](Figures\Autocor bad.png)
+  
+When such a behavior is observed, running the chains for more iterations will help achieve the desire ESS. In some situations, specifying different priors (i.e., increasing the amount of information in priors) may also help.  
+  
+## Getting our estimates
+Now, if you are happy with the behavior of your Markov chains, the number of iterations, and burn-in period, you can summarize your results (i.e., report the median, 2.5th and 97.5th percentiles) very easily with the `print()` function. Below, I have also indicated `digits.summary=3` to adjust the precision of the estimates that are reported (the default is 1). 
+```{r}
+print(bug.out,                  #Asking to see the mean, median, etc of the unknown parameters that were monitored
+      digits.summary=3)         #Requiring a precision of 3 digits
+```
+  
+Here you see that the median *Prev* estimate (95CI) was (after rounding off) 0.30 (0.22, 0.40).  
+  
+You can also ask for plotting the *bug.mcmc* object that you have created using the `plot()` function. It would produce the trace plot and a density plot presenting the posterior distributions of each unknown parameter.  
+  
+```{r, fig.cap="Trace plot and density plot produced using the plot() function."}
+plot(bug.mcmc)              #Asking for trace plot and plots of prior and posterior distributions
+```
+  
+If you prefer to work on your own plots, note that all the values sampled from your posterior distributions were stored in the *bug.out* object that you have created. If you inspect the *bug.out* object, you will notice an element named *BUGSoutput*, inside this element, there is another object named *sims.list*, within this *sims.list*, there is an element named *Prev*. As you can see below, this element is made of a list of 15000 values. This correspond to the 5000 values sampled (1/iteration) by each Markov chain (3 chains) for the unknown parameter *Prev*. **So this element is simply all the sampled values assembled together**.  
+  
+![sims.list object located in the *bug.out* output.](Figures\sims list.png)
+
+You could use this element, for instance, to plot together the prior and posterior distributions on a same figure. On the figure below, the prior distribution is not obvious, it is the flat dashed red line just above the x axis (remember, we used a flat prior for *Prev*).   
+  
+```{r, warning=FALSE, message=FALSE, fig.cap="Prior (dashed red line) and posterior (full black line) distribution of the prevalence of disease."}
+
+#Plot the posterior distribution
+plot(density(x=bug.out$BUGSoutput$sims.list$Prev),      #Indicating variable to plot
+     main="Disease prevalence",                         #Title for the plot
+     xlab="Prevalence", ylab="Density",                 #x and y axis titles
+     )
+
+#plot the prior distribution
+curve(dbeta(x, shape1=Prev.shapea, shape2=Prev.shapeb), from=0, to=1,          #Plotting the corresponding prior distribution
+      lty=2,                                                                   #Asking for a dashed line pattern
+      col="red",                                                               #Asking for a red line  
+      add=TRUE)                                                                #Asking to add this plot to the preceding one
+```
+  
+  
+
+  
+
+
+<!--chapter:end:02-JAGS.Rmd-->
+
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 4
+output: html_document
+---
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Exercise 1 - Proportions
+## Data
+The data used for the following exercises came from a study aiming at estimating diagnostic accuracy of a milk pregnancy associated glycoprotein (**PAG**) ELISA and of transrectal ultrasonographic (**US**) exam when used for determining pregnancy status of individual dairy cows 28 to 45 days post-insemination. In that study, the new test under investigation was the PAG test and US was used for comparison, but was considered as an imperfect reference test.  
+  
+In the original study, data from 519 cows from 18 commercial dairy herds were used. For the following exercises, the dataset was modified so that we have data from 519 cows from 3 herds (i.e., the data from 16 herds were collapsed together so they appear to be from one large herd). Note that there are some cows with missing values for one of the tests, so we will not always work with 519 cows. The complete original publication can be found here: [Dufour et al., 2017](https://www.sciencedirect.com/science/article/pii/S016758771630527X?casa_token=jmHY9HiOdEYAAAAA:kGdiIujRzrAQjjFRbGqtUxIBalDGvXllp6ja9w4T2s6c7yPbgc0asnak79bJ5GWWXI8InhCg0sg).  
+  
+The dataset *Preg.xlsx* contains the results from the study. However, **for the exercises we will always simply used the cross-tabulated data and these will be already organized for you and presented at the beginning of each exercise**. The dataset is still provided so you can further explore additional comparisons. The list of variables in the *Preg.xlsx* dataset are described in the table below.  
+  
+**Table**. List of variables in the *Preg.xlsx* dataset.  
+
+| **Variable** | **Description**                               | **Range**                      |
+|--------------|-----------------------------------------------|--------------------------------|
+| Obs          | An observation unique ID number               | 1 to 519                       |
+| Herd         | Herd ID number                                | 1 to 3                         |
+| Cow          | Cow ID number                                 | NA                             |
+| T1_DOP       | Number of days since insemination at testing  | 28 to 45                       |
+| PAG_DX       | Results from the PAG test                     | 0 (not pregnant); 1 (pregnant) |
+| US_DX        | Results from the ultrasound test              | 0 (not pregnant); 1 (pregnant) |
+| TRE_DX       | Results from the transrectal exam (TRE) test  | 0 (not pregnant); 1 (pregnant) |
+  
+## Questions
+In the study, we had the following proportion of apparently pregnant cows (based on the US exam).  
+  
+**257 US+/497 exams**  
+  
+Open up the `R` project for Exercise 1 (i.e., the R project file named *Exercise 1.Rproj*).   
+  
+In the Exercise 1 folder, you will find partially completed `R` scripts. To answer the questions, try to complete the missing parts (they are highlighted by a **#TO COMPLETE#** comment). We also provided complete `R` scripts, but try to work it out on your own first! 
+  
+  
+**1. Start from the partially completed *Question 1.R* `R` script located in Exercise 1 folder.** What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (**CI**). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (**ESS**), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?  
+  
+**2.** If you were to compute a Frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why? As a refresher, the formula for a Frequentist 95%CI for a proportion is below (where *P* is the actual observed proportion and *n* is the denominator for that proportion):  
+  
+$95CI=P \pm 1.96* \sqrt{\frac{P*(1-P)}{n}}$  
+  
+**3. Start from the `R` script that you completed in Question 1.** In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?  
+  
+**4. Start from the partially completed *Question 4.R* `R` script located in Exercise 1 folder.** When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table.  
+  
+**Table.** Cross-classified results of the PAG and TUS tests.  
+  
+|           | **TUS+** | **TUS-** | **Total** |
+|-----------|----------|----------|-----------|
+| **PAG+**  | 255      | 21       | 276       |
+| **PAG-**  | 2        | 219      | 221       |
+| **Total** | 257      | 240      | 497       |
+  
+Assuming that TUS is a gold-standard test could you compute PAG sensitivity (**Se**) and specificity (**Sp**)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).  
+  
+## Answers
+**1.** What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (**CI**). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (**ESS**), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?  
+  
+**Answer:** I chose to run a model with 3 chains of 10,000 iterations each (11,000 iterations minus a burn-in of 1,000). I have obtained the following diagnostic plots:  
+  
+![Diagnostic plot](Figures\Ex1_Q1_Dx.png)
+  
+Convergence of the 3 chains was achieved, all three chains appear to be moving in the same space (see trace plot). The 1,000 iterations burn-in period is probably more than needed for this very simple problem. Autocorrelation plot is just perfect with correlation declining very rapidly close to zero at lag of 1! The effective sample size for the *Prev* parameter is >17,000 values. So, plenty of precision to report the median and 2.5th and 97.5th percentiles.        
+  
+The median pregnancy prevalence estimate (95% CI) was 51.7% (47.3, 56.1).  
+  
+**2.** If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why?   
+  
+**Answer:** It should not differ much from the Bayesian median estimate and 95CI because these latter estimates were generated using vague priors. In such cases, Bayesian and Frequentist estimates should be quite similar. Actually, if we use the Frequentist formula for computing 95CI and the observed data (i.e., 257/497) we get:  
+  
+$P = 257/497 = 0.517$  
+  
+$95CI=0.517 \pm 1.96* \sqrt{\frac{0.517*(1-0.517)}{497}} = 0.517 \pm 0.044$  
+  
+Thus, we have a Frequentist estimated proportion of 51.7% with a Frequentist 95 CI of 47.3 to 56.1 (virtually unchanged compared to the Bayesian estimates).  
+  
+**3.** In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?  
+  
+**Answer:** A beta(4.2, 5.4) distribution would have a mode of 0.42 and a 97.5th percentile of 0.74. Using this information as prior, I get a prevalence of pregnancy of 51.6% (95 CI: 47.2, 55.8). Actually, we observe very little difference between the models using vague *vs.* informative priors. This is because this informative prior contains only the equivalent of 10 observations $(4.2+5.4)$. In the dataset, there are 497 cows. Therefore, the estimation process is still mainly driven by our dataset.  
+    
+**4.** When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table. Assuming that TUS is a gold-standard test could you compute PAG sensitivity (**Se**) and specificity (**Sp**)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).  
+  
+**Answer:** A sensitivity or a specificity are, similarly to a prevalence, simple proportions. Sensitivity is simply the number of test positive among the number of true positive. We have data for these in the 2x2 table.  If we assume that *US* is a gold-standard test, than number of true positive cows is 257. And 255 of them tested positive to the *PAG* test. Similarly, the specificity is simply the number of test negative among the number of true negative. From the 2x2 table, the number of true negative cows was 240 and 219 of them tested negative to the *PAG* test.  The likelihood functions (one for each parameter in this case) linking the unknown parameters (*Se* and *Sp*) to these observed data would be:  
+  
+$Test+ \sim dbin(Se, True+)$  
+  
+$Test- \sim dbin(Sp, True-)$
+  
+Using vague beta(1, 1) priors on the *Se* and *Sp*, I got an estimated *Se* of 99.0% (95 CI: 97.3, 99.8) and a *Sp* of 91.0% (95CI: 87.0, 94.2). **But be cautious with these numbers.** We know very well that an *US* exam is not a perfect diagnostic test for pregnancy in dairy cows. With the current approach, we are attributing all disagreements between tests to a failure of the *PAG* test... But it could be the *US* test that was wrong in many instances. Moreover, animals for which the two tests agreed could still be misdiagnosed as pregnant or open, but by both tests (i.e., a failure of the *PAG* **AND** the *US* tests). We wil see in the next parts of the course how to account for the fact that neither of the tests are gold-standards.
+  
+
+
+  
+  
+
+  
+
+
+<!--chapter:end:03-Ex.1.Rmd-->
+

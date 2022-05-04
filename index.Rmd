@@ -3,12 +3,12 @@ title: "Bayesian latent class models for prevalence estimation and diagnostic te
 author: "Simon Dufour and Juan Carlos Arango Sabogal"
 date: "`r Sys.Date()`"
 output:
+  word_document: default
   html_document: 
     fig_caption: yes
     toc: yes
     toc_float: yes
     number_sections: yes
-  word_document: default
   pdf_document: default
 description: Exercises for the Dx test - LCM workshop 
 documentclass: book
