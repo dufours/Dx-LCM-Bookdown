@@ -1,0 +1,28 @@
+model{
+
+#=== LIKELIHOOD	===#
+
+  n[1:4] ~ dmulti(p[1:4], 262)
+  p[1] <- Prev*(Se_US*Se_PAG + covp) + (1-Prev)*((1-Sp_US)*(1-Sp_PAG) + covn)
+  p[2] <- Prev*(Se_US*(1-Se_PAG) - covp) + (1-Prev)*((1-Sp_US)*Sp_PAG - covn)
+  p[3] <- Prev*((1-Se_US)*Se_PAG - covp) + (1-Prev)*(Sp_US*(1-Sp_PAG) - covn)
+  p[4] <- Prev*((1-Se_US)*(1-Se_PAG) + covp) + (1-Prev)*(Sp_US*Sp_PAG + covn)
+
+#=== PRIOR	===#
+
+  Prev ~ dbeta(4.2, 5.4) 	## Prior for Prev
+  Se_US ~ dbeta(131, 15) 	## Prior for Se of Test A
+  Sp_US ~ dbeta(100, 6) 	## Prior for Sp of Test A
+  Se_PAG ~ dbeta(1, 1) 	## Prior for Se of Test B
+  Sp_PAG ~ dbeta(1, 1) 	## Prior for Sp of Test B
+  
+#=== CONDITIONAL DEPENDENCE STRUCTURE ===#
+
+  covp ~ dunif(minp,maxp)
+  covn ~ dunif(minn,maxn)
+  minp <- (1-Se_US)*(Se_PAG-1)
+  minn <- (Sp_US-1)*(1-Sp_PAG)
+  maxp <- min(Se_US,Se_PAG) - Se_US*Se_PAG	
+  maxn <- min(Sp_US,Sp_PAG) - Sp_US*Sp_PAG  
+  
+}

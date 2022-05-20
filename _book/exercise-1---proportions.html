@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Exercise 1 - Proportions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
-  <meta name="description" content="Chapitre 4" />
+  <meta name="description" content="Chapitre 5" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Exercise 1 - Proportions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Chapitre 4" />
+  <meta property="og:description" content="Chapitre 5" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 4 Exercise 1 - Proportions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   
-  <meta name="twitter:description" content="Chapitre 4" />
+  <meta name="twitter:description" content="Chapitre 5" />
   
 
-<meta name="author" content="Simon Dufour and Juan Arango Sabogal" />
+<meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
 
 
-<meta name="date" content="2022-05-02" />
+<meta name="date" content="2022-05-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="running-bayesian-models.html"/>
-
+<link rel="next" href="comparing-2-imperfect-tests.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,8 +52,74 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -84,7 +150,7 @@
 <li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
 <li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-function"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood function</a>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-functions"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood functions</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
 <li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
@@ -112,8 +178,12 @@
 <li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
-<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#exercises"><i class="fa fa-check"></i><b>4.2</b> Exercises</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
 <li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="comparing-2-imperfect-tests.html"><a href="comparing-2-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Comparing 2 imperfect tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="comparing-2-imperfect-tests.html"><a href="comparing-2-imperfect-tests.html#lcm---conditional-independence"><i class="fa fa-check"></i><b>5.1</b> LCM - Conditional independence</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -139,8 +209,8 @@
 <h1><span class="header-section-number">Chapter 4</span> Exercise 1 - Proportions<a href="exercise-1---proportions.html#exercise-1---proportions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="data" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Data<a href="exercise-1---proportions.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The data used for the following exercises came from a study aiming at estimating diagnostic accuracy of a milk pregnancy associated glycoprotein (PAG) ELISA and of transrectal ultrasonographic (US) exam when used for determining pregnancy status of individual dairy cows 28 to 45 days post-insemination. In that study, the new test under investigation was the PAG test and US was used for comparison, but was considered as an imperfect reference test.</p>
-<p>In the original study, data from 519 cows from 18 commercial dairy herds were used. For the following exercises, the dataset was modified so that we have data from 519 cows from 3 herds (i.e., the data from 16 herds were collapsed together so they appear to be from one large herd). The complete original publication can be found here: <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?casa_token=jmHY9HiOdEYAAAAA:kGdiIujRzrAQjjFRbGqtUxIBalDGvXllp6ja9w4T2s6c7yPbgc0asnak79bJ5GWWXI8InhCg0sg">Dufour et al., 2017</a>.</p>
+<p>The data used for the following exercises came from a study aiming at estimating diagnostic accuracy of a milk pregnancy associated glycoprotein (<strong>PAG</strong>) ELISA and of transrectal ultrasonographic (<strong>US</strong>) exam when used for determining pregnancy status of individual dairy cows 28 to 45 days post-insemination. In that study, the new test under investigation was the PAG test and US was used for comparison, but was considered as an imperfect reference test.</p>
+<p>In the original study, data from 519 cows from 18 commercial dairy herds were used. For the following exercises, the dataset was modified so that we have data from 519 cows from 3 herds (i.e., the data from 16 herds were collapsed together so they appear to be from one large herd). Note that there are some cows with missing values for one of the tests, so we will not always work with 519 cows. The complete original publication can be found here: <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?casa_token=jmHY9HiOdEYAAAAA:kGdiIujRzrAQjjFRbGqtUxIBalDGvXllp6ja9w4T2s6c7yPbgc0asnak79bJ5GWWXI8InhCg0sg">Dufour et al., 2017</a>.</p>
 <p>The dataset <em>Preg.xlsx</em> contains the results from the study. However, <strong>for the exercises we will always simply used the cross-tabulated data and these will be already organized for you and presented at the beginning of each exercise</strong>. The dataset is still provided so you can further explore additional comparisons. The list of variables in the <em>Preg.xlsx</em> dataset are described in the table below.</p>
 <p><strong>Table</strong>. List of variables in the <em>Preg.xlsx</em> dataset.</p>
 <table>
@@ -195,22 +265,17 @@
 </tbody>
 </table>
 </div>
-<div id="exercises" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Exercises<a href="exercise-1---proportions.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="questions" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Questions<a href="exercise-1---proportions.html#questions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the study, we had the following proportion of apparently pregnant cows (based on the US exam).</p>
 <p><strong>257 US+/497 exams</strong></p>
-<p>Open up the <code>R</code> project for Exercise 1 (i.e., the R project file named <em>Exercise 1 - Intro Bayesian.Rproj</em>).</p>
-<p>In the Question 1 folder, you will find a partially completed <code>R</code> script named <em>Question 1.R</em>. To answer the following questions, try to complete the missing parts (they are highlighted by a <strong>#TO COMPLETE#</strong> comment). We also provided complete R scripts, but try to work it out on your own first!</p>
-<p><strong>Start from the partially completed <em>Question 1.R</em> <code>R</code> script located in Question 1 folder.</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (<em>CI</em>). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (<strong>ESS</strong>), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?</p></li>
-<li><p>If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why? As a refresher, the formula for a frequentist 95%CI for a proportion is below (where <em>P</em> is the actual observed proportion and n is the denominator for that proportion):</p></li>
-</ol>
-<p>$ 95CI = P * $</p>
-<ol start="3" style="list-style-type: decimal">
-<li><p>In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?</p></li>
-<li><p>When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table.</p></li>
-</ol>
+<p>Open up the <code>R</code> project for Exercise 1 (i.e., the R project file named <em>Exercise 1.Rproj</em>).</p>
+<p>In the Exercise 1 folder, you will find partially completed <code>R</code> scripts. To answer the questions, try to complete the missing parts (they are highlighted by a <strong>#TO COMPLETE#</strong> comment). We also provided complete <code>R</code> scripts, but try to work it out on your own first!</p>
+<p><strong>1. Start from the partially completed <em>Question 1.R</em> <code>R</code> script located in Exercise 1 folder.</strong> What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (<strong>CI</strong>). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (<strong>ESS</strong>), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?</p>
+<p><strong>2.</strong> If you were to compute a Frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why? As a refresher, the formula for a Frequentist 95%CI for a proportion is below (where <em>P</em> is the actual observed proportion and <em>n</em> is the denominator for that proportion):</p>
+<p><span class="math inline">\(95CI=P \pm 1.96* \sqrt{\frac{P*(1-P)}{n}}\)</span></p>
+<p><strong>3. Start from the <code>R</code> script that you completed in Question 1.</strong> In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?</p>
+<p><strong>4. Start from the partially completed <em>Question 4.R</em> <code>R</code> script located in Exercise 1 folder.</strong> When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table.</p>
 <p><strong>Table.</strong> Cross-classified results of the PAG and TUS tests.</p>
 <table>
 <thead>
@@ -232,7 +297,7 @@
 <td><strong>PAG-</strong></td>
 <td>2</td>
 <td>219</td>
-<td>497</td>
+<td>221</td>
 </tr>
 <tr class="odd">
 <td><strong>Total</strong></td>
@@ -246,22 +311,26 @@
 </div>
 <div id="answers" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Answers<a href="exercise-1---proportions.html#answers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ol style="list-style-type: decimal">
-<li>What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (<em>CI</em>). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (<strong>ESS</strong>), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?</li>
-</ol>
-<p><strong>Answer:</strong></p>
-<ol start="2" style="list-style-type: decimal">
-<li>If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why?</li>
-</ol>
-<p><strong>Answer:</strong></p>
-<ol start="3" style="list-style-type: decimal">
-<li>In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?</li>
-</ol>
-<p><strong>Answer:</strong></p>
-<ol start="4" style="list-style-type: decimal">
-<li>When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table. Assuming that TUS is a gold-standard test could you compute PAG sensitivity (<strong>Se</strong>) and specificity (<strong>Sp</strong>)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).</li>
-</ol>
-<p><strong>Answer:</strong></p>
+<p><strong>1.</strong> What would be the proportion of pregnant cows? Use a Bayesian approach to compute that proportion and a credible interval (<strong>CI</strong>). For this first computation, assume that you have no prior knowledge on the expected proportion of pregnant cows in a Canadian herd. Run three Markov chains with different sets of initial values. Look at the trace plot. Do you think convergence was achieved? Do you need a longer burn-in period? Are all 3 chains converging in the same space? Compute the effective sample size (<strong>ESS</strong>), do you feel that number of iterations was sufficient to describe the posterior distribution with enough precision? What about auto-correlation of the Markov chains, any issues there?</p>
+<p><strong>Answer:</strong> I chose to run a model with 3 chains of 10,000 iterations each (11,000 iterations minus a burn-in of 1,000). I have obtained the following diagnostic plots:</p>
+<div class="figure">
+<img src="Figures/Ex1_Q1_Dx.png" alt="" />
+<p class="caption">Diagnostic plot</p>
+</div>
+<p>Convergence of the 3 chains was achieved, all three chains appear to be moving in the same space (see trace plot). The 1,000 iterations burn-in period is probably more than needed for this very simple problem. Autocorrelation plot is just perfect with correlation declining very rapidly close to zero at lag of 1! The effective sample size for the <em>Prev</em> parameter is &gt;17,000 values. So, plenty of precision to report the median and 2.5th and 97.5th percentiles.</p>
+<p>The median pregnancy prevalence estimate (95% CI) was 51.7% (47.3, 56.1).</p>
+<p><strong>2.</strong> If you were to compute a frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why?</p>
+<p><strong>Answer:</strong> It should not differ much from the Bayesian median estimate and 95CI because these latter estimates were generated using vague priors. In such cases, Bayesian and Frequentist estimates should be quite similar. Actually, if we use the Frequentist formula for computing 95CI and the observed data (i.e., 257/497) we get:</p>
+<p><span class="math inline">\(P = 257/497 = 0.517\)</span></p>
+<p><span class="math inline">\(95CI=0.517 \pm 1.96* \sqrt{\frac{0.517*(1-0.517)}{497}} = 0.517 \pm 0.044\)</span></p>
+<p>Thus, we have a Frequentist estimated proportion of 51.7% with a Frequentist 95 CI of 47.3 to 56.1 (virtually unchanged compared to the Bayesian estimates).</p>
+<p><strong>3.</strong> In the literature, you saw a recent study conducted on 30 Canadian herds and reporting an expected pregnancy prevalence of 42% with 97.5% percentile of 74%. What kind of distribution could you use to represent this information? Use these information as a pregnancy prevalence prior distribution. Are your results very different?</p>
+<p><strong>Answer:</strong> A beta(4.2, 5.4) distribution would have a mode of 0.42 and a 97.5th percentile of 0.74. Using this information as prior, I get a prevalence of pregnancy of 51.6% (95 CI: 47.2, 55.8). Actually, we observe very little difference between the models using vague <em>vs.</em> informative priors. This is because this informative prior contains only the equivalent of 10 observations <span class="math inline">\((4.2+5.4)\)</span>. In the dataset, there are 497 cows. Therefore, the estimation process is still mainly driven by our dataset.</p>
+<p><strong>4.</strong> When comparing PAG to TUS results for the whole dataset, you got the following 2x2 table. Assuming that TUS is a gold-standard test could you compute PAG sensitivity (<strong>Se</strong>) and specificity (<strong>Sp</strong>)? Use vague priors for PAG Se and Sp since it is the first ever study on this topic (i.e., you do not have any prior knowledge on these unknown parameters).</p>
+<p><strong>Answer:</strong> A sensitivity or a specificity are, similarly to a prevalence, simple proportions. Sensitivity is simply the number of test positive among the number of true positive. We have data for these in the 2x2 table. If we assume that <em>US</em> is a gold-standard test, than number of true positive cows is 257. And 255 of them tested positive to the <em>PAG</em> test. Similarly, the specificity is simply the number of test negative among the number of true negative. From the 2x2 table, the number of true negative cows was 240 and 219 of them tested negative to the <em>PAG</em> test. The likelihood functions (one for each parameter in this case) linking the unknown parameters (<em>Se</em> and <em>Sp</em>) to these observed data would be:</p>
+<p><span class="math inline">\(Test+ \sim dbin(Se, True+)\)</span></p>
+<p><span class="math inline">\(Test- \sim dbin(Sp, True-)\)</span></p>
+<p>Using vague beta(1, 1) priors on the <em>Se</em> and <em>Sp</em>, I got an estimated <em>Se</em> of 99.0% (95 CI: 97.3, 99.8) and a <em>Sp</em> of 91.0% (95CI: 87.0, 94.2). <strong>But be cautious with these numbers.</strong> We know very well that an <em>US</em> exam is not a perfect diagnostic test for pregnancy in dairy cows. With the current approach, we are attributing all disagreements between tests to a failure of the <em>PAG</em> test… But it could be the <em>US</em> test that was wrong in many instances. Moreover, animals for which the two tests agreed could still be misdiagnosed as pregnant or open, but by both tests (i.e., a failure of the <em>PAG</em> <strong>AND</strong> the <em>US</em> tests). We wil see in the next parts of the course how to account for the fact that neither of the tests are gold-standards.</p>
 
 </div>
 </div>
@@ -270,8 +339,8 @@
           </div>
         </div>
       </div>
-<a href="running-bayesian-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="running-bayesian-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparing-2-imperfect-tests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -302,7 +371,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-Ex.1.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-Ex1.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -325,6 +394,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

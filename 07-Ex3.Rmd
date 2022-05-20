@@ -1,0 +1,47 @@
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 8
+output: html_document
+---
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Exercise 3 - Mulitple populations
+## Questions
+  
+Open up the `R` project for Exercise 3 (i.e., the R project file named *Exercise 3.Rproj*).   
+  
+In the Exercise 3 folder, you will find partially completed `R` scripts. To answer the questions, try to complete the missing parts (they are highlighted by a **#TO COMPLETE#** comment). We also provided complete `R` scripts, but try to work it out on your own first! 
+  
+  
+**1. Start from the partially completed *Question 1.R* script located in Exercise 3 folder.** 
+
+
+
+
+
+
+
+
+    
+## Answers
+**1.** We could ........  
+  
+**Answer:** We ........
+  

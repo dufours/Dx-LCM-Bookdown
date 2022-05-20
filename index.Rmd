@@ -20,7 +20,7 @@ site: bookdown::bookdown_site
 biblio-style: apalike
 ---
 
-![Credit: National Cancer Institute on Unsplash](Figures\national-cancer-institute-NFvdKIhxYlU-unsplash.jpg) 
+![](Figures\Main_pic.jpg) 
 
 # About this document
 In this document you will find indications on how to use various `R` libraries and functions for estimating true disease prevalence and accuracy of diagnostic tests in a Bayesian framework, along with various exercises. We suppose that you do have some basic `R` skills. If you have not worked with `R` before or feel a bit rusty, here are some resources to help you to prepare:  
@@ -43,11 +43,11 @@ For instance, this is a `R` code where I am simply asking to show main descripti
 summary(cars$speed)
 ```
   
-Throughout the document, in the text I will use:  
+Throughout the document, in the text we will use:  
 - Italics for datasets or variables. For instance, the *speed* variable of the dataset *cars*.  
 - Shaded boxes for `R` libraries (e.g., `episensr`) and functions (e.g., `summary()`).  
   
-In `R` we can first call a given library and then use the functions related to each library or we can name the library followed by `::` and then the function. For instance the two following pieces of code are equivalent:
+In `R` we can first call a given library and then use the functions related to this library or we can type the name of the library followed by `::` and then the function. For instance the two following pieces of code are equivalent:
 ```{r, eval=FALSE}
 library(ggplot2)
 ggplot(data=cars, mapping=(aes(x=speed)))+
@@ -59,7 +59,7 @@ ggplot2::ggplot(data=cars, mapping=(aes(x=speed)))+
   geom_histogram()
 ```
   
-The latter may improve reproducibility, but to the expense of longer codes. Throughout the document, we will always first call the library and then run the functions to keep codes shorter. 
+The latter may improve reproducibility, but at the expense of longer codes. Throughout the document, we will always first call the library and then run the functions to keep codes short. 
 
 One last thing, when using a given function, it is not mandatory to name all the arguments, as long as they are presented in the sequence expected by this function. For instance, the `ggplot()` function that we used in the previous chunk of code is expecting to see first a dataset (`data=`) and then a mapping attribute (`mapping=`) and, within that mapping attribute a x variable (`x=`). We could shorten the code by omitting all of these. The two following pieces of code are, therefore, equivalent: 
 ```{r, eval=FALSE}
