@@ -22,26 +22,76 @@ knitr::write_bib(c(
 ```
 
 
-# Exercise 3 - Mulitple populations
+# Exercise 3 - Multiple populations
 ## Questions
   
 Open up the `R` project for Exercise 3 (i.e., the R project file named *Exercise 3.Rproj*).   
   
 In the Exercise 3 folder, you will find partially completed `R` scripts. To answer the questions, try to complete the missing parts (they are highlighted by a **#TO COMPLETE#** comment). We also provided complete `R` scripts, but try to work it out on your own first! 
   
+We know that US is not a gold-standard test for diagnosing pregnancy in dairy cows between 28-45 days post-AI. [Romano et al. (2006)](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub) have reported estimates of Se and Sp for US that we have used in the preceding exercises. However, these US accuracy
+estimates were themselves computed without comparing to a gold-standard, and the authors did not used a LCM methodology. The reported US accuracy estimates are, thus, possibly biased to some extent.  
   
-**1. Start from the partially completed *Question 1.R* script located in Exercise 3 folder.** 
+It would be great if we could compute Se and Sp estimates for the PAG test, but without using these potentially biased US accuracy estimates. In the complete study, we have results for cows from three herds. Assuming that pregnancy prevalence is sufficiently different between herds, we could possibly use the [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model with 3 populations. Cross-tabulated PAG and US data from the 3 herds are presented below.  
+  
+**Table.** Cross-classified results from the PAG and US diagnostic tests in the three herds studied.  
+  
+| **Herd 1** |         |         | **Total** |   | **Herd 2** |         |         | **Total** |   | **Herd 3** |         |         | **Total** |
+|:----------:|:-------:|:-------:|:---------:|:-:|:----------:|:-------:|:-------:|:---------:|:-:|:----------:|:-------:|:-------:|:---------:|
+|            | **US+** | **US-** |           |   |            | **US+** | **US-** |           |   |            | **US+** | **US-** |           |
+|  **PAG+**  |   138   |    10   |           |   |  **PAG+**  |    71   |    8    |           |   |  **PAG+**  |    46   |    3    |           |
+|  **PAG-**  |    1    |   113   |           |   |  **PAG-**  |    0    |    69   |           |   |  **PAG-**  |    1    |    37   |           |
+|  **Total** |         |         |    262    |   |  **Total** |         |         |    148    |   |  **Total** |         |         |     87    |  
+  
 
-
-
-
-
-
-
-
-    
+  
+**1.** Using a [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model with these three populations, how many unknown parameters and degrees of freedom would you have, and how many informative priors will you need?  
+  
+**2.** Based on the observed results (do not compute a model yet, just ballpark estimates), do you think pregnancy prevalence differ between the 3 herds? Do you have any biological reason to believe that PAG or US Se and/or Sp should not be the same in herd #1 *vs.* herd #2 *vs.* herd #3?  
+  
+**3. Start from the partially completed *Question 3.R* script located in Exercise 3 folder.** Try to apply a [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model for three populations to these data using informative pregnancy prevalence (mode=0.42, 97.5th percentile=0.74) and informative US accuracy priors (Se: mode=0.90, 2.5th percentile=0.85; Sp: mode=0.95, 2.5th percentile=0.90). For this analysis, consider that the two tests are conditionally independent. Then use the same LCM, but with vague priors for all parameters and compare your results. 
+  
+       
 ## Answers
-**1.** We could ........  
+**1.** Using a [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model with these three populations, how many unknown parameters and degrees of freedom would you have, and how many informative priors will you need?  
   
-**Answer:** We ........
+**Answer:** We would still have 2 Se and 2 Sp and now 3 prevalence (one for each herd) to estimate, thus 7 unknown parameters. For each herd we have 3 degrees of freedom; in total 9 degrees of freedom. We have 7 unknown parameters and 9 degrees of freedom, so we do not need any informative prior to estimate these parameters.  
   
+**2.** Based on the observed results (do not compute a model yet, just ballpark estimates), do you think pregnancy prevalence differ between the 3 herds? Do you have any biological reason to believe that PAG or US Se and/or Sp should not be the same in herd #1 *vs.* herd #2 *vs.* herd #3? 
+  
+**Answer:** We do not know the true pregnancy prevalence in these herds, but we could explore the apparent prevalence observed using our tests under investigation. Here are the apparent prevalence estimates computed using either PAG or US results by herd.  
+  
+**Table.** Apparent prevalence of pregnancy in 3 herds using either a PAG or US test.  
+  
+| **Herd** | **PAG-based prevalence** | **US-based prevalence** |
+|:--------:|:------------------------:|:-----------------------:|
+|   **1**  |           0.56           |           0.53          |
+|   **2**  |           0.53           |           0.48          |
+|   **3**  |           0.56           |           0.54          |  
+  
+These prevalences are fairly similar... In a real-life situation, I would probably try to find another way to split the dataset in different populations so we have more striking outcome prevalence differences between populations (e.g., cows with < 3 AI *vs.* cows with ≥ 3 AI; 1st lactation cows *vs.* older cows). But, for the sake of the exercise, we could still try to apply the [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model to these data.  
+  
+Regarding PAG or US changing Se and/or Sp between the three herds, it is difficult to imagine any reason that would affect PAG or US accuracy from one herd to another. We would probably be OK considering that, no matter the herd, tests Se and Sp are the same.  
+  
+**3.** Try to apply a [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model for three populations to these data using informative pregnancy prevalence (mode=0.42, 97.5th percentile=0.74) and informative US accuracy priors (Se: mode=0.90, 2.5th percentile=0.85; Sp: mode=0.95, 2.5th percentile=0.90). For this analysis, consider that the two tests are conditionally independent. Then use the same LCM, but with vague priors for all parameters and compare your results.   
+
+**Answer:** The model with informative priors run very smoothly, as expected.  
+  
+The model using vague priors for all parameters also converged very easily, autocorrelation is not a problem, etc. Isn’t it a bit surprising? We would have expected that, with prevalence that are not overly different between the three herds, using the [Hui and Walter](https://www.jstor.org/stable/2530508?seq=1) model would not necessarily make the model identifiable. In this specific example, however, we have two very precise tests and, therefore, limited disagreement between tests (check the three 2x2 tables). Therefore, the number of potential solutions is very limited and the model is still identifiable even though we do not have striking prevalence differences between herds. It may not work as well in a different dataset. Below, I have summarize the results of the LCM with informative *vs.* vague priors.  
+  
+**Table.** Results from a 2 tests, 3 populations LCM using different priors (informative on pregnancy prevalence and on US Se and Sp *vs.* vague priors on all parameters).  
+  
+| **Parameter** | **Informative** |                      |       |    **Vague**    |                      |
+|:-------------:|:---------------:|:--------------------:|:-----:|:---------------:|:--------------------:|
+|               |    **Prior**    |     **Posterior**    |       |    **Prior**    |     **Posterior**    |
+|   **Prev1**   |  Beta(4.2, 5.4) | 0.554 (0.493, 0.614) |       | Beta (1.0, 1.0) | 0.547 (0.482, 0.612) |
+|   **Prev2**   |  Beta(4.2, 5.4) | 0.517 (0.436, 0.595) |       | Beta (1.0, 1.0) | 0.505 (0.418, 0.590) |
+|   **Prev3**   |  Beta(4.2, 5.4) | 0.547 (0.444, 0.646) |       | Beta (1.0, 1.0) | 0.551 (0.445, 0.654) |
+|   **Se US**   |  Beta (100, 12) | 0.926 (0.893, 0.955) |       | Beta (1.0, 1.0) | 0.961 (0.908, 0.998) |
+|   **Sp US**   | Beta (100, 6.2) | 0.977 (0.956, 0.990) |       | Beta (1.0, 1.0) | 0.993 (0.972, 1.000) |
+|   **Se PAG**  | Beta (1.0, 1.0) | 0.996 (0.980, 1.000) |       | Beta (1.0, 1.0) | 0.994 (0.976, 1.000) |
+|   **Sp PAG**  | Beta (1.0, 1.0) | 0.980 (0.956, 0.990) |       | Beta (1.0, 1.0) | 0.949 (0.891, 0.997) |  
+  
+We have small difference between approaches. In the LCM with informative priors, we indicated, as prior knowledge, that US Se and Sp were around 0.90 and 0.95, respectively. Our posterior estimates for these parameters were 0.93 and 0.98. So, our data indicates that US Se and Sp is possibly better than what was reported by [Romano et al.](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub). This is confirmed in the model were we used vague priors. In that latter LCM, only the data were used to provide Se and Sp estimates, and, in that model, US Se and Sp were estimated at 0.96 and 0.99, respectively.  
+  
+In the LCM with vague priors, Se of US was estimated to 0.96 (*vs.* 0.93), as a result, the PAG Sp was slightly reduced (0.95 *vs.* 0.98). In other words, in the LCM with informative priors, most of the US-/PAG+ results were attributed to errors of the US exam (because of the prior US Se with mode of 0.90). In the LCM with vague priors, the US-/PAG+ disagreements were distributed more equally between an error of the PAG *vs.* an error of the US test.  

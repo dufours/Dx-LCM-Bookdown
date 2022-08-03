@@ -1,0 +1,36 @@
+model{
+
+#=== LIKELIHOOD	===#
+
+  n[1:8] ~ dmulti(p[1:8], 496)
+  p[1] <- Prev*(Se_US*Se_TRE + covp)*Se_PAG + (1-Prev)*((1-Sp_US)*(1-Sp_TRE) + covn)*(1-Sp_PAG)
+  p[2] <- Prev*(Se_US*(1-Se_TRE) - covp)*Se_PAG + (1-Prev)*((1-Sp_US)*Sp_TRE - covn)*(1-Sp_PAG)
+  p[3] <- Prev*((1-Se_US)*Se_TRE - covp)*Se_PAG + (1-Prev)*(Sp_US*(1-Sp_TRE) - covn)*(1-Sp_PAG)
+  p[4] <- Prev*((1-Se_US)*(1-Se_TRE) + covp)*Se_PAG + (1-Prev)*(Sp_US*Sp_TRE + covn)*(1-Sp_PAG)
+  
+  p[5] <- Prev*(Se_US*Se_TRE + covp)*(1-Se_PAG) + (1-Prev)*((1-Sp_US)*(1-Sp_TRE) + covn)*Sp_PAG
+  p[6] <- Prev*(Se_US*(1-Se_TRE) - covp)*(1-Se_PAG) + (1-Prev)*((1-Sp_US)*Sp_TRE - covn)*Sp_PAG
+  p[7] <- Prev*((1-Se_US)*Se_TRE - covp)*(1-Se_PAG) + (1-Prev)*(Sp_US*(1-Sp_TRE) - covn)*Sp_PAG
+  p[8] <- Prev*((1-Se_US)*(1-Se_TRE) + covp)*(1-Se_PAG) + (1-Prev)*(Sp_US*Sp_TRE + covn)*Sp_PAG
+  
+  
+#=== PRIOR	===#
+
+  Prev ~ dbeta(1, 1) 	## Prior for Prevalence
+  Se_US ~ dbeta(1, 1) 	## Prior for Se of Test A
+  Sp_US ~ dbeta(1, 1) 	## Prior for Sp of Test A
+  Se_TRE ~ dbeta(1, 1) 	## Prior for Se of Test B
+  Sp_TRE ~ dbeta(1, 1) 	## Prior for Sp of Test B
+  Se_PAG ~ dbeta(1, 1) 	## Prior for Se of Test C
+  Sp_PAG ~ dbeta(1, 1) 	## Prior for Sp of Test C
+  
+  #=== CONDITIONAL DEPENDENCE STRUCTURE ===#
+
+  covp ~ dunif(minp,maxp)
+  covn ~ dunif(minn,maxn)
+  minp <- (1-Se_US)*(Se_TRE-1)
+  minn <- (Sp_US-1)*(1-Sp_TRE)
+  maxp <- min(Se_US,Se_TRE) - Se_US*Se_TRE	
+  maxn <- min(Sp_US,Sp_TRE) - Sp_US*Sp_TRE  
+  
+}

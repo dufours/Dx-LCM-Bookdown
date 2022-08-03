@@ -100,7 +100,7 @@ We initially ran the LCM for 11,000 iterations (with a burn-in of 1,000). The Ma
   
 The ESS for these two parameters were both around 170. So, despite the 30,000 values (3 chains times 11,000 iterations, minus the 1,000 burn-in of each chain) stored during the Monte Carlo simulation, there is just the equivalent of 170 independent values.  This would be quite a small sample to report with precision the median, 2.5th, and 97.5th estimates. Using the exact same model, but with a number of iteration of 201,000, we obtained ESS >3,500 for all parameters.  
   
-**Table.** Results of the LCM assuming or not conditional independence  between diagonstic tests.  
+**Table.** Results of the LCM assuming or not conditional independence  between diagnostic tests.  
   
 |                | **Conditional independence LCM** |              |   | **Conditional dependence LCM** |              |
 |:--------------:|:--------------------------------:|:------------:|:-:|:------------------------------:|:------------:|

@@ -23,12 +23,12 @@ knitr::write_bib(c(
 
 # Multiple populations
   
-In some situations, the diagnostic tests will be applied in two or more populations with different disease prevalence. In such cases, it could be reasonable to assume that:  
+In some situations, the diagnostic tests will be apply to two or more populations with different disease prevalence. In such cases, it could be reasonable to assume that:  
   
 - The prevalence varies from one population to another  
-- The tests Se and Sp are constant from one population to another  
+- The tests Se and Sp are constant across populations  
   
-It could then be advantageous to model the different populations simultaneously in a same LCM as described by [Hui and Walter (1980)](https://www.jstor.org/stable/2530508?seq=1). With two populations, we would have six unknown parameters (*SeA* and *SpA*, *SeB* and *SpB*, and each population's prevalence, *P1* and *P2*). When conducting two diagnostic tests in two populations, the data generated can be presented as two 2x2 tables presenting the cross-classified results of the two tests.  
+It could then be advantageous to model the different populations simultaneously in the same LCM as described by [Hui and Walter (1980)](https://www.jstor.org/stable/2530508?seq=1). With two populations, we would have six unknown parameters (*SeA* and *SpA*, *SeB* and *SpB*, and each population's prevalence, *P1* and *P2*). When conducting two diagnostic tests in two populations, the data generated can be presented as two 2x2 tables presenting the cross-classified results of the two tests.  
   
 **Table.** Cross-classified results from two diagnostic tests in two populations.  
   
@@ -53,7 +53,7 @@ We can see from these 2x2 tables that we have 6 degrees of freedom available. In
 |             p             |                  4+p                  |                  3*p                  |              if df < np, then np-df             |  
   
 
-## Likelihood function with 2 (or more) populations
+## Likelihood function with 2 populations
 With two populations, the likelihood function that could be used to link the observed data (*Pop1 n1*, *Pop1 n2*, ..., *Pop2 n4*) to the unknown parameters (*SeA* and *SpA*, *SeB* and *SpB*, and *P1* and *P2*) can be described as follows:  
   
 $Ppop1[1:4] \sim dmulti(Pop1[1:4], nPop1)$  
@@ -68,10 +68,10 @@ $Ppop2_2 = P2*SeA*(1-SeB) + (1-P2)*(1-SpA)*SpB$
 $Ppop2_3 = P2*(1-SeA)*SeB + (1-P2)*SpA*(1-SpB)$  
 $Ppop2_4 = P2*(1-SeA)*(1-SeB) + (1-P2)*SpA*SpB$  
   
-Where $Ppop1_1$ to $Ppop1_4$ and $Ppop2_1$ to $Ppop2_4$ are the probabilities of falling in a given cell of the 2x2 table in population 1 and population 2, respectively; and $nPop1$ and $nPop2$ are the number of individuals tested in population 1 and 2, respectively. Thus, if you look carefully, **we simply duplicated the likelihood function used before and we added subscripts to differentiate the cells, probabilities, and disease prevalence of the two populations.** Cool hey? If you have three, four, etc populations, you can then extend the likelihood function to include them.   
+Where $Ppop1_1$ to $Ppop1_4$ and $Ppop2_1$ to $Ppop2_4$ are the probabilities of falling in a given cell of the 2x2 table in population 1 and population 2, respectively; and $nPop1$ and $nPop2$ are the number of individuals tested in population 1 and 2, respectively. Thus, if you look carefully, **we simply duplicated the likelihood function used before and we added subscripts to differentiate the cells, probabilities, and disease prevalence of the two populations.** Pretty cool right? If you have three, four, etc populations, you can then extend the likelihood function to include them.   
 
-## Organizing the data with 2 (or more) populations  
-To run such a model, we simply need to provide, for each population, a dataset where *n1*, *n2*, *n3*, and *n4* are listed (in that order). For instance, if we use herd #1 and herd #2 from the PAG *vs.* US study, we have the following 2x2 tables:  
+## Organizing the data with 2 populations  
+To run such a model, we simply need to provide, for each population, a dataset where *n1*, *n2*, *n3*, and *n4* are listed (in that order). For instance, if we use herd #1 and herd #2 from the PAG *vs.* US study, we will have the following 2x2 tables:  
   
 **Table.** Cross-classified results from the PAG and US diagnostic tests in herd #1 and herd #2.  
   
@@ -91,7 +91,7 @@ datalist <- list(Pop1=c(138,1,10,113),
 
 ```
   
-## The JAGS model with 2 (or more) populations
+## The JAGS model with 2 populations
 We could provide the values that will be used to described the prior distributions as we did before (so they are included in the model text file). The only difference is that we now have two prevalence parameters (*P1* and *P2*) to describe. In the example below, I will use vague priors for all parameters (just because we can!).    
   
 ```{r}
@@ -227,7 +227,7 @@ print(bug.out, digits.summary=3)
 ```
   
 ## Conditional dependence
-As discussed before, an important assumption of the LCM described in the preceding section is that diagnostic tests are conditionally independent. This assumption, however, can be relaxed using the method proposed by [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x). Note that, we are now increasing the number of unknown parameters and we will, therefore, have to provide additional informative distributions.
+As discussed before, an important assumption of the LCM described in the previous section is that diagnostic tests are conditionally independent. This assumption, however, can be relaxed using the method proposed by [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x). Note that, we are now increasing the number of unknown parameters and we will, therefore, have to provide additional informative distributions.
 
 **Table.** Number of degrees of freedom and of unknown parameters when comparing two **conditionally dependent** diagnostic tests across various number of populations (adapted from [Cheung et al. (2021)](https://doi.org/10.20506/rst.40.1.3224)).  
   
@@ -257,7 +257,7 @@ Sp.TestA.shapea <- Sp.US$shape1     #a shape parameter for Sp of TestA
 Sp.TestA.shapeb <- Sp.US$shape2     #b shape parameter for Sp of TestA
 ```
   
-The model would then be modified as follows (we simply added the *covp* and *covn* parameters in the likelihood function, and specified prior distributions for these):  
+Now, we could add the *covp* and *covn* parameters in the likelihood function, and specified prior distributions for these as we did before:  
   
 ```{r}
 #Create the JAGS text file

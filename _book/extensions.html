@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Extensions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
+  <meta name="description" content="Chapitre 13" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Extensions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapitre 13" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Extensions | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  
+  <meta name="twitter:description" content="Chapitre 13" />
+  
+
+<meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
+
+
+<meta name="date" content="2022-06-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exercise-5---multiple-tests.html"/>
+<link rel="next" href="sensitivity-analyses.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian latent class models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#prior-distributions"><i class="fa fa-check"></i><b>2.1</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.1.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
+<li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-functions"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood functions</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html"><i class="fa fa-check"></i><b>3</b> Running Bayesian models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-data"><i class="fa fa-check"></i><b>3.1</b> The data</a></li>
+<li class="chapter" data-level="3.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-model"><i class="fa fa-check"></i><b>3.2</b> The model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-likelihood-function"><i class="fa fa-check"></i><b>3.2.1</b> The likelihood function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#priors-for-unkown-parameters"><i class="fa fa-check"></i><b>3.2.2</b> Priors for unkown parameters</a></li>
+<li class="chapter" data-level="3.2.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#creating-the-jags-model"><i class="fa fa-check"></i><b>3.2.3</b> Creating the JAGS model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#generating-initial-values"><i class="fa fa-check"></i><b>3.3</b> Generating initial values</a></li>
+<li class="chapter" data-level="3.4" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#running-a-model-in-jags"><i class="fa fa-check"></i><b>3.4</b> Running a model in JAGS</a></li>
+<li class="chapter" data-level="3.5" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#model-diagnostic"><i class="fa fa-check"></i><b>3.5</b> Model diagnostic</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#convergence-and-burn-in"><i class="fa fa-check"></i><b>3.5.1</b> Convergence and burn-in</a></li>
+<li class="chapter" data-level="3.5.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#number-of-iterations"><i class="fa fa-check"></i><b>3.5.2</b> Number of iterations</a></li>
+<li class="chapter" data-level="3.5.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#auto-correlation"><i class="fa fa-check"></i><b>3.5.3</b> Auto-correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#getting-our-estimates"><i class="fa fa-check"></i><b>3.6</b> Getting our estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
+<li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>11</b> Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.1</b> Likelihood function when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="exercise-5---multiple-tests.html"><a href="exercise-5---multiple-tests.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exercise-5---multiple-tests.html"><a href="exercise-5---multiple-tests.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
+<li class="chapter" data-level="12.2" data-path="exercise-5---multiple-tests.html"><a href="exercise-5---multiple-tests.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="extensions.html"><a href="extensions.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
+<li class="chapter" data-level="14" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analyses</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#perturbing-informative-priors"><i class="fa fa-check"></i><b>14.1</b> Perturbing informative priors</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="extensions" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Extensions<a href="extensions.html#extensions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this document we have described some of the “main” LCM. More specifically we described LCMs that can be used with:</p>
+<p>-<strong>Two</strong> conditionally <strong>independent</strong> diagnostic tests applied in <strong>one single population</strong><br />
+-<strong>Two</strong> conditionally <strong>dependent</strong> diagnostic tests applied in <strong>one single population</strong><br />
+-<strong>Two</strong> conditionally <strong>independent</strong> diagnostic tests applied in <strong>more than one population</strong><br />
+-<strong>Two</strong> conditionally <strong>dependent</strong> diagnostic tests applied in <strong>more than one population</strong><br />
+-<strong>More than two</strong> conditionally <strong>independent</strong> diagnostic tests applied in <strong>one single population</strong><br />
+-<strong>More than two</strong> diagnostic tests applied in <strong>one single population</strong> and with conditional <strong>dependence</strong> between two of the tests<br />
+-<strong>Two</strong> conditionally <strong>independent</strong> diagnostic tests, but with <strong>accuracy of one of the test varying as function of a characteristic of the individual tested</strong></p>
+<p>From here, it is up to you to adapt these LCMs to fit your needs. For instance, you could have a study where three tests were applied to one population, but two of these tests were also applied to a second population. For two of the tests, you may want to relax the assumption of conditional dependence by including covariance terms between them. Finally, you may want to allow the Se and Sp of one of the test to vary as function of a characteristic of the individual tested.</p>
+<p>When working with a “customized” LCM, the principles that we have discussed still apply. It will always be a good starting point to:</p>
+<p>-Count the number of unknown parameters to estimate<br />
+-Organize the dataset(s)<br />
+-Evaluate whether some tests combinations are not observed<br />
+-Count the number of degrees of freedom available
+-Identify the number of informative priors that will be needed
+-Consider whether scientific literature will be available to develop the needed informative priors</p>
+<p>Based on this initial assessment, you will be able to decide whether running this LCM is doable, or if it would be better to revise your plans.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exercise-5---multiple-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sensitivity-analyses.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/12-Extensions.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

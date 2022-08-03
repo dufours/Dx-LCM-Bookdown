@@ -1,0 +1,354 @@
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 14
+output: html_document
+---
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Sensitivity analyses
+An important step of any Bayesian analysis is to evaluate whether the results are strongly affected by the choice of priors and/or to the assumptions made.  
+  
+## Choice of LCM
+Regarding the sensitivity of our results to the assumptions made, this could be assessed by comparing the results from the LCM where a given assumption was made *vs.* the ones from a LCM where the assumption was relaxed. Of course, to fully "isolate" the effect of a given assumption, the same priors would have to be used in both LCM. This is, however, not always possible since the "relaxed" LCM will often need a larger number of informative priors to make it identifiable.  
+  
+In the end, providing the results from an "alternative" LCM could help the readers understand what was the influence of the model chosen on the presented results. As author, you would probably want to use the LCM that is the most "biologically relevant" as your main model.      
+  
+## Perturbing informative priors  
+Whenever informative priors are used in a LCM, the sensitivity of the LCM to the choice of priors should be assessed. This can be done by running the same LCM, but with "perturbed" and usually "more diffuse" priors. [Johnson et al. (2019)](https://doi.org/10.1016/j.prevetmed.2019.01.010) recommended, for instance, to move the mode of the prior distribution of a given parameter by a few percentage-points and to increase the width of its prior distribution. Then, the results from the LCM using the scientific literature-derived priors can be compared to those of the LCM using perturbed priors to assess how sensitive to the choice of priors the results are. The amount and direction by which the mode will be moved and the level of increase of the width of the distribution will depend on the problem at hand.  
+
+For instance, in the preceding sections we used the [Romano et al. (2006)](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub) results, to inform the priors for the Se and Sp of a US exam conducted between 28-45 days post-insemination:  
+  -Se = 0.90 (95CI: 0.85, 0.95)  
+  -Sp = 0.95 (95CI: 0.90, 0.97)  
+  
+We thus came up with these prior distributions for US' Se and sp.  
+  
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(epiR)
+# US sensitivity ----------------------------------------------------------
+# Sensitivity of US:  Mode=0.90, and we are 97.5% sure >0.85 
+Se.US <- epi.betabuster(mode=0.90, conf=0.975, greaterthan=T, x=0.85)  
+#plot the Se prior distribution
+curve(dbeta(x, shape1=Se.US$shape1, shape2=Se.US$shape2), from=0, to=1, 
+      main="Prior for ultrasound exam sensitivity", xlab = "Proportion", ylab = "Density")
+
+
+
+```
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+# US specificity ----------------------------------------------------------
+# Specificity of US:  Mode=0.95, and we are 97.5% sure >0.90 
+Sp.US <- epi.betabuster(mode=0.95, conf=0.975, greaterthan=T, x=0.90)  
+#plot the Sp prior distribution
+curve(dbeta(x, shape1=Sp.US$shape1, shape2=Sp.US$shape2), from=0, to=1, 
+      main="Prior for ultrasound exam specificity", xlab = "Proportion", ylab = "Density")
+```
+  
+Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se:0.80 and mode for Sp:0.85) and to increase the with of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:  
+  
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+# US sensitivity ----------------------------------------------------------
+# Sensitivity of US:  Mode=0.80, and we are 97.5% sure >0.55 
+Se.US <- epi.betabuster(mode=0.80, conf=0.975, greaterthan=T, x=0.55)  
+#plot the Se prior distribution
+curve(dbeta(x, shape1=Se.US$shape1, shape2=Se.US$shape2), from=0, to=1, 
+      main="Perturbed prior for ultrasound exam sensitivity", xlab = "Proportion", ylab = "Density")
+
+```
+  
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+# US specificity ----------------------------------------------------------
+# Specificity of US:  Mode=0.85, and we are 97.5% sure >0.60 
+Sp.US <- epi.betabuster(mode=0.85, conf=0.975, greaterthan=T, x=0.60)  
+#plot the Sp prior distribution
+curve(dbeta(x, shape1=Sp.US$shape1, shape2=Sp.US$shape2), from=0, to=1, 
+      main="Perturbed prior for ultrasound exam specificity", xlab = "Proportion", ylab = "Density")
+```
+
+Then, the results from the LCM with the informative and perturbed priors could be compared.  
+  
+For instance, in exercise 3 we compared two conditionally independent diagnostic tests (PAG and US) in three populations (herd #1, herd #2, and herd #3). For that model, though the model is identifiable, we could use the [Romano et al. (2006)](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub) informative priors on US' Se and Sp. Then, we could run the same LCM, but with the perturbed US' Se and Sp priors suggested above. If we do that, we would obtain the following results:  
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, results=FALSE}
+
+# Generate data and labels ------------------------------------------------
+datalist <- list(Pop1=c(138,1,10,113),
+                 Pop2=c(71, 0, 8, 69),
+                 Pop3=c(46, 1, 3, 37)
+                 )
+
+n <- sapply(datalist, sum)
+nPop1 <- n[1]
+nPop2 <- n[2]
+nPop3 <- n[3]
+
+TestA <- "US"
+TestB <- "PAG"
+
+
+# Information for prior distributions -------------------------------------
+
+library(epiR) 
+
+# US sensitivity ----------------------------------------------------------
+# Sensitivity of US:  Mode=0.90, and we are 97.5% sure >0.85 
+Se.US <- epi.betabuster(mode=0.90, conf=0.975, greaterthan=T, x=0.85)  
+
+# US specificity ----------------------------------------------------------
+# Specificity of US:  Mode=0.95, and we are 97.5% sure >0.90 
+Sp.US <- epi.betabuster(mode=0.95, conf=0.975, greaterthan=T, x=0.90)  
+
+# Assign values generated -------------------------------------------------
+Prev1.shapea <- 1         #a shape parameter for Prev in population 1    
+Prev1.shapeb <- 1         #b shape parameter for Prev in population 1
+
+Prev2.shapea <- 1         #a shape parameter for Prev in population 2    
+Prev2.shapeb <- 1         #b shape parameter for Prev in population 2
+
+Prev3.shapea <- 1         #a shape parameter for Prev in population 3    
+Prev3.shapeb <- 1         #b shape parameter for Prev in population 3
+
+Se.TestA.shapea <- Se.US$shape1     #a shape parameter for Se of TestA
+Se.TestA.shapeb <- Se.US$shape2     #b shape parameter for Se of TestA
+Sp.TestA.shapea <- Sp.US$shape1     #a shape parameter for Sp of TestA
+Sp.TestA.shapeb <- Sp.US$shape2     #b shape parameter for Sp of TestA
+
+#I could use vague priors for Se and Sp of PAG
+Se.TestB.shapea <- 1     #a shape parameter for Se of TestB
+Se.TestB.shapeb <- 1     #b shape parameter for Se of TestB
+Sp.TestB.shapea <- 1     #a shape parameter for Sp of TestB
+Sp.TestB.shapeb <- 1     #b shape parameter for Sp of TestB
+
+
+# Create the JAGS text file -----------------------------------------------
+#Create the JAGS text file
+model_2tests_3pop_indep <- paste0("model{
+
+#=== LIKELIHOOD	===#
+
+  #=== POPULATION 1 ===#
+  Pop1[1:4] ~ dmulti(p1[1:4], ",nPop1,")
+  p1[1] <- Prev1*Se_", TestA, "*Se_", TestB, " + (1-Prev1)*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+  p1[2] <- Prev1*Se_", TestA, "*(1-Se_", TestB, ") + (1-Prev1)*(1-Sp_", TestA, ")*Sp_", TestB, "
+  p1[3] <- Prev1*(1-Se_", TestA, ")*Se_", TestB, " + (1-Prev1)*Sp_", TestA, "*(1-Sp_", TestB, ")
+  p1[4] <- Prev1*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-Prev1)*Sp_", TestA, "*Sp_", TestB, "
+
+  #=== POPULATION 2 ===#  
+  Pop2[1:4] ~ dmulti(p2[1:4], ",nPop2,")
+  p2[1] <- Prev2*Se_", TestA, "*Se_", TestB, " + (1-Prev2)*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+  p2[2] <- Prev2*Se_", TestA, "*(1-Se_", TestB, ") + (1-Prev2)*(1-Sp_", TestA, ")*Sp_", TestB, "
+  p2[3] <- Prev2*(1-Se_", TestA, ")*Se_", TestB, " + (1-Prev2)*Sp_", TestA, "*(1-Sp_", TestB, ")
+  p2[4] <- Prev2*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-Prev2)*Sp_", TestA, "*Sp_", TestB, "
+
+  #=== POPULATION 3 ===#  
+  Pop3[1:4] ~ dmulti(p3[1:4], ",nPop3,")
+  p3[1] <- Prev3*Se_", TestA, "*Se_", TestB, " + (1-Prev3)*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+  p3[2] <- Prev3*Se_", TestA, "*(1-Se_", TestB, ") + (1-Prev3)*(1-Sp_", TestA, ")*Sp_", TestB, "
+  p3[3] <- Prev3*(1-Se_", TestA, ")*Se_", TestB, " + (1-Prev3)*Sp_", TestA, "*(1-Sp_", TestB, ")
+  p3[4] <- Prev3*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-Prev3)*Sp_", TestA, "*Sp_", TestB, "  
+  
+#=== PRIOR	===#
+
+  Prev1 ~ dbeta(",Prev1.shapea,", ",Prev1.shapeb,") 	## Prior for Prevalence in population 1
+  Prev2 ~ dbeta(",Prev2.shapea,", ",Prev2.shapeb,") 	## Prior for Prevalence in population 2
+  Prev3 ~ dbeta(",Prev3.shapea,", ",Prev3.shapeb,") 	## Prior for Prevalence in population 3
+  Se_", TestA, " ~ dbeta(",Se.TestA.shapea,", ",Se.TestA.shapeb,") 	## Prior for Se of Test A
+  Sp_", TestA, " ~ dbeta(",Sp.TestA.shapea,", ",Sp.TestA.shapeb,") 	## Prior for Sp of Test A
+  Se_", TestB, " ~ dbeta(",Se.TestB.shapea,", ",Se.TestB.shapeb,") 	## Prior for Se of Test B
+  Sp_", TestB, " ~ dbeta(",Sp.TestB.shapea,", ",Sp.TestB.shapeb,") 	## Prior for Sp of Test B
+  
+}")
+
+#write as a text (.txt) file
+write.table(model_2tests_3pop_indep, 
+            file="model_2tests_3pop_indep.txt", 
+            quote=FALSE, 
+            sep="", 
+            row.names=FALSE,
+            col.names=FALSE)
+
+
+# Generate initial values -------------------------------------------------
+inits <- list(list(Prev1=0.50,
+                   Prev2=0.50,
+                   Prev3=0.50,
+                   Se_US=0.90,
+                   Sp_US=0.90,
+                   Se_PAG=0.90,
+                   Sp_PAG=0.90),
+              
+              list(Prev1=0.60,
+                   Prev2=0.60,
+                   Prev3=0.60,
+                   Se_US=0.80,
+                   Sp_US=0.80,
+                   Se_PAG=0.80,
+                   Sp_PAG=0.80),
+              
+              list(Prev1=0.40,
+                   Prev2=0.40,
+                   Prev3=0.40,
+                   Se_US=0.70,
+                   Sp_US=0.70,
+                   Se_PAG=0.70,
+                   Sp_PAG=0.70)
+              )
+
+# Run the model -----------------------------------------------------------
+library(R2jags)
+library(coda)
+
+#Run the Bayesian model
+bug.out <- jags(data=datalist,                             
+                model.file="model_2tests_3pop_indep.txt",     
+                parameters.to.save=c("Prev1", "Prev2", "Prev3", "Se_US", "Sp_US", "Se_PAG", "Sp_PAG"),               
+                n.chains=3,                                 
+                inits=inits,                                
+                n.iter=11000,                                
+                n.burnin=1000,                              
+                n.thin=1,                                   
+                DIC=FALSE)  
+
+
+# Check diagnostic plots --------------------------------------------------
+library(mcmcplots)
+bug.mcmc <- as.mcmc(bug.out)          
+mcmcplot(bug.mcmc, title="Diagnostic plots") 
+
+
+# Compute Effective sample size -------------------------------------------
+effectiveSize(bug.mcmc)
+
+
+# Check results -----------------------------------------------------------
+print(bug.out, digits.summary=3) 
+```
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, results=FALSE}
+
+# US sensitivity ----------------------------------------------------------
+# Sensitivity of US:  Mode=0.80, and we are 97.5% sure >0.55 
+Se.US <- epi.betabuster(mode=0.80, conf=0.975, greaterthan=T, x=0.55)  
+
+# US specificity ----------------------------------------------------------
+# Specificity of US:  Mode=0.85, and we are 97.5% sure >0.60 
+Sp.US <- epi.betabuster(mode=0.85, conf=0.975, greaterthan=T, x=0.60)  
+
+# Assign values generated -------------------------------------------------
+Se.TestA.shapea <- Se.US$shape1     #a shape parameter for Se of TestA
+Se.TestA.shapeb <- Se.US$shape2     #b shape parameter for Se of TestA
+Sp.TestA.shapea <- Sp.US$shape1     #a shape parameter for Sp of TestA
+Sp.TestA.shapeb <- Sp.US$shape2     #b shape parameter for Sp of TestA
+
+# Create the JAGS text file -----------------------------------------------
+#Create the JAGS text file
+model_2tests_3pop_indep <- paste0("model{
+
+#=== LIKELIHOOD	===#
+
+  #=== POPULATION 1 ===#
+  Pop1[1:4] ~ dmulti(p1[1:4], ",nPop1,")
+  p1[1] <- Prev1*Se_", TestA, "*Se_", TestB, " + (1-Prev1)*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+  p1[2] <- Prev1*Se_", TestA, "*(1-Se_", TestB, ") + (1-Prev1)*(1-Sp_", TestA, ")*Sp_", TestB, "
+  p1[3] <- Prev1*(1-Se_", TestA, ")*Se_", TestB, " + (1-Prev1)*Sp_", TestA, "*(1-Sp_", TestB, ")
+  p1[4] <- Prev1*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-Prev1)*Sp_", TestA, "*Sp_", TestB, "
+
+  #=== POPULATION 2 ===#  
+  Pop2[1:4] ~ dmulti(p2[1:4], ",nPop2,")
+  p2[1] <- Prev2*Se_", TestA, "*Se_", TestB, " + (1-Prev2)*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+  p2[2] <- Prev2*Se_", TestA, "*(1-Se_", TestB, ") + (1-Prev2)*(1-Sp_", TestA, ")*Sp_", TestB, "
+  p2[3] <- Prev2*(1-Se_", TestA, ")*Se_", TestB, " + (1-Prev2)*Sp_", TestA, "*(1-Sp_", TestB, ")
+  p2[4] <- Prev2*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-Prev2)*Sp_", TestA, "*Sp_", TestB, "
+
+  #=== POPULATION 3 ===#  
+  Pop3[1:4] ~ dmulti(p3[1:4], ",nPop3,")
+  p3[1] <- Prev3*Se_", TestA, "*Se_", TestB, " + (1-Prev3)*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+  p3[2] <- Prev3*Se_", TestA, "*(1-Se_", TestB, ") + (1-Prev3)*(1-Sp_", TestA, ")*Sp_", TestB, "
+  p3[3] <- Prev3*(1-Se_", TestA, ")*Se_", TestB, " + (1-Prev3)*Sp_", TestA, "*(1-Sp_", TestB, ")
+  p3[4] <- Prev3*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-Prev3)*Sp_", TestA, "*Sp_", TestB, "  
+  
+#=== PRIOR	===#
+
+  Prev1 ~ dbeta(",Prev1.shapea,", ",Prev1.shapeb,") 	## Prior for Prevalence in population 1
+  Prev2 ~ dbeta(",Prev2.shapea,", ",Prev2.shapeb,") 	## Prior for Prevalence in population 2
+  Prev3 ~ dbeta(",Prev3.shapea,", ",Prev3.shapeb,") 	## Prior for Prevalence in population 3
+  Se_", TestA, " ~ dbeta(",Se.TestA.shapea,", ",Se.TestA.shapeb,") 	## Prior for Se of Test A
+  Sp_", TestA, " ~ dbeta(",Sp.TestA.shapea,", ",Sp.TestA.shapeb,") 	## Prior for Sp of Test A
+  Se_", TestB, " ~ dbeta(",Se.TestB.shapea,", ",Se.TestB.shapeb,") 	## Prior for Se of Test B
+  Sp_", TestB, " ~ dbeta(",Sp.TestB.shapea,", ",Sp.TestB.shapeb,") 	## Prior for Sp of Test B
+  
+}")
+
+#write as a text (.txt) file
+write.table(model_2tests_3pop_indep, 
+            file="model_2tests_3pop_indep.txt", 
+            quote=FALSE, 
+            sep="", 
+            row.names=FALSE,
+            col.names=FALSE)
+
+
+
+# Run the model -----------------------------------------------------------
+library(R2jags)
+library(coda)
+
+#Run the Bayesian model
+bug.out <- jags(data=datalist,                             
+                model.file="model_2tests_3pop_indep.txt",     
+                parameters.to.save=c("Prev1", "Prev2", "Prev3", "Se_US", "Sp_US", "Se_PAG", "Sp_PAG"),               
+                n.chains=3,                                 
+                inits=inits,                                
+                n.iter=11000,                                
+                n.burnin=1000,                              
+                n.thin=1,                                   
+                DIC=FALSE)  
+
+
+# Check diagnostic plots --------------------------------------------------
+library(mcmcplots)
+bug.mcmc <- as.mcmc(bug.out)          
+mcmcplot(bug.mcmc, title="Diagnostic plots") 
+
+
+# Compute Effective sample size -------------------------------------------
+effectiveSize(bug.mcmc)
+
+
+# Check results -----------------------------------------------------------
+print(bug.out, digits.summary=3) 
+```
+
+**Table.** Results from a 2 tests, 3 populations LCM using different priors (literature-based *vs.* perturbed informative priors on US' Se and Sp). The priors differing between LCM are indicated in bold.  
+  
+| **Parameter** | **Romano et al. 2006 priors** |                      |   | **Perturbed priors** |                      |
+|:-------------:|:-----------------------------:|:--------------------:|:-:|:--------------------:|:--------------------:|
+|               |           **Prior**           |     **Posterior**    |   |       **Prior**      |     **Posterior**    |
+|   **Prev1**   |         Beta(1.0, 1.0)        | 0.558 (0.496, 0.618) |   |    Beta (1.0, 1.0)   | 0.556 (0.494, 0.617) |
+|   **Prev2**   |         Beta(1.0, 1.0)        | 0.523 (0.440, 0.604) |   |    Beta (1.0, 1.0)   | 0.520 (0.435, 0.603) |
+|   **Prev3**   |         Beta(1.0, 1.0)        | 0.559 (0.452, 0.662) |   |    Beta (1.0, 1.0)   | 0.557 (0.449, 0.657) |
+|   **Se US**   |       **Beta (100, 12)**      | 0.925 (0.893, 0.954) |   |  **Beta (13.6, 4.1)** | 0.931 (0.890, 0.970) |
+|   **Sp US**   |      **Beta (100, 6.2)**      | 0.977 (0.956, 0.990) |   |  **Beta (14.0, 3.3)** | 0.981 (0.957, 0.994) |
+|   **Se PAG**  |        Beta (1.0, 1.0)        |  0.996 (0.981, 1.00) |   |    Beta (1.0, 1.0)   |  0.996 (0.980, 1.00) |
+|   **Sp PAG**  |        Beta (1.0, 1.0)        | 0.981 (0.934, 0.999) |   |    Beta (1.0, 1.0)   | 0.977 (0.922, 0.999) |  
+  
+In this specific example, we can see that the results are virtually unchanged. Thus, we could say that our initial analysis was quite robust to the choice of prior distributions. Personally, we would present the LCM with the [Romano et al. (2006)](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub) priors as our "main" model. If we do have valid information from the literature about one or many of the unknown parameters, then why not using them? 
+  
+
+
+

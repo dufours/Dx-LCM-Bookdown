@@ -1,0 +1,27 @@
+model{
+
+#=== LIKELIHOOD	===#
+
+  n[1:8] ~ dmulti(p[1:8], 496)
+  p[1] <- Prev*Se_US*Se_PAG*Se_TRE + (1-Prev)*(1-Sp_US)*(1-Sp_PAG)*(1-Sp_TRE)
+  p[2] <- Prev*Se_US*(1-Se_PAG)*Se_TRE + (1-Prev)*(1-Sp_US)*Sp_PAG*(1-Sp_TRE)
+  p[3] <- Prev*(1-Se_US)*Se_PAG*Se_TRE + (1-Prev)*Sp_US*(1-Sp_PAG)*(1-Sp_TRE)
+  p[4] <- Prev*(1-Se_US)*(1-Se_PAG)*Se_TRE + (1-Prev)*Sp_US*Sp_PAG*(1-Sp_TRE)
+  
+  p[5] <- Prev*Se_US*Se_PAG*(1-Se_TRE) + (1-Prev)*(1-Sp_US)*(1-Sp_PAG)*Sp_TRE
+  p[6] <- Prev*Se_US*(1-Se_PAG)*(1-Se_TRE) + (1-Prev)*(1-Sp_US)*Sp_PAG*Sp_TRE
+  p[7] <- Prev*(1-Se_US)*Se_PAG*(1-Se_TRE) + (1-Prev)*Sp_US*(1-Sp_PAG)*Sp_TRE
+  p[8] <- Prev*(1-Se_US)*(1-Se_PAG)*(1-Se_TRE) + (1-Prev)*Sp_US*Sp_PAG*Sp_TRE
+  
+  
+#=== PRIOR	===#
+
+  Prev ~ dbeta(1, 1) 	## Prior for Prevalence
+  Se_US ~ dbeta(1, 1) 	## Prior for Se of Test A
+  Sp_US ~ dbeta(1, 1) 	## Prior for Sp of Test A
+  Se_PAG ~ dbeta(1, 1) 	## Prior for Se of Test B
+  Sp_PAG ~ dbeta(1, 1) 	## Prior for Sp of Test B
+  Se_TRE ~ dbeta(1, 1) 	## Prior for Se of Test C
+  Sp_TRE ~ dbeta(1, 1) 	## Prior for Sp of Test C
+  
+}

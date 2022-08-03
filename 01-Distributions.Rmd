@@ -108,7 +108,7 @@ In many situations, a distribution will be used as a part of the likelihood func
 **Notation: dmulti(*P[1:k]*, *n*)**     
     
 ### Binomial distribution  
-If we have a variable that can take only two values, healthy or diseased (0 or 1), we can estimates an unknown parameter such as the proportion (*P*) of diseased individuals (i.e., the disease prevalence), based on the observed data (a number of positive individuals, *T* AND a total number of individuals, *n*). For instance, if we had 30 diseased (*T* = 30) out of 100 tested individuals (*n*=100) we could estimate the unknown parameter *P* using this very simple likelihood function:  
+If we have a variable that can take only two values, healthy or diseased (0 or 1), we can estimate an unknown parameter such as the proportion (*P*) of diseased individuals (i.e., the disease prevalence), based on the observed data (a number of positive individuals, *T* AND a total number of individuals, *n*). For instance, if we had 30 diseased (*T* = 30) out of 100 tested individuals (*n*=100) we could estimate the unknown parameter *P* using this very simple likelihood function:  
   
 $T \sim dbin(P, n)$
     

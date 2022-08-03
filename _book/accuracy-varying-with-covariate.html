@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Accuracy varying with covariate | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
+  <meta name="description" content="Chapitre 11" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Accuracy varying with covariate | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapitre 11" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Accuracy varying with covariate | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  
+  <meta name="twitter:description" content="Chapitre 11" />
+  
+
+<meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
+
+
+<meta name="date" content="2022-06-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exercise-4---multiple-tests.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian latent class models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#prior-distributions"><i class="fa fa-check"></i><b>2.1</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.1.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
+<li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-functions"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood functions</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html"><i class="fa fa-check"></i><b>3</b> Running Bayesian models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-data"><i class="fa fa-check"></i><b>3.1</b> The data</a></li>
+<li class="chapter" data-level="3.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-model"><i class="fa fa-check"></i><b>3.2</b> The model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-likelihood-function"><i class="fa fa-check"></i><b>3.2.1</b> The likelihood function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#priors-for-unkown-parameters"><i class="fa fa-check"></i><b>3.2.2</b> Priors for unkown parameters</a></li>
+<li class="chapter" data-level="3.2.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#creating-the-jags-model"><i class="fa fa-check"></i><b>3.2.3</b> Creating the JAGS model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#generating-initial-values"><i class="fa fa-check"></i><b>3.3</b> Generating initial values</a></li>
+<li class="chapter" data-level="3.4" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#running-a-model-in-jags"><i class="fa fa-check"></i><b>3.4</b> Running a model in JAGS</a></li>
+<li class="chapter" data-level="3.5" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#model-diagnostic"><i class="fa fa-check"></i><b>3.5</b> Model diagnostic</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#convergence-and-burn-in"><i class="fa fa-check"></i><b>3.5.1</b> Convergence and burn-in</a></li>
+<li class="chapter" data-level="3.5.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#number-of-iterations"><i class="fa fa-check"></i><b>3.5.2</b> Number of iterations</a></li>
+<li class="chapter" data-level="3.5.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#auto-correlation"><i class="fa fa-check"></i><b>3.5.3</b> Auto-correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#getting-our-estimates"><i class="fa fa-check"></i><b>3.6</b> Getting our estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
+<li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>11</b> Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.1</b> Likelihood function when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="accuracy-varying-with-covariate" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Accuracy varying with covariate<a href="accuracy-varying-with-covariate.html#accuracy-varying-with-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>So far we have (implicitly) assumed that tests’ accuracy (i.e., their Se and Sp) are the same for every individuals tested. Some diagnostic tests, however, may behave differently whether they are applied to individuals of a certain age, breed, etc. For instance, we could hypothesized that many of the diagnostic tests aiming at quantifying antibodies against a given pathogen will behave differently in neonates (which typically have an immature immune system) compared to juvenile or adult animals.</p>
+<p>The situation where test accuracy varies as function of a characteristic of the individual tested (i.e., as function of a covariate) can be implemented relatively easily in the different LCM we have used so far. For instance, if we hypothesize that the accuracy of the PAG-based pregnancy test varies as function of whether the cow is a first lactation <em>vs.</em> and older cow, we would simply specify a LCM where we have two different PAG Se and Sp, one for first lactation cows (<em>PAG_Se_first</em> and <em>PAG_Sp_first</em>) and one for older cows (<em>PAG_Se_old</em> and <em>PAG_Sp_old</em>). You would also provide two sets of data (one for first lactation cows and one for older cows). Of course, in that specific example, you would now have three additional unknown parameters to estimate (one additional Se, one additional Sp, and one additional prevalence), with three additional degrees of freedom (one additional 2x2 table). So investigating whether test accuracy varies as function of a covariate will not help you make the LCM identifiable. You will still need to use another trick to make the model identifiable (e.g., informative priors, &gt; 1 population, or &gt;2 diagnostic tests).</p>
+<div id="likelihood-function-when-accuracy-varies-as-function-of-covariate" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Likelihood function when accuracy varies as function of covariate<a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If we have two diagnostic tests (Test A and Test B) applied to a single population, and if we assumed that the Se and Sp of one of the test (Test A) varies as function of a characteristic (<em>Z</em>) of the individual tested, then we would specify one likelihood function for the individuals without the characteristic (<em>Z</em>=0) and one likelihood function for the individual having the characteristic (<em>Z</em>=1). Moreover, we would estimate two Se and two Sp for the test which is hypothesized to vary as function of the covariate (<em>Se_Z0</em>, <em>Sp_Z0</em>, <em>Se_Z1</em>, <em>Sp_Z1</em>). Note that this could be extended to covariates with more than 2 levels. Thus, the likelihood function would become:</p>
+<p>With Z=0:<br />
+<span class="math inline">\(n_0[1:4] \sim dmulti(P_0[1:4], n_0)\)</span><br />
+<span class="math inline">\(P1_0 = P_0*SeA_0*SeB + (1-P_0)*(1-SpA_0)*(1-SpB)\)</span><br />
+<span class="math inline">\(P2_0 = P_0*SeA_0*(1-SeB) + (1-P_0)*(1-SpA_0)*SpB\)</span><br />
+<span class="math inline">\(P3_0 = P_0*(1-SeA_0)*SeB + (1-P_0)*SpA_0*(1-SpB)\)</span><br />
+<span class="math inline">\(P4_0 = P_0*(1-SeA_0)*(1-SeB) + (1-P_0)*SpA_0*SpB\)</span></p>
+<p>With Z=1:<br />
+<span class="math inline">\(n_1[1:4] \sim dmulti(P_1[1:4], n_1)\)</span><br />
+<span class="math inline">\(P1_1 = P_1*SeA_1*SeB + (1-P_1)*(1-SpA_1)*(1-SpB)\)</span><br />
+<span class="math inline">\(P2_1 = P_1*SeA_1*(1-SeB) + (1-P_1)*(1-SpA_1)*SpB\)</span><br />
+<span class="math inline">\(P3_1 = P_1*(1-SeA_1)*SeB + (1-P_1)*SpA_1*(1-SpB)\)</span><br />
+<span class="math inline">\(P4_1 = P_1*(1-SeA_1)*(1-SeB) + (1-P_1)*SpA_1*SpB\)</span></p>
+</div>
+<div id="organizing-the-data-when-accuracy-varies-as-function-of-covariate" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Organizing the data when accuracy varies as function of covariate<a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To run such a model, we simply need to provide a dataset presenting the cross tabulated results of the two tests for individuals with <em>Z</em>=0 and a second dataset for the individuals with <em>Z</em>=1. For instance, in the PAG <em>vs.</em> US study, the results of the PAG and US tests can be presented as function of the cow’s age as follows:</p>
+<p><strong>Table.</strong> Cross-classified results from a PAG and US in first lactation <em>vs.</em> older cows.</p>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="12%" />
+<col width="12%" />
+<col width="4%" />
+<col width="21%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>First (Z=0)</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"><strong>Old (Z=1)</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>US+</strong></td>
+<td align="center"><strong>US-</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><strong>US+</strong></td>
+<td align="center"><strong>US-</strong></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>PAG+</strong></td>
+<td align="center">76</td>
+<td align="center">10</td>
+<td align="center"></td>
+<td align="center"><strong>PAG+</strong></td>
+<td align="center">179</td>
+<td align="center">11</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>PAG-</strong></td>
+<td align="center">1</td>
+<td align="center">65</td>
+<td align="center"></td>
+<td align="center"><strong>PAG-</strong></td>
+<td align="center">1</td>
+<td align="center">153</td>
+</tr>
+</tbody>
+</table>
+<p>The two datasets could, thus be created as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="accuracy-varying-with-covariate.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#n is of the form : (TestA pos and TestB pos), (TestA pos and TestB neg), (TestA neg and TestB pos), then (TestA neg and TestB neg)</span></span>
+<span id="cb1-2"><a href="accuracy-varying-with-covariate.html#cb1-2" aria-hidden="true" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Z0=</span><span class="fu">c</span>(<span class="dv">76</span>,<span class="dv">1</span> ,<span class="dv">10</span>, <span class="dv">65</span>),</span>
+<span id="cb1-3"><a href="accuracy-varying-with-covariate.html#cb1-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Z1=</span><span class="fu">c</span>(<span class="dv">179</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">153</span>)</span>
+<span id="cb1-4"><a href="accuracy-varying-with-covariate.html#cb1-4" aria-hidden="true" tabindex="-1"></a>                 )</span></code></pre></div>
+</div>
+<div id="the-jags-model-when-accuracy-varies-as-function-of-covariate" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> The JAGS model when accuracy varies as function of covariate<a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We could provide the values that will be used to described the prior distributions as we did before (so they are included in the model text file). The difference is that we now have, for one of the test, two Se and Sp and we also have one prevalence for <em>Z</em>=0 and one prevalence for <em>Z=1</em>. In the example below, I will use informative priors for these two prevalence (I will use the same priors for <em>Z</em>=0 and <em>Z</em>=1, but they could be different) and for US’ Se and Sp.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="accuracy-varying-with-covariate.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#I could first create labels for TestA and TestB</span></span>
+<span id="cb2-2"><a href="accuracy-varying-with-covariate.html#cb2-2" aria-hidden="true" tabindex="-1"></a>TestA <span class="ot">&lt;-</span> <span class="st">&quot;US&quot;</span></span>
+<span id="cb2-3"><a href="accuracy-varying-with-covariate.html#cb2-3" aria-hidden="true" tabindex="-1"></a>TestB <span class="ot">&lt;-</span> <span class="st">&quot;PAG&quot;</span></span>
+<span id="cb2-4"><a href="accuracy-varying-with-covariate.html#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="accuracy-varying-with-covariate.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#I could create labels for Z=0 and Z=1</span></span>
+<span id="cb2-6"><a href="accuracy-varying-with-covariate.html#cb2-6" aria-hidden="true" tabindex="-1"></a>Z0 <span class="ot">&lt;-</span> <span class="st">&quot;First&quot;</span></span>
+<span id="cb2-7"><a href="accuracy-varying-with-covariate.html#cb2-7" aria-hidden="true" tabindex="-1"></a>Z1 <span class="ot">&lt;-</span> <span class="st">&quot;Old&quot;</span></span>
+<span id="cb2-8"><a href="accuracy-varying-with-covariate.html#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="accuracy-varying-with-covariate.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Provide information for the prior distributions (all beta distributions) for the unknown parameters </span></span>
+<span id="cb2-10"><a href="accuracy-varying-with-covariate.html#cb2-10" aria-hidden="true" tabindex="-1"></a>Prev0.shapea <span class="ot">&lt;-</span> <span class="fl">4.2</span>         <span class="co">#a shape parameter for Prev in Z=0    </span></span>
+<span id="cb2-11"><a href="accuracy-varying-with-covariate.html#cb2-11" aria-hidden="true" tabindex="-1"></a>Prev0.shapeb <span class="ot">&lt;-</span> <span class="fl">5.4</span>         <span class="co">#b shape parameter for Prev in Z=0</span></span>
+<span id="cb2-12"><a href="accuracy-varying-with-covariate.html#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="accuracy-varying-with-covariate.html#cb2-13" aria-hidden="true" tabindex="-1"></a>Prev1.shapea <span class="ot">&lt;-</span> <span class="fl">4.2</span>         <span class="co">#a shape parameter for Prev in Z=1    </span></span>
+<span id="cb2-14"><a href="accuracy-varying-with-covariate.html#cb2-14" aria-hidden="true" tabindex="-1"></a>Prev1.shapeb <span class="ot">&lt;-</span> <span class="fl">5.4</span>         <span class="co">#b shape parameter for Prev in Z=1</span></span>
+<span id="cb2-15"><a href="accuracy-varying-with-covariate.html#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="accuracy-varying-with-covariate.html#cb2-16" aria-hidden="true" tabindex="-1"></a>Se.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">131</span>     <span class="co">#a shape parameter for Se of TestA</span></span>
+<span id="cb2-17"><a href="accuracy-varying-with-covariate.html#cb2-17" aria-hidden="true" tabindex="-1"></a>Se.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">15</span>     <span class="co">#b shape parameter for Se of TestA</span></span>
+<span id="cb2-18"><a href="accuracy-varying-with-covariate.html#cb2-18" aria-hidden="true" tabindex="-1"></a>Sp.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">100</span>     <span class="co">#a shape parameter for Sp of TestA</span></span>
+<span id="cb2-19"><a href="accuracy-varying-with-covariate.html#cb2-19" aria-hidden="true" tabindex="-1"></a>Sp.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">6</span>     <span class="co">#b shape parameter for Sp of TestA</span></span>
+<span id="cb2-20"><a href="accuracy-varying-with-covariate.html#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="accuracy-varying-with-covariate.html#cb2-21" aria-hidden="true" tabindex="-1"></a>Se.TestB.Z0.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestB in Z=0</span></span>
+<span id="cb2-22"><a href="accuracy-varying-with-covariate.html#cb2-22" aria-hidden="true" tabindex="-1"></a>Se.TestB.Z0.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestB in Z=0</span></span>
+<span id="cb2-23"><a href="accuracy-varying-with-covariate.html#cb2-23" aria-hidden="true" tabindex="-1"></a>Sp.TestB.Z0.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestB in Z=0</span></span>
+<span id="cb2-24"><a href="accuracy-varying-with-covariate.html#cb2-24" aria-hidden="true" tabindex="-1"></a>Sp.TestB.Z0.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestB in Z=0</span></span>
+<span id="cb2-25"><a href="accuracy-varying-with-covariate.html#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="accuracy-varying-with-covariate.html#cb2-26" aria-hidden="true" tabindex="-1"></a>Se.TestB.Z1.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestB in Z=1</span></span>
+<span id="cb2-27"><a href="accuracy-varying-with-covariate.html#cb2-27" aria-hidden="true" tabindex="-1"></a>Se.TestB.Z1.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestB in Z=1</span></span>
+<span id="cb2-28"><a href="accuracy-varying-with-covariate.html#cb2-28" aria-hidden="true" tabindex="-1"></a>Sp.TestB.Z1.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestB in Z=1</span></span>
+<span id="cb2-29"><a href="accuracy-varying-with-covariate.html#cb2-29" aria-hidden="true" tabindex="-1"></a>Sp.TestB.Z1.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestB in Z=1</span></span>
+<span id="cb2-30"><a href="accuracy-varying-with-covariate.html#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="accuracy-varying-with-covariate.html#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#I will also need the number of individuals tested in each populations (n0 and n1)</span></span>
+<span id="cb2-32"><a href="accuracy-varying-with-covariate.html#cb2-32" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sapply</span>(datalist, sum)</span>
+<span id="cb2-33"><a href="accuracy-varying-with-covariate.html#cb2-33" aria-hidden="true" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> n[<span class="dv">1</span>]</span>
+<span id="cb2-34"><a href="accuracy-varying-with-covariate.html#cb2-34" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> n[<span class="dv">2</span>]</span></code></pre></div>
+<p>With that, we have everything that is needed to write the JAGS model.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="accuracy-varying-with-covariate.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
+<span id="cb3-2"><a href="accuracy-varying-with-covariate.html#cb3-2" aria-hidden="true" tabindex="-1"></a>model_2tests_covariate <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb3-3"><a href="accuracy-varying-with-covariate.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="accuracy-varying-with-covariate.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb3-5"><a href="accuracy-varying-with-covariate.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">  #For Z=0</span></span>
+<span id="cb3-6"><a href="accuracy-varying-with-covariate.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Z0[1:4] ~ dmulti(p0[1:4], &quot;</span>,n0,<span class="st">&quot;)</span></span>
+<span id="cb3-7"><a href="accuracy-varying-with-covariate.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">  p0[1] &lt;- Prev_&quot;</span>, Z0,<span class="st">&quot;*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot; + (1-Prev_&quot;</span>, Z0,<span class="st">&quot;)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot;)</span></span>
+<span id="cb3-8"><a href="accuracy-varying-with-covariate.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  p0[2] &lt;- Prev_&quot;</span>, Z0,<span class="st">&quot;*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot;) + (1-Prev_&quot;</span>, Z0,<span class="st">&quot;)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot;</span></span>
+<span id="cb3-9"><a href="accuracy-varying-with-covariate.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">  p0[3] &lt;- Prev_&quot;</span>, Z0,<span class="st">&quot;*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot; + (1-Prev_&quot;</span>, Z0,<span class="st">&quot;)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot;)</span></span>
+<span id="cb3-10"><a href="accuracy-varying-with-covariate.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">  p0[4] &lt;- Prev_&quot;</span>, Z0,<span class="st">&quot;*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot;) + (1-Prev_&quot;</span>, Z0,<span class="st">&quot;)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0,<span class="st">&quot;</span></span>
+<span id="cb3-11"><a href="accuracy-varying-with-covariate.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-12"><a href="accuracy-varying-with-covariate.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">  #For Z=1</span></span>
+<span id="cb3-13"><a href="accuracy-varying-with-covariate.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">  Z1[1:4] ~ dmulti(p1[1:4], &quot;</span>,n1,<span class="st">&quot;)</span></span>
+<span id="cb3-14"><a href="accuracy-varying-with-covariate.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[1] &lt;- Prev_&quot;</span>, Z1,<span class="st">&quot;*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot; + (1-Prev_&quot;</span>, Z1,<span class="st">&quot;)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot;)</span></span>
+<span id="cb3-15"><a href="accuracy-varying-with-covariate.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[2] &lt;- Prev_&quot;</span>, Z1,<span class="st">&quot;*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot;) + (1-Prev_&quot;</span>, Z1,<span class="st">&quot;)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot;</span></span>
+<span id="cb3-16"><a href="accuracy-varying-with-covariate.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[3] &lt;- Prev_&quot;</span>, Z1,<span class="st">&quot;*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot; + (1-Prev_&quot;</span>, Z1,<span class="st">&quot;)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot;)</span></span>
+<span id="cb3-17"><a href="accuracy-varying-with-covariate.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[4] &lt;- Prev_&quot;</span>, Z1,<span class="st">&quot;*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot;) + (1-Prev_&quot;</span>, Z1,<span class="st">&quot;)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1,<span class="st">&quot;</span></span>
+<span id="cb3-18"><a href="accuracy-varying-with-covariate.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">   </span></span>
+<span id="cb3-19"><a href="accuracy-varying-with-covariate.html#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="accuracy-varying-with-covariate.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb3-21"><a href="accuracy-varying-with-covariate.html#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="accuracy-varying-with-covariate.html#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev_&quot;</span>, Z0,<span class="st">&quot; ~ dbeta(&quot;</span>,Prev0.shapea,<span class="st">&quot;, &quot;</span>,Prev0.shapeb,<span class="st">&quot;)  ## Prior for Prev in Z=0</span></span>
+<span id="cb3-23"><a href="accuracy-varying-with-covariate.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev_&quot;</span>, Z1,<span class="st">&quot; ~ dbeta(&quot;</span>,Prev1.shapea,<span class="st">&quot;, &quot;</span>,Prev1.shapeb,<span class="st">&quot;)  ## Prior for Prev in Z=1</span></span>
+<span id="cb3-24"><a href="accuracy-varying-with-covariate.html#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestA.shapea,<span class="st">&quot;, &quot;</span>,Se.TestA.shapeb,<span class="st">&quot;)  ## Prior for Se of Test A</span></span>
+<span id="cb3-25"><a href="accuracy-varying-with-covariate.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestA.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestA.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
+<span id="cb3-26"><a href="accuracy-varying-with-covariate.html#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.Z0.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.Z0.shapeb,<span class="st">&quot;)   ## Prior for Se of Test B in Z=0</span></span>
+<span id="cb3-27"><a href="accuracy-varying-with-covariate.html#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z0, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.Z0.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.Z0.shapeb,<span class="st">&quot;)   ## Prior for Sp of Test B in Z=0</span></span>
+<span id="cb3-28"><a href="accuracy-varying-with-covariate.html#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.Z1.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.Z1.shapeb,<span class="st">&quot;)   ## Prior for Se of Test B in Z=1</span></span>
+<span id="cb3-29"><a href="accuracy-varying-with-covariate.html#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot;_&quot;</span>, Z1, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.Z1.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.Z1.shapeb,<span class="st">&quot;)   ## Prior for Sp of Test B in Z=1</span></span>
+<span id="cb3-30"><a href="accuracy-varying-with-covariate.html#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-31"><a href="accuracy-varying-with-covariate.html#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb3-32"><a href="accuracy-varying-with-covariate.html#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="accuracy-varying-with-covariate.html#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb3-34"><a href="accuracy-varying-with-covariate.html#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(model_2tests_covariate, </span>
+<span id="cb3-35"><a href="accuracy-varying-with-covariate.html#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_2tests_covariate.txt&quot;</span>, </span>
+<span id="cb3-36"><a href="accuracy-varying-with-covariate.html#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb3-37"><a href="accuracy-varying-with-covariate.html#cb3-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb3-38"><a href="accuracy-varying-with-covariate.html#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb3-39"><a href="accuracy-varying-with-covariate.html#cb3-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>With this code, you could, again, simply modify the labels for Test A and Test B, and for Z0 and Z1, and the shape parameters for the prior distributions. The text file with the JAGS model will automatically be updated. Currently, it looks like this:</p>
+<div class="figure">
+<img src="Figures/model_2tests_covariate.png" alt="" />
+<p class="caption">Text file with the LCM for 2 independent diagnostic tests applied to one population but with one of the test accuracy varying as function of a covariate.</p>
+</div>
+<p>Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful again, we now have two tests, but two Se and Sp for one of the test, and two prevalence.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="accuracy-varying-with-covariate.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Initializing values for the parameters Prev, and the Ses and Sps of the two tests for the 3 chains.</span></span>
+<span id="cb4-2"><a href="accuracy-varying-with-covariate.html#cb4-2" aria-hidden="true" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Prev_First=</span><span class="fl">0.50</span>,</span>
+<span id="cb4-3"><a href="accuracy-varying-with-covariate.html#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Prev_Old=</span><span class="fl">0.50</span>,</span>
+<span id="cb4-4"><a href="accuracy-varying-with-covariate.html#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-5"><a href="accuracy-varying-with-covariate.html#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-6"><a href="accuracy-varying-with-covariate.html#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG_First=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-7"><a href="accuracy-varying-with-covariate.html#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG_First=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-8"><a href="accuracy-varying-with-covariate.html#cb4-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG_Old=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-9"><a href="accuracy-varying-with-covariate.html#cb4-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG_Old=</span><span class="fl">0.90</span>),</span>
+<span id="cb4-10"><a href="accuracy-varying-with-covariate.html#cb4-10" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb4-11"><a href="accuracy-varying-with-covariate.html#cb4-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev_First=</span><span class="fl">0.60</span>,</span>
+<span id="cb4-12"><a href="accuracy-varying-with-covariate.html#cb4-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">Prev_Old=</span><span class="fl">0.60</span>,</span>
+<span id="cb4-13"><a href="accuracy-varying-with-covariate.html#cb4-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-14"><a href="accuracy-varying-with-covariate.html#cb4-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-15"><a href="accuracy-varying-with-covariate.html#cb4-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG_First=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-16"><a href="accuracy-varying-with-covariate.html#cb4-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG_First=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-17"><a href="accuracy-varying-with-covariate.html#cb4-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG_Old=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-18"><a href="accuracy-varying-with-covariate.html#cb4-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG_Old=</span><span class="fl">0.80</span>),</span>
+<span id="cb4-19"><a href="accuracy-varying-with-covariate.html#cb4-19" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb4-20"><a href="accuracy-varying-with-covariate.html#cb4-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev_First=</span><span class="fl">0.40</span>,</span>
+<span id="cb4-21"><a href="accuracy-varying-with-covariate.html#cb4-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">Prev_Old=</span><span class="fl">0.40</span>,</span>
+<span id="cb4-22"><a href="accuracy-varying-with-covariate.html#cb4-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-23"><a href="accuracy-varying-with-covariate.html#cb4-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-24"><a href="accuracy-varying-with-covariate.html#cb4-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG_First=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-25"><a href="accuracy-varying-with-covariate.html#cb4-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG_First=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-26"><a href="accuracy-varying-with-covariate.html#cb4-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG_Old=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-27"><a href="accuracy-varying-with-covariate.html#cb4-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG_Old=</span><span class="fl">0.70</span>)</span>
+<span id="cb4-28"><a href="accuracy-varying-with-covariate.html#cb4-28" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
+<p>We can run the model using <code>jags()</code> function as seen before.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="accuracy-varying-with-covariate.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb5-2"><a href="accuracy-varying-with-covariate.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb5-3"><a href="accuracy-varying-with-covariate.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="accuracy-varying-with-covariate.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb5-5"><a href="accuracy-varying-with-covariate.html#cb5-5" aria-hidden="true" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
+<span id="cb5-6"><a href="accuracy-varying-with-covariate.html#cb5-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_2tests_covariate.txt&quot;</span>,     </span>
+<span id="cb5-7"><a href="accuracy-varying-with-covariate.html#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev_First&quot;</span>, <span class="st">&quot;Prev_Old&quot;</span>,<span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG_First&quot;</span>, <span class="st">&quot;Sp_PAG_First&quot;</span>, <span class="st">&quot;Se_PAG_Old&quot;</span>, <span class="st">&quot;Sp_PAG_Old&quot;</span>),               </span>
+<span id="cb5-8"><a href="accuracy-varying-with-covariate.html#cb5-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
+<span id="cb5-9"><a href="accuracy-varying-with-covariate.html#cb5-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                </span>
+<span id="cb5-10"><a href="accuracy-varying-with-covariate.html#cb5-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">11000</span>,                                </span>
+<span id="cb5-11"><a href="accuracy-varying-with-covariate.html#cb5-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              </span>
+<span id="cb5-12"><a href="accuracy-varying-with-covariate.html#cb5-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
+<span id="cb5-13"><a href="accuracy-varying-with-covariate.html#cb5-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                   </span></code></pre></div>
+<p>Then we could produce the diagnostic plots, compute the ESS, and print out our results as we did previously (results not shown).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="accuracy-varying-with-covariate.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb6-2"><a href="accuracy-varying-with-covariate.html#cb6-2" aria-hidden="true" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
+<span id="cb6-3"><a href="accuracy-varying-with-covariate.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
+<span id="cb6-4"><a href="accuracy-varying-with-covariate.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span>
+<span id="cb6-5"><a href="accuracy-varying-with-covariate.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exercise-4---multiple-tests.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10-covariate.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

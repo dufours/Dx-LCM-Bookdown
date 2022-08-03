@@ -31,7 +31,7 @@ Basically, to run any Bayesian model, we will always need the same three things:
 * A model containing:
   + A likelihood function linking observed data to unknown parameters
   + A prior distribution for each unknown parameter
-* An initial value for each unknown parameters to start the Markov chains
+* An initial value for each unknown parameter to start the Markov chains
   + These values can also be generated randomly by the software, but specifying them will improve reproducibility
   
 ## The data
@@ -122,7 +122,7 @@ When using `paste0()`, any text appearing outside of sets of quotation marks (e.
   
 - Array can be indicated using squared brackets [ ].  
 
-In the example below, I create a `R` object called *model_single_prop* using the `paste0()` function and then save it as a text file using the `write.table()` function. We will check this text file below and then explain the code for the model. 
+In the example below, I create an `R` object called *model_single_prop* using the `paste0()` function and then save it as a text file using the `write.table()` function. We will check this text file below and then explain the code for the model. 
 ```{r}
 # Specify the model
 model_single_prop <- paste0("model{

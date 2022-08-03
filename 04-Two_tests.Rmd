@@ -22,7 +22,7 @@ knitr::write_bib(c(
 
 
 # Two imperfect tests
-When using two imperfect diagnostic tests on a same population, we will have to use a Bayesian latent class model (**LCM**) to estimate the true disease prevalence, and the sensitivity and specificity of both diagnostic tests. Two different approaches could be used. The simplest approach would be to consider that the two diagnostic tests are conditionally independents. Conditional independence can be defined as:  
+When using two imperfect diagnostic tests on the same population, we will have to use a Bayesian latent class model (**LCM**) to estimate the true disease prevalence, and the sensitivity and specificity of both diagnostic tests. Two different approaches could be used. The simplest approach would be to consider that the two diagnostic tests are independent conditionally on the true health status of the individuals. Conditional independence can be defined as:  
   
 *Two tests are conditionally independent when the sensitivity (or specificity) of one test does not depend on whether the results of another test are positive or negative among infected (or non-infected) individuals.* [Cheung et al., 2021](https://doi.org/10.20506/rst.40.1.3224)  
   
@@ -30,14 +30,14 @@ In many situations, however, we will use two diagnostic tests that make use of t
   
 *The sensitivity of the milk test does not depend on whether the results of the blood test are positive or negative among infected individuals.*  
   
-In such case, it would be better to consider a LCM where conditional dependence between tests is possible. Note that, even for tests that make use of very different biological processes, it is rather difficult (or, actually, often impossible) to "demonstrate" conditional independence between tests. So, if doable, allowing for a potential conditional dependence between tests would be a more robust strategy.  
+In such case, it would be better to consider a LCM where conditional dependence between tests is possible. Note that, even for tests that make use of very different biological processes, it is rather difficult (or, actually, often impossible) to "demonstrate" conditional independence between them. So, if doable, allowing for a potential conditional dependence between tests would be a more robust strategy.  
   
 ## Assuming conditional independence
-Let's first consider two conditionally independent diagnostic tests. When two tests are conditionally independent, then obtaining a given combination of results to Test A and Test B, as function of the true disease prevalence (*P*) and of the accuracy of each test (*SeA*, *SpA*, *SeB*, *SpB*), can be described as illustrated below:  
+When two tests are conditionally independent, then obtaining a given combination of results to Test A and Test B, as function of the true disease prevalence (*P*) and of the accuracy of each test (*SeA*, *SpA*, *SeB*, *SpB*) can be described as illustrated below:  
   
 ![Illustration of the different potential results when applying two conditionally independent tests in a population.](Figures/cond_indep.png)
   
-With that illustration, we can deduce that the probability of testing positive to both tests is the sum of the first and fifth rows:  
+From that illustration, we can deduce that the probability of testing positive to both tests is the sum of the first and fifth rows:  
   
 $P(TestA+ TestB+) = P*SeA*SeB + (1-P)*(1-SpA)*(1-SpB)$  
   
@@ -48,7 +48,7 @@ $P(TestA+TestB-) = P*SeA*(1-SeB) + (1-P)*(1-SpA)*SpB$
 $P(TestA-TestB+) = P*(1-SeA)*SeB + (1-P)*SpA*(1-SpB)$  
 $P(TestA-TestB-) = P*(1-SeA)*(1-SeB) + (1-P)*SpA*SpB$  
   
-When conducting two diagnostic tests on a given population, the data generated can be presented very simply as the number of individuals in each cells of the 2x2 table presenting the cross-classified results of the two tests:  
+When applying two diagnostic tests on a given population, the data generated can be presented very simply as the number of individuals in each cell of the 2x2 table presenting the cross-classified results of the two tests:  
   
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 #Créer une table
@@ -73,7 +73,7 @@ $P2 = P*SeA*(1-SeB) + (1-P)*(1-SpA)*SpB$
 $P3 = P*(1-SeA)*SeB + (1-P)*SpA*(1-SpB)$  
 $P4 = P*(1-SeA)*(1-SeB) + (1-P)*SpA*SpB$  
   
-Again, if we put that in words, the number of individuals in cell *n1* (i.e., TestA+ and TestB+) is determined by the number of individuals tested (*n*) and the probability (*P1*) of falling in that cell. The latter itself depends on the true prevalence of disease in the population (*P*), and on each of the two tests sensitivity (*SeA* and *SeB*) and specificity (*SpA* and *SpB*). We can use similar reasoning for *n2*, *n3*, and *n4*. Finally, the multinomial distribution would further imposed that the four probabilities (*P1*, *P2*, *P3*, and *P4*) have to sum up to 1.0 (i.e., 100%). 
+Again, if we put that in words, the number of individuals in cell *n1* (i.e., TestA+ and TestB+) is determined by the number of individuals tested (*n*) and the probability (*P1*) of falling in that cell. The latter itself depends on the true prevalence of disease in the population (*P*), and on each of the two tests sensitivity (*SeA* and *SeB*) and specificity (*SpA* and *SpB*). We can use similar reasoning for *n2*, *n3*, and *n4*. Finally, the multinomial distribution would further impose that the four probabilities (*P1*, *P2*, *P3*, and *P4*) have to sum up to 1.0 (i.e., 100%). 
   
 In such a model, we will have five unknown parameters to estimate (*P*, *SeA*, *SeB*, *SpA*, *SpB*), but only four equations. Thus, the model will be "non-identifiable", and we will need to provide informative priors on, at least, two parameters. Often, we will provide priors on the Se and Sp of one of the tests, and/or on disease prevalence.  
   
@@ -201,7 +201,7 @@ effectiveSize(bug.mcmc)
 print(bug.out, digits.summary=3) 
 ```
   
-Or we could ask to plot the prior and posterior distributions of one (or many) of the parameters. Here, we asked for the prior and posterior distribution of *US* sensitivity.
+Or we could ask to plot the prior and posterior distributions of one (or many) of the parameters. Here, we asked for the prior and posterior distributions of *US* sensitivity.
 
 ```{r, warning=FALSE, message=FALSE, fig.cap="Prior (dashed red line) and posterior (full black line) distribution of US sensitivity."}
 
