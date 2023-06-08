@@ -38,7 +38,7 @@ In the Exercise 2 folder, you will find partially completed `R` scripts. To answ
 |:---------:|:-------:|:-------:|:---------:|
 |  **PAG+** |   138   |    10   |    148    |
 |  **PAG-** |    1    |   113   |    114    |
-| **Total** |   139   |    13   |    262    |
+| **Total** |   139   |   123   |    262    |
   
 How many unknown parameters do you have to estimate and how many degrees of freedom do you have? Therefore, how many informative priors will you need? Estimate PAG's Se and Sp, and true pregnancy prevalence using informative priors on US' Se and Sp, and on pregnancy's prevalence. Compare your results to those of Exercise 1 (question 4) where you estimated PAG's Se and Sp, but assuming that US was a gold standard test.  
   
