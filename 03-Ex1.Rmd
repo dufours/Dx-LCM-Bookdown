@@ -85,7 +85,7 @@ The median pregnancy prevalence estimate (95% CI) was 53.0% (46.9, 59.0).
   
 **2.** If you were to compute a Frequentist estimate with 95% CI, would it differ a lot from your Bayesian estimates? Why?   
   
-**Answer:** It should not differ much from the Bayesian median estimate and 95CI because these latter estimates were generated using vague priors. In such cases, Bayesian and Frequentist estimates should be quite similar. Actually, if we use the Frequentist formula for computing 95CI and the observed data (i.e., 257/497) we get:  
+**Answer:** It should not differ much from the Bayesian median estimate and 95CI because these latter estimates were generated using vague priors. In such cases, Bayesian and Frequentist estimates should be quite similar. Actually, if we use the Frequentist formula for computing 95CI and the observed data (i.e., 139/262) we get:  
   
 $P = 139/262 = 0.531$  
   

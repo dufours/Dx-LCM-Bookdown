@@ -31,9 +31,68 @@ In this document you will find indications on how to use various `R` libraries a
   
 Remember, there are often many different ways to conduct a given piece of work in `R`. Throughout this document, we tried to stick with the simpler approaches (e.g., the shortest code, the minimal number of `R` libraries). 
    
+## Software and libraries used  
+
+To conduct the exercises from this book, you will need to install three software (`R`, `RStudio`, and `JAGS`) and a few `R` packages. The installation steps are described below. These instructions are reproduced in parts from [R-project.org](https://www.r-project.org/), [Rstudio.com](https://posit.co/downloads/), and various R packages’ manuals.     
+  
+### R download  
+
+`R` is a language and environment for statistical computing and graphics. `R` provides a wide variety of statistical (linear and nonlinear modelling, classical statistical tests, time-series analysis, classification, clustering, …) and graphical techniques, and is highly extensible.  
+  
+`R` can be downloaded [here](https://cran.r-project.org/mirrors.html). You can choose in the list a CRAN mirror close to your institution; for instance, in Canada we use the mirror from [Simon Fraser University, Burnaby](https://mirror.rcg.sfu.ca/mirror/CRAN/).  
+  
+**We used the 4.4.1 version of R to develop this book.**  
+  
+### RStudio download  
+
+`RStudio` is an integrated development environment (IDE) for `R`. It includes a console, syntax-highlighting editor that supports direct code execution, as well as tools for plotting, history, debugging and workspace management.  
+  
+`RStudio` is available in open source and commercial editions and runs on the desktop (Windows, Mac, and Linux) or in a browser connected to `RStudio Server` or `RStudio Workbench`.  
+  
+A free `RStudio Desktop Open Source License` can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).  
+  
+**We used the 2024.04.2+764 version of `RStudio` to develop this book.**  
+  
+### R libraries  
+
+To install a given `R` library, open `RStudio`, click `Packages`, choose `load package`, choose the package you need (e.g., `epiR`).  
+  
+For the workshop, these different `R` packages will be used:  
+  
+#### R2jags 
+**Version 0.8-5** [R2jags manual](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cran.r-project.org/web/packages/R2jags/R2jags.pdf)
+The `R2JAGS` package provides convenient functions to call `rjags` (see next) and then `JAGS` (a software specialized in Bayesian analyses; see below) from `R`. It automatically writes the data and scripts in a format readable by `JAGS`. After the `JAGS` process has finished, it is possible either to read the resulting data into `R` using the facilities of the `coda` and `mcmcplots` packages for further analyses of the output.  
+  
+#### rjags  
+**Version 4-15** [rjags manual](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https:/cran.r-project.org/web/packages/rjags/rjags.pdf) 
+The `rjags` package provides an interface from `R` to the `JAGS` library for Bayesian data analysis. `JAGS` uses Markov Chain Monte Carlo (**MCMC**) to generate a sequence of dependent samples from the posterior distribution of the parameters.  
+  
+#### coda 
+**Version 0.19-4.1** [coda manual](https://cran.r-project.org/web/packages/coda/coda.pdf)  
+The `coda` package provides functions for summarizing and plotting the output from MCMC simulations, as well as diagnostic tests of convergence to the equilibrium distribution of the Markov chain.  
+  
+#### mcmcplots  
+**Version 0.4.3** [mcmcplots manual](https://cran.r-project.org/web/packages/mcmcplots/mcmcplots.pdf)  
+The `mcmcplots` package provides a function (`mcmcplot`) that produces common MCMC diagnostic plots in an html file that can be viewed from a web browser. When viewed in a web browser, hundreds of MCMC plots can be viewed efficiently by scrolling through the output as if it were any typical web page.  
+  
+#### epiR  
+**Version 2.0.75** [epiR manual](https://cran.r-project.org/web/packages/epiR/epiR.pdf)  
+The `epiR` package contains tools for the analysis of epidemiological and surveillance data. For the workshop we will mainly use `epiR` functions that can return shape parameters for different distributions, based on expert elicitation, to produce and visualize prior distributions.  
+  
+### JAGS  
+`JAGS` is a free software package for performing Bayesian inference Using Gibbs Sampling. `JAGS` stand for “Just Another Gibbs Sampler”. It is a program for analysis of Bayesian hierarchical models using MCMC simulation.  
+  
+You will have to install `JAGS` on your computer for the `R2JAGS` library to work. `JAGS` can be downloaded [here](https://sourceforge.net/projects/mcmc-jags/files/).  
+  
+-	Click on the “Download latest version JAGS-4.3.1.html” green button;  
+-	Wait a few seconds;  
+-	Open up the JAGS-4.3.1.html file that was downloaded;  
+-	Pick the appropriate installation depending on the version of `R` that is installed on your computer;  
+    -	If you have installed `R` version 4.2.0 or later, then JAGS-4.3.1 can be installed.  
+  
 ## Some notation
 
-Throughout the document,  you will find examples of `R` code along with comments. **The `R` code used always appear in grey boxes** (see the following example). This is the code that you will be able to use for your own analyses. **Lines that are preceded by a # sign are comments**, they are skipped when `R` reads them. Following each grey box with `R` code, a **white box with results from the analysis is presented**.  
+Throughout the document,  you will find examples of `R` code along with comments. **The `R` code used always appear in grey boxes** (see the following example). This is the code that you will be able to use for your own analyses. **Lines that are preceded by a # sign are comments**, they are skipped when `R` reads them. Following each grey box with `R` code, another **grey box with results from the analysis is presented**.  
   
 For instance, this is a `R` code where I am simply asking to show main descriptive statistics for the *speed* variable of the *cars* dataset (note that this dataset is already part of `R`).
 ```{r cars, warning=FALSE, message=FALSE}

@@ -92,7 +92,7 @@ rval$shape2                #View the b shape parameter in rval
 ### Creating the JAGS model
 Our Bayesian model has to be presented to JAGS as a text file (i.e., a .txt document).  To create this text file, we will use the `paste0()` function to write down the model and then the `write.table()` function to save it as a .txt file.  
   
-**An interesting feature of the `paste0()` function is the possibility to include `R` objects in the text.** For instance, you may want to have a generic model that will not be modified, but within with you would like to change the values used to describe the priors. You could include these "external" values Within your `paste0()` function. Thus, you just have to change the value of the `R` object that your model is using, rather than rewriting a new model. For instance, we just created these two `R` objects called *Prev.shapea* and *Prev.shapeb* (which were the a and b shape parameters for the prior distribution of our proportion *Prev*). To describe our prior distribution, we can ignore this previous work that we have done and directly create a short text as follows:
+**An interesting feature of the `paste0()` function is the possibility to include `R` objects in the text.** For instance, you may want to have a generic model that will not be modified, but within which you would like to change the values used to describe the priors. You could include these "external" values within your `paste0()` function. Thus, you just have to change the value of the `R` object that your model is using, rather than rewriting a new model. For instance, we just created these two `R` objects called *Prev.shapea* and *Prev.shapeb* (which were the a and b shape parameters for the prior distribution of our proportion *Prev*). To describe our prior distribution, we can ignore this previous work that we have done and directly create a short text as follows:
 ```{r}
 text1 <- paste0("Prev ~ dbeta(1, 1)")       #Creating a short text named "text1"
 text1                                       #Asking to see the text1 object
@@ -150,11 +150,17 @@ write.table(model_single_prop,
 Here is a snapshot of the final result (i.e., the text file):  
 
 ![Text file with the model for estimating a single proportion.](Figures\Model_single_prop.png)
+ 
+In the preceding script, the `paste0()` function was used to create the text, as an `R` object, that will be needed for the .txt file. This text is mainly "static", except for the *a* and *b* parameters of the beta distribution used to describe our prior knowledge on disease prevalence. You can see that, if we were to modify and then run the preceding script where we assigned values to these parameters, and then run again the `paste0()` function, our text file would be updated with new values for our prior distribution. This is a feature that we will use a lot, especially with more complex LCM, to minimize the amount of work.  
+  
+The `write.table()` function was simply used to record as a .txt file the `R` object containing the text we just created.  
+  
+Both the `paste0()` and `write.table()` functions are part of basic `R`, no need to install or call a given library.  
   
 ## Generating initial values
 The initial value is the first value where each Markov chain will start.  
 - You have to specify one initial value for each unknown parameter in the model.  
-- If you decide to run three Markov chains, you will need three different sets of initial values.
+- If you decide to run three Markov chains, you will need three different sets of initial values.  
 - You can also let the software choose a random value to start each chain, but it will then be impossible to **exactly** reproduce a given result. For instance, if you have obtained a very ackward Markov chain, you may not be able to reproduce this result to investigate what went wrong. Note, though, that it would be quite uncommon for a Markov chain to be "sensitive" to the chosen starting value. But you will see during the workshop that it will sometimes happen.  
   
 In our preceding example we have one unknown parameter (*Prev*). If we were to run three Markov chains, we could generate three sets of initial values for this parameter as follows. Of course, the chosen values could be changed. In the case of a proportion, you can specify any value between 0 and 1.
@@ -167,7 +173,7 @@ inits <- list(
   )
 ```
   
-We know have a `R` object called *inits* that contains the three values where each Markov chains will start from.  
+We know have a `R` object called *inits* that contains the three values where each Markov chains will start.  
 
 ## Running a model in JAGS
 We now have the three elements that we needed: the data, the model, and a set of initial values. We can now use the `R2jags` library to run our Bayesian analysis. The `R2jags` package provides an interface from `R` to the JAGS software for Bayesian data analysis. JAGS uses Markov Chain Monte Carlo (**MCMC**) simulation to generate a sample from the posterior distribution of the parameters.  
@@ -271,7 +277,7 @@ print(bug.out,                  #Asking to see the mean, median, etc of the unkn
       digits.summary=3)         #Requiring a precision of 3 digits
 ```
   
-Here you see that the median *Prev* estimate (95CI) was 30.2% (21.8, 39.6).  
+Here you see that the median *Prev* estimate (95CI) was 30% (22, 40).  
   
 You can also ask for plotting the *bug.mcmc* object that you have created using the `plot()` function. It would produce the trace plot and a density plot presenting the posterior distributions of each unknown parameter.  
   
