@@ -23,7 +23,7 @@ knitr::write_bib(c(
 
 
 # Running Bayesian models
-Different software and `R` packages can be used to run Bayesian models. Whether it is a LCM or a more conventional regression model is not very important at this stage. In this document we will mainly use a software called JAGS and the `R2jags` package. **So, if not already done, you will have to download JAGS [here](https://sourceforge.net/projects/mcmc-jags/files/) and install it on your computer.** Once installed, we will be able to use `R2jags` to operate JAGS through `R`.   
+Different software and `R` packages can be used to run Bayesian models. Whether it is a LCM or a more conventional regression model is not very important at this stage. In this document we will mainly use a software called `JAGS` and the `R2jags` package. **So, if not already done, you will have to download JAGS [here](https://sourceforge.net/projects/mcmc-jags/files/) and install it on your computer.** Once installed, we will be able to use `R2jags` to operate JAGS through `R`.   
   
 Basically, to run any Bayesian model, we will always need the same three things:  
   
@@ -35,7 +35,7 @@ Basically, to run any Bayesian model, we will always need the same three things:
   + These values can also be generated randomly by the software, but specifying them will improve reproducibility
   
 ## The data
-This is the easy part. If we were to run, for instance, a "conventional" regression analysis, we would have to import in  `R` a complete dataset (e.g., a CSV file) with a row for each observation and a column for each variable. However, when using LCM to estimate a disease prevalence or diagnostic accuracy, the dataset is simply made up of the number of individuals in each category. For instance, to estimate a simple prevalence (*Prev*), we could have 30 individuals that tested positive (variable *T*) out of a total of 100 individuals (variable *n*). In such case, the dataset could be created as follow:      
+This is the easy part. If we were to run, for instance, a "conventional" regression analysis, we would have to import in `R` a complete dataset (e.g., a CSV file) with a row for each observation and a column for each variable. However, when using LCM to estimate a disease prevalence or diagnostic accuracy, the dataset is simply made up of the number of individuals in each category. For instance, to estimate a simple prevalence (*Prev*), we could have 30 individuals that tested positive (variable *T*) out of a total of 100 individuals (variable *n*). In such case, the dataset could be created as follow:      
   
 ```{r}
 #Creating a dataset
@@ -75,15 +75,18 @@ With informative priors, for instance, if we know from the literature that the p
 ```{r, message=FALSE, warning=FALSE}
 library(epiR) 
 
-# Prevalence as Mode=0.25, and we are 97.5% sure >0.20 
-rval <- epi.betabuster(mode=0.25, conf=0.975, greaterthan=T, x=0.20)  # I create a new object named rval
+# Prevalence as Mode=0.25, and we are 97.5% sure <0.30 
+rval <- epi.betabuster(mode=0.25, 
+                       conf=0.975, 
+                       imsure="less than", 
+                       x=0.30)  
 
 rval$shape1                #View the a shape parameter in rval
 rval$shape2                #View the b shape parameter in rval
 
-#I left them as comments, but the two lines below would be used to assign the generated values for later usage
-#Prev.shapea <- rval$shape1
-#Prev.shapeb <- rval$shape2
+#The two lines below would be used to assign the generated values for later usage. Below we decided to rename this parameters Prev.shapea and Prev.shapeb since they will represent the a and b shape parameters for the Beta distribution describing the disease prevalence
+Prev.shapea <- rval$shape1
+Prev.shapeb <- rval$shape2
 
 ```
 
@@ -98,17 +101,17 @@ text1 <- paste0("Prev ~ dbeta(1, 1)")       #Creating a short text named "text1"
 text1                                       #Asking to see the text1 object
 ```
   
-However, if the same model is to be applied later with a different prior distribution, it may be more convenient to leave the *a* and *b* shape parameters as `R` objects. Thus, if we change the prior distribution and run the script again, you would run the entire analyses with the newly created distribution. 
+However, if the same model is to be applied later with a different prior distribution, it may be more convenient to leave the *a* and *b* shape parameters as `R` objects. Thus, if we change the prior distribution and run the script again, you would run the entire analyses with the newly created distribution. For instance, the code below would use the a and b shape parameters that we created above.   
 ```{r}
 text2 <- paste0("Prev ~ dbeta(",Prev.shapea,", ",Prev.shapeb,")")            #Creating a short text named "text2" and containing other already created R objects
 text2                                                                        #Asking to see the text2 object
 ```
   
-When using `paste0()`, any text appearing outside of sets of quotation marks (e.g.,  *Prev.shapea* and *Prev.shapeb* in the preceding script) will be considered as `R` objects that need to be included in the text. Thus, later, I could just change the values for *Prev.shapea* and *Prev.shapeb* and my model will be automatically modified.   
+When using `paste0()`, any text appearing outside of sets of quotation marks (e.g.,  *Prev.shapea* and *Prev.shapeb* in the preceding script) will be considered as `R` objects that need to be included in the text. Thus, later, we could just change the values for *Prev.shapea* and *Prev.shapeb* and our model will be automatically modified.   
   
 **Some important notes about the text file containing the model before we start with `R2jags`:**  
   
-- JAGS is expecting to see the word "model" followed by curly brackets { }. The curly brackets will contain the likelihood function AND the priors.  
+- JAGS is expecting to see the word "model" followed by curly brackets { }. The curly brackets will contain the likelihood function **AND** the priors.  
   
 - Similarly to `R`, any line starting with a # will be ignored (these are comments).  
   
@@ -116,13 +119,13 @@ When using `paste0()`, any text appearing outside of sets of quotation marks (e.
   
 - The ~ symbol means "follows a distribution".  
   
-- Similarly to `R`, JAGS is case sensitive (i.e., *P* does not equal *p*).
+- Similarly to `R`, `JAGS` is case sensitive (i.e., *P* does not equal *p*).
   
 - Loops can be used with keyword "for" followed by curly brackets.  
   
 - Array can be indicated using squared brackets [ ].  
 
-In the example below, I create an `R` object called *model_single_prop* using the `paste0()` function and then save it as a text file using the `write.table()` function. We will check this text file below and then explain the code for the model. 
+In the example below, we create an `R` object called *model_single_prop* using the `paste0()` function and then save it as a text file using the `write.table()` function. We will check this text file below and then explain the code for the model. 
 ```{r}
 # Specify the model
 model_single_prop <- paste0("model{
@@ -144,13 +147,13 @@ write.table(model_single_prop,
             quote=FALSE, 
             sep="", 
             row.names=FALSE,
-             col.names=FALSE)
+            col.names=FALSE)
 ```
   
 Here is a snapshot of the final result (i.e., the text file):  
 
 ![Text file with the model for estimating a single proportion.](Figures\Model_single_prop.png)
- 
+  
 In the preceding script, the `paste0()` function was used to create the text, as an `R` object, that will be needed for the .txt file. This text is mainly "static", except for the *a* and *b* parameters of the beta distribution used to describe our prior knowledge on disease prevalence. You can see that, if we were to modify and then run the preceding script where we assigned values to these parameters, and then run again the `paste0()` function, our text file would be updated with new values for our prior distribution. This is a feature that we will use a lot, especially with more complex LCM, to minimize the amount of work.  
   
 The `write.table()` function was simply used to record as a .txt file the `R` object containing the text we just created.  
@@ -161,7 +164,7 @@ Both the `paste0()` and `write.table()` functions are part of basic `R`, no need
 The initial value is the first value where each Markov chain will start.  
 - You have to specify one initial value for each unknown parameter in the model.  
 - If you decide to run three Markov chains, you will need three different sets of initial values.  
-- You can also let the software choose a random value to start each chain, but it will then be impossible to **exactly** reproduce a given result. For instance, if you have obtained a very ackward Markov chain, you may not be able to reproduce this result to investigate what went wrong. Note, though, that it would be quite uncommon for a Markov chain to be "sensitive" to the chosen starting value. But you will see during the workshop that it will sometimes happen.  
+- You can also let the software choose a random value to start each chain, but it will then be impossible to **exactly** reproduce a given result. For instance, if you have obtained a very awkward Markov chain, you may not be able to reproduce this result to investigate what went wrong. Note, though, that it would be quite uncommon for a Markov chain to be extremely "sensitive" to the chosen starting value. But you will see during the workshop that it will sometimes happen.  
   
 In our preceding example we have one unknown parameter (*Prev*). If we were to run three Markov chains, we could generate three sets of initial values for this parameter as follows. Of course, the chosen values could be changed. In the case of a proportion, you can specify any value between 0 and 1.
 ```{r}
@@ -176,21 +179,21 @@ inits <- list(
 We know have a `R` object called *inits* that contains the three values where each Markov chains will start.  
 
 ## Running a model in JAGS
-We now have the three elements that we needed: the data, the model, and a set of initial values. We can now use the `R2jags` library to run our Bayesian analysis. The `R2jags` package provides an interface from `R` to the JAGS software for Bayesian data analysis. JAGS uses Markov Chain Monte Carlo (**MCMC**) simulation to generate a sample from the posterior distribution of the parameters.  
+We now have the three elements that we needed: the data, the model, and a set of initial values. We can now use the `R2jags` library to run our Bayesian analysis. The `R2jags` package provides an interface from `R` to the `JAGS` software for Bayesian data analysis. `JAGS` uses Markov Chain Monte Carlo (**MCMC**) simulation to generate a sample from the posterior distribution of the parameters.  
   
 The `R2jags` function that we will use for that purpose is the `jags()` function. Here are the arguments that we need to specify:  
   
 - The dataset using `data=`  
-- The text file containing the model written in JAGS code using `model.file=`  
+- The text file containing the model written in `JAGS` code using `model.file=`  
 - The names of the parameters which should be monitored using `parameters.to.save=`  
 - The number of Markov chains using `n.chains=`. The default is 3  
-- The sets of initial values using `inits=`. If inits is NULL, JAGS will randomly generate values  
+- The sets of initial values using `inits=`. If inits is NULL, `JAGS` will randomly generate values  
 - The number of total iterations per chain (including burn-in; default: 2000) using `n.iter=` 
 - The length of burn-in (i.e., number of iterations to discard at the beginning) using `n.burnin=`
 - The thinning rate, which represent how many of the values sampled by the MCMC will be retained. The default is 5 (1 out of 5). Since there is no *a priori* need for thinning, you can specify `n.thin`=1 in most situations
 - The last argument `DIC=TRUE` or `DIC=FALSE` will determine whether to compute the deviance, pD, and deviance information criteria (**DIC**). These could sometimes be useful for model selection/comparison. We could leave that to `DIC=FALSE` since we will not be using these values during the workshop   
     
-With the following code, we will create a `R` object called *bug.out*. This object will contain the results of running our model with the specified priors using the available data, and the sets of initial values that we have created. For this analysis, we have asked to run 3 Markov chains for 6000 iterations each and we discarded the first 1000 iterations of each chain. Finally, we will monitor our only unknown parameter: *Prev* and nothing else.
+With the following code, we will create a `R` object named *bug.out*. This object will contain the results of running our model with the specified priors using the available data, and the sets of initial values that we have created. For this analysis, we have asked to run 3 Markov chains for 6000 iterations each and we discarded the first 1000 iterations of each chain. Finally, we will monitor our only unknown parameter: *Prev* and nothing else.
 ```{r, message=FALSE, warning=FALSE}
 library(R2jags)
 library(coda)
@@ -202,7 +205,7 @@ bug.out <- jags(data=datalist,                             #Specifying the R obj
                n.chains=3,                                 #Number of chains
                inits=inits,                                #Specifying the R object containing the initial values  
                n.iter=6000,                                #Specifying the number of iterations
-               n.burnin=1000,                              #Specifying the number of iterations to remove at the begining
+               n.burnin=1000,                              #Specifying the number of iterations to remove at the beginning
                n.thin=1,                                   #Specifying the thinning rate
                DIC=FALSE)                                  #Indicating that we do not request the deviance, pD, nor DIC 
 ```
@@ -210,7 +213,7 @@ bug.out <- jags(data=datalist,                             #Specifying the R obj
 As you can see, we received a few messages. It looks good, don't you think?  
   
 ## Model diagnostic
-Before jumping to the results, you should first check if:  
+Before jumping to the results, you should first verify that:  
 - The chains have converged,  
 - The burn-in period was long enough,  
 - You have a large enough sample of values to describe the posterior distribution with sufficient precision,  
@@ -246,7 +249,7 @@ Here is another example where two chains (the red and green) converged in the sa
 ![**Figure.** Trace plot - chains converging in different areas.](Figures\2 nice 1 bad chain.png)
   
 Finally, here is a last example with just one Markov chain which clearly did not converge, even after 25,000 iterations. **You should be terrified by that!!! ;-)**.  
-![**Figure.** Trace plot - chains converging in different areas.](Figures\non-conv chain.png)
+![**Figure.** Trace plot - a non-converging chain.](Figures\non-conv chain.png)
   
 ### Number of iterations
 Next, you can inspect the posterior distributions to determine if you have a large enough sample of independent values to describe with enough precision the median estimate and the 2.5th and 97.5th percentiles. The effective sample size (**EES**) takes into account the number of values generated by the Markov chains **AND** whether these values were auto-correlated, to compute the number of "effective" independent values that are used to describe the posterior distribution. Chains that are auto-correlated will generate a smaller number of "effective values" than chains that are not auto-correlated.  
@@ -256,7 +259,7 @@ The `effectiveSize()` function of the `coda` library provide a way to appraise w
 effectiveSize(bug.mcmc)         #Asking for the ESS
 ```
   
-So we see here that, despite having stored 3 times 5,000 values (15,000 values), we have the equivalent of almost 9,000 independent values. What to do with this information? Well, you could, for instance, decide on an arbitrary rule for ESS (say 10,000 values) and then adapt the length of the chains to achieve such an ESS (for each of the selected parameters, because the effective sample sizes will not be the same for all parameters).
+So we see here that, despite having stored 3 times 5,000 values (15,000 values), we have the equivalent of roughly 10,000 independent values. What to do with this information? Well, you could, for instance, decide on an arbitrary rule for ESS (say 10,000 values) and then adapt the length of the chains to achieve such an ESS (for each of the selected parameters, because the effective sample sizes will not be the same for all parameters).
   
   
 ### Auto-correlation
@@ -277,7 +280,7 @@ print(bug.out,                  #Asking to see the mean, median, etc of the unkn
       digits.summary=3)         #Requiring a precision of 3 digits
 ```
   
-Here you see that the median *Prev* estimate (95CI) was 30% (22, 40).  
+Here you see that the median *Prev* estimate (95CI) was 26% (22, 31).  
   
 You can also ask for plotting the *bug.mcmc* object that you have created using the `plot()` function. It would produce the trace plot and a density plot presenting the posterior distributions of each unknown parameter.  
   
@@ -300,10 +303,13 @@ plot(density(x=bug.out$BUGSoutput$sims.list$Prev),      #Indicating variable to 
      )
 
 #plot the prior distribution
-curve(dbeta(x, shape1=Prev.shapea, shape2=Prev.shapeb), from=0, to=1,          #Plotting the corresponding prior distribution
-      lty=2,                                                                   #Asking for a dashed line pattern
-      col="red",                                                               #Asking for a red line  
-      add=TRUE)                                                                #Asking to add this plot to the preceding one
+curve(dbeta(x, 
+            shape1=Prev.shapea, 
+            shape2=Prev.shapeb), 
+      from=0, to=1,          
+      lty=2,                    #Asking for a dashed line pattern
+      col="red",                #Asking for a red line  
+      add=TRUE)                #Asking to add this plot to the preceding one
 ```
   
   
