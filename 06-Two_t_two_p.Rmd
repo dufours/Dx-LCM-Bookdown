@@ -21,7 +21,7 @@ knitr::write_bib(c(
 ```
 
 
-# Multiple populations
+# Multiple populations 
   
 In some situations, the diagnostic tests will be apply to two or more populations with different disease prevalence. In such cases, it could be reasonable to assume that:  
   
@@ -116,14 +116,14 @@ Se.TestB.shapeb <- 1     #b shape parameter for Se of TestB
 Sp.TestB.shapea <- 1     #a shape parameter for Sp of TestB
 Sp.TestB.shapeb <- 1     #b shape parameter for Sp of TestB
 
-#I will also need the total number of individuals tested in each population (nPop1 and nPop2)
+#We will also need the total number of individuals tested in each population (nPop1 and nPop2)
 n <- sapply(datalist, sum)
 nPop1 <- n[1]
 nPop2 <- n[2]
 
 ```
   
-With that, we have everything that is needed to write the JAGS model. 
+With that, we have everything that is needed to write the `JAGS` model. 
   
 ```{r}
 #Create the JAGS text file
@@ -167,7 +167,7 @@ write.table(model_2tests_2pop_indep,
 
 ```
   
-With this code, you could, again, simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions. The text file with the JAGS model will automatically be updated. Currently, it looks like this:  
+With this code, you could, again, simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions. The text file with the `JAGS` model will automatically be updated. Currently, it looks like this:  
   
 ![Text file with the model for 2 independent diagnostic tests applied to two populations.](Figures/model_2tests_2pop_indep.png)
   
@@ -239,17 +239,17 @@ As discussed before, an important assumption of the LCM described in the previou
 |             4             |                   10                  |                   12                  |                        0                        |
 |             p             |                  4+2+p                |                  3*p                  |              if df < np, then np-df             |  
   
-For this example, in addition to specifying priors for *covp* and *covn*, I will add informative priors on US *Se* and *Sp*.  
+For this example, in addition to specifying priors for *covp* and *covn*, we will add informative priors on US *Se* and *Sp*.  
   
 ```{r, message=FALSE, warning=FALSE}
 library(epiR)
 # US sensitivity ----------------------------------------------------------
 # Sensitivity of US:  Mode=0.90, and we are 97.5% sure >0.85 
-Se.US <- epi.betabuster(mode=0.90, conf=0.975, greaterthan=T, x=0.85)  
+Se.US <- epi.betabuster(mode=0.90, conf=0.975, imsure="greater than", x=0.85)  
 
 # US specificity ----------------------------------------------------------
 # Specificity of US:  Mode=0.95, and we are 97.5% sure >0.90 
-Sp.US <- epi.betabuster(mode=0.95, conf=0.975, greaterthan=T, x=0.90)  
+Sp.US <- epi.betabuster(mode=0.95, conf=0.975, imsure="greater than", x=0.90)  
 
 Se.TestA.shapea <- Se.US$shape1     #a shape parameter for Se of TestA
 Se.TestA.shapeb <- Se.US$shape2     #b shape parameter for Se of TestA
@@ -348,7 +348,7 @@ inits <- list(list(Prev1=0.50,
               )
 ```
   
-And, when running the model using `jags()`, we would also ask to monitor *covp* and *covn*. Note that I have increased the number of iterations / burn-in period (remember the autocorrelation problem seen with LCM with a covariance between test?).   
+And, when running the model using `jags()`, we would also ask to monitor *covp* and *covn*. Note that we have increased the number of iterations / burn-in period (remember the autocorrelation problem seen with LCM with a covariance between tests?).   
   
 ```{r, message=FALSE, warning=FALSE}
 library(R2jags)
@@ -375,3 +375,347 @@ mcmcplot(bug.mcmc, title="Diagnostic plots")
 effectiveSize(bug.mcmc)
 print(bug.out, digits.summary=3) 
 ``` 
+  
+## Hierarchical latent class models  
+  
+### The general idea  
+In a given study, you may have measured individuals from a substantial number of sub-populations. For instance, in the [Dufour et al. (2017)](https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub) original study comparing the PAG-ELISA and ultrasound tests for diagnosing pregnancy in dairy cows, cows from 18 commercial dairy herds were studied. In such case, we could, for instance, split the data in 18 sub-populations and use the models described in the preceding sections, with 18 likelihood functions, and where we would estimate 18 prevalence (one for each herd). This approach is totally fine, but it may not be the most elegant, nor efficient model for that type of study. If we were to use this approach, and assuming conditional independence between tests, we would have:  
+  
+- 22 unknown parameters to estimate (*SeA* and *SpA*, *SeB* and *SpB*, and each sub-population's prevalence, *P1* to *P18* in this case);  
+- 54 degrees of freedom (3 degrees of freedom for each 2x2 table, and 18 2x2 tables).  
+  
+Nevertheless, this would be an identifiable model and we would not necessarily require informative priors.  
+  
+On the other hand, [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) have proposed a slightly different, and possibly more elegant and efficient, modelling approach named the hierarchical latent class model. Actually, in most cases, **estimating the disease prevalence in each of the sub-populations (e.g., in each of the 18 herds in the PAG study) is of no interest as compared to estimating** test accuracy and/or **the distribution of within-herd prevalence in the population of herds from which these herds were sampled (i.e., the source population)**. In such case, we could use the model described in the figure below.  
+  
+![Diagrammatic representation of Hanson et al. (2005) hierarchical latent class model. Rectangles represent observed variables (results of the two tests), ovals represent latent variable (individual herd's disease prevalence and population’s distribution of within-herd prevalence), and circles represent the unknown accuracy parameters (Se and Sp of the two tests). ](Figures/Hierarchical model.png)  
+
+  
+Briefly, in this model we would assume that each of the recruited herds originated from a large population of herds (the source population). We would then only need to describe the distribution of within-herd prevalence of the source population (rather than the prevalence of sick individuals of each herd, as we did so far). We could propose a *beta(a, b)* distribution as prior for this distribution of within-herd prevalence. Given the hierarchical nature of the priors (i.e., the priors are on the source population, not on the studied sub-populations), we will rather refer to them as **hyperpriors**.  In the hierarchical model, instead of providing hyperpriors for *a* and *b*, we will instead provide hyperpriors for *mu* and *psi*. Remember from Chapter 2 that:  
+  
+- *mu* represents how the mean within-herd prevalence varies in the source population of herds;  
+- *psi* describes the spread of the distribution around the mean within-herd prevalence in the source population of herds.  
+  
+And also, in a *beta(a,b)* distribution:  
+  
+$a = mu*psi$  
+$b = psi*(1-mu)$  
+  
+For *mu*, it would be quite natural to use a beta distribution as hyperprior, given that the mean within-herd prevalence need to be bounded by 0.0 and 1.0. For *psi*, which represent a variance, a gamma distribution could be used as hyperprior.  
+  
+We have not discussed gamma distributions in Chapter 2, since they are not used in the other BLCM presented in this document. Briefly, the gamma distribution is also defined by two parameters *α* and *β*. The *α* parameter is also known as the *shape* parameter and the *β* parameter is known as the *rate* parameter. Gamma distributions can take different forms, but are bounded to values between 0 and ∞. Moreover, a **Gamma(0.001, 0.001) would correspond to a vague gamma distribution.**  
+  
+### The likelihood function  
+We could described the likelihood function for the hierarchical model as follow:  
+  
+$\text{for i in  }1:NumberOfHerds$  
+$n[i,1:4] \sim dmulti(p[i,1:4], NumAnimInHerd[i])$ 
+  
+$p[i,1] = prevInHerd[i]*SeA*SeB + (1-prevInHerd[i])*(1-SpA)*(1-SpB)$  
+$p[i,2] = prevInHerd[i]*SeA*(1-SeB) + (1-prevInHerd[i])*(1-SpA)*SpB$  
+$p[i,3] = prevInHerd[i]*(1-SeA)*SeB + (1-prevInHerd[i])*SpA*(1-SpB)$  
+$p[i,4] = prevInHerd[i]*(1-SeA)*(1-SeB) + (1-prevInHerd[i])*SpA*SpB$ 
+  
+$prevInHerd[i] \sim dbeta(alpha, beta)$ 
+$alpha = mu*psi$  
+$beta = psi*(1-mu)$  
+
+Where *NumberOfHerds* is the number of sub-populations in the study, *n[i,1:4]* is the content, for each sub-population, of the 4 cells (*n1*, *n2*, *n3*, and *n4*) from the 2x2 tables with cross-classified tests results (i.e., the observed data), *NumAnimInHerd[i]* is the number of individuals tested in each sub-population, and *prevInHerd[i]* is the prevalence of disease in each sub-population. *dbeta(alpha, beta)* is the distribution of within-herd prevalence in the source population (assumed to follow a beta distribution) and is defined by two unknown parameters, *mu* and *psi*, for which we will have to propose hyperpriors. We could use a beta hyperprior for *mu* and a gamma hyperprior for *psi*. These hyperpriors could be vague (e.g., beta(1.0, 1.0) and gamma(0.001, 0.001)) or informative (we will see in a following section how to propose informative hyperpriors for *mu* and *psi*).  
+  
+If we examine the hierarchical model more carefully, we see one important difference between this model and the models we have used so far, the inclusion of a loop in the likelihood function. Briefly, we are asking to repeat this likelihood function for each sub-population (i.e., *for (i in 1:NumberOfHerds)*). Again, if we try to translate this likelihood function in words, and focusing on Herd #1 (to simplify) the number of individuals in cell *n1* (i.e., TestA+ and TestB+) is determined by the number of individuals tested in Herd #1 (*NumAnimInHerd[1]*) and the probability (*p[1]*) of falling in that cell. The latter itself depends on the true prevalence of disease in Herd #1 (*prevInHerd[1]*; which can be drawn from the source population distribution of within-herd prevalence, *dbeta(alpha, beta)*), and on each of the two tests sensitivity (*SeA* and *SeB*) and specificity (*SpA* and *SpB*). We can use similar reasoning for *n2*, *n3*, and *n4*. Finally, the multinomial distribution would further impose that the four probabilities (*p[1]*, *p[2]*, *p[3]*, and *p[4]*) have to sum up to 1.0 (i.e., 100%) within a given herd.  
+  
+Note that we now have:  
+  
+- 6 unknown parameters to estimate (*SeA* and *SpA*, *SeB* and *SpB*, *mu*, and *psi*), as compared to 4 parameters plus one parameter for each sub-population for the approach described in the preceding sections;  
+- 3 degrees of freedom for each sub-population.  
+  
+For instance, with the 18 commercial herds available in the [Dufour et al. (2017)](https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub) original study, we would have 6 unknown parameters and 54 degrees of freedom. If we were to use 30 herds, we would still have 6 unknown parameters, but now 90 degrees of freedom, etc. This is the reason why we described the [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) hierarchical model as "more efficient".  
+  
+### The data  
+Data for the hierarchical model will have to be organized as follow. Briefly, we will first need a **dataset where we report, for each sub-population, the number of individuals with a given combination of tests results**. For instance, below we are importing an Excel sheet with the organized results. The example below is reproduced from [Dufour et al. (2017; Table 1)](https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub).   
+  
+```{r}
+library(readxl)   #A library that can import .xlsx documents 
+obs <- read_excel("Data/Herd level results.xlsx")
+#Check the data
+obs
+```
+  
+You can see that we have used this order:  
+  
+- *TestA* + and *TestB* +  
+- *TestA* + and *TestB* -  
+- *TestA* - and *TestB* +  
+- *TestA* - and *TestB* -  
+  
+This will be important, because we will use the same order for the 4 probabilities in the likelihood function.  
+  
+Then, we will need a **second dataset where we report the total number of individual tested by sub-population**. This can be computed from the above dataset as follow:  
+  
+```{r}
+#Compute total number of animals by herd
+totals <- rowSums(obs)
+#Check the total number of animals per herd
+totals
+```
+  
+The previous two pieces of data will have to be reunited together. We can do this using:  
+  
+```{r}
+datalist <- list(obs=obs, totals=totals)
+#Check the datalist
+datalist
+```
+  
+Finally, we will need to know the **number of sub-populations studied**. Again, this can be computed as follow:  
+  
+```{r}
+#Compute number of herds
+numherd <- dim(obs)[1]
+#Check number of herd
+numherd
+```
+  
+We could also assign labels to the tests for future usage, as we did before:  
+  
+```{r}
+TestA <- "US"
+TestB <- "PAG"
+```
+
+### The priors  
+We will need to assign priors (or hyperpriors) for *mu*, *psi*, *SeA* and *SpA*, *SeB* and *SpB*. Below, we have used vague priors (or hyperpriors) for all these unknown parameters. If we were to use informative priors for *SeA*, *SpA*, *SeB*, or *SpB*, we could implement this as in the previous chapters. Informative priors for *mu* and *psi* are bit more tedious to generate; we will describe in a following section how to achieve this.  
+
+```{r}
+mu.shapea <- 1.0           # a shape parameter for mu
+mu.shapeb <- 1.0           # b shape parameter for mu
+
+psi.shapea <- 0.001        # α (shape) parameter for gamma
+psi.shapeb <- 0.001        # β (rate) parameter for gamma
+
+Se.TestA.shapea <- 1       #a shape parameter for Se of TestA
+Se.TestA.shapeb <- 1       #b shape parameter for Se of TestA
+Sp.TestA.shapea <- 1       #a shape parameter for Sp of TestA
+Sp.TestA.shapeb <- 1       #b shape parameter for Sp of TestA
+
+Se.TestB.shapea <- 1       #a shape parameter for Se of TestB
+Se.TestB.shapeb <- 1       #b shape parameter for Se of TestB
+Sp.TestB.shapea <- 1       #a shape parameter for Sp of TestB
+Sp.TestB.shapeb <- 1       #b shape parameter for Sp of TestB
+```
+
+### Write the JAGS model  
+The text file we would like to generate would look as the screen capture below.  
+  
+![Text file for the hierarchical model. ](Figures/Hierarchical model text file.png)
+
+    
+The script below can be used for that.  
+```{r}
+#Create the JAGS text file
+model_2tests_hierarchical <- paste0("model{
+
+#=== LIKELIHOOD	===#
+  for (i in 1:", numherd,"){
+    obs[i, 1:4] ~ dmulti(p[i, 1:4], totals[i])
+    
+    p[i, 1] <- prev[i]*Se_", TestA, "*Se_", TestB, " + (1-prev[i])*(1-Sp_", TestA, ")*(1-Sp_", TestB, ")
+    p[i, 2] <- prev[i]*Se_", TestA, "*(1-Se_", TestB, ") + (1-prev[i])*(1-Sp_", TestA, ")*Sp_", TestB, "
+    p[i, 3] <- prev[i]*(1-Se_", TestA, ")*Se_", TestB, " + (1-prev[i])*Sp_", TestA, "*(1-Sp_", TestB, ")
+    p[i, 4] <- prev[i]*(1-Se_", TestA, ")*(1-Se_", TestB, ") + (1-prev[i])*Sp_", TestA, "*Sp_", TestB, "
+    
+    prev[i] ~ dbeta(alpha, beta)
+  }
+  
+#=== PRIOR	===#
+  alpha <- mu*psi      ## a parameter for the hierarchical beta distribution
+  beta <- psi*(1-mu)   ## b parameter for the hierarchical beta distribution
+  
+  mu ~ dbeta(", mu.shapea, ", ", mu.shapeb, ") 	     ## Mean within-herd prevalence distribution in the source population
+  psi ~ dgamma(", psi.shapea, ", ", psi.shapeb, ") 	 ## Spread of the within-herd prevalence distribution in the source population  
+
+  Se_", TestA, " ~ dbeta(", Se.TestA.shapea, ", ", Se.TestA.shapeb, ") 	## Prior for Se of Test A
+  Sp_", TestA, " ~ dbeta(", Sp.TestA.shapea, ", ", Sp.TestA.shapeb, ") 	## Prior for Sp of Test A
+  Se_", TestB, " ~ dbeta(", Se.TestB.shapea, ", ", Se.TestB.shapeb, ") 	## Prior for Se of Test B
+  Sp_", TestB, " ~ dbeta(", Sp.TestB.shapea, ", ", Sp.TestB.shapeb, ") 	## Prior for Sp of Test B
+ 
+}")
+
+
+#write as a text (.txt) file
+write.table(model_2tests_hierarchical, 
+            file="model_2tests_hierarchical.txt", 
+            quote=FALSE, 
+            sep="", 
+            row.names=FALSE,
+            col.names=FALSE)
+
+```
+
+### Generating initial values  
+Remember, the initial value is the first value where each Markov chain will start.  
+- You have to specify one initial value for each unknown parameter in the model;  
+- If you decide to run three Markov chains, you will need three different sets of initial values;  
+- You can also let the software choose a random value to start each chain.  
+  
+```{r}
+#Initializing values for the unknown parameters for the 3 chains.
+inits <- list(list(mu=0.50,
+                   psi=1,
+                   Se_US=0.90,
+                   Sp_US=0.90,
+                   Se_PAG=0.90,
+                   Sp_PAG=0.90),
+              
+              list(mu=0.40,
+                   psi=2,
+                   Se_US=0.80,
+                   Sp_US=0.80,
+                   Se_PAG=0.80,
+                   Sp_PAG=0.80),
+              
+              list(mu=0.60,
+                   psi=0.5,
+                   Se_US=0.95,
+                   Sp_US=0.95,
+                   Se_PAG=0.95,
+                   Sp_PAG=0.95)
+)
+```
+
+### Running the model  
+As we did before, we could use the following script to run the model. Note that the tests accuracy parameters, along with *mu* and *psi* are the main parameters that you could monitor for that model.  
+  
+```{r, message=FALSE, warning=FALSE}
+library(R2jags)
+library(coda)
+
+#Run the Bayesian model
+bug.out <- jags(data=datalist,                             
+                model.file="model_2tests_hierarchical.txt",     
+                parameters.to.save=c("Se_US", "Sp_US", "Se_PAG", "Sp_PAG",
+                                     "mu", "psi"),               
+                n.chains=3,                                 
+                inits=inits,                                
+                n.iter=25000,                                
+                n.burnin=5000,                              
+                n.thin=1,                                   
+                DIC=FALSE)  
+```
+  
+### Model diagnostic  
+Model's diagnostic can be generated as we did before (results not shown).
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+library(mcmcplots)
+bug.mcmc <- as.mcmc(bug.out)          
+mcmcplot(bug.mcmc, title="Diagnostic plots") 
+effectiveSize(bug.mcmc)
+```
+  
+### Getting our estimates  
+Our estimates can be obtained as we did before.  
+```{r}
+print(bug.out, digits.summary=3) 
+```
+  
+Finally, you may be interested in describing the distribution of within-herd prevalence of the source population. In the following script we used *mu* and *psi* median estimates to generate this plot.  
+  
+```{r}
+mu <- 0.540      #Here used the median estimate for mu
+psi <- 161.242   #Here used the median estimate for psi
+
+alpha <- mu*psi
+beta <- psi*(1-mu)
+
+#plot the posterior distribution
+curve(dbeta(x, 
+            shape1=alpha, 
+            shape2=beta), 
+      from=0, to=1, 
+      main="Distribution of within-herd prevalence in the source population", 
+      xlab = "Proportion", 
+      ylab = "Density")
+
+```
+  
+### Generating informative hyperpriors for mu and psi  
+[Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) proposed to use a **beta distribution as a hyperprior for *mu* and a gamma distribution for *psi***. They also provided a method to elicit values for these hyperpriors. This method is, however, slightly more technical than what with have done so far.  
+  
+#### mu    
+For *mu*, (the mean within-herd prevalence) we could use a method similar to the one we used before. For instance, we could have some literature, external data, or experts opinion, indicating a most likely (mode) mean within-herd prevalence in the source population, and we could provide the 97.5th (or another) percentile for this mean within-herd prevalence. As an example, in the PAG *vs.* ultrasound study, [Dufour et al. (2017)](https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub) used reproductive data from 30 other herds from the same region as the 18 recruited herds. They computed the within-herd pregnancy prevalence at testing for these 30 herds and found a 50th and 95th percentiles of 42% and 74%, respectively. Using the `epiR` `epi.betabuster` function we could find the corresponding beta distribution as follow:      
+  
+```{r, message=FALSE, warning=FALSE}
+library(epiR) 
+# Prevalence as Mode=0.42, and we are 95% sure <0.74 
+rval <- epi.betabuster(mode=0.42, 
+                       conf=0.95, 
+                       imsure="less than", 
+                       x=0.74)  
+
+rval$shape1                #View the a shape parameter in rval
+rval$shape2                #View the b shape parameter in rval
+
+#Assign the generated values for later usage. 
+mu.shapea <- rval$shape1
+mu.shapeb <- rval$shape2  
+
+#plot the prior distribution
+curve(dbeta(x, 
+            shape1=mu.shapea, 
+            shape2=mu.shapeb), 
+      from=0, to=1, 
+      main="Hyperprior for mu (the mean within-herd prevalence)", 
+      xlab = "Proportion", 
+      ylab = "Density")
+
+```
+  
+#### psi  
+For *psi*, which describe the spread of the distribution around the mean within-herd prevalence, [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) proposed to describe the uncertainty around the 90th percentile of the distribution of the mean within-herd prevalence. More specifically, they proposed to use the most likely value (mode) for that 90th percentile and a less likely and large value (for instance the 90th percentile) of this 90th percentile.   
+  
+For instance, in [Dufour et al. (2017)](https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub), using the 30 herds from the same region, they found a 90th percentile of 65% of pregnancy (i.e., the top 10% of herds would achieve 65% pregnancy rate at pregnancy testing). Through experts opinion, they identified that this 90th percentile could hardly be higher than 75%, thus a 90th percentile of the 90th percentile of 75%. In other words, they proposed that the top 10% of herds would most probably have a pregnancy rate at testing of 65%, but this could possibly (90% sure) be up to 75%.  
+  
+Then, as described by [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526), the 50th percentile of the gamma distribution for *psi* can be computed by adding the *a* and *b* terms of the *beta(a, b)* distribution with mean of 42% (based on *mu*’s mode) and 90th percentile of 65% (based on the above assumption on the median value for the 90th percentile).
+
+```{r}
+fifty.psi <- epi.betabuster(mode=0.42, 
+                            conf = 0.90, 
+                            imsure="less than", 
+                            x=0.65)  
+
+# Computing the value for the 50th percentile for the gamma distribution for psi 
+fifty <- fifty.psi$shape1 + fifty.psi$shape2 
+fifty
+```
+  
+The 90th percentile of the gamma distribution is computed in the same manner, but using the *a* and *b* terms of the *beta(a, b)* distribution with mean of, again, 42%, but 90th percentile of 75%.  
+  
+```{r}
+ninety.psi <- epi.betabuster(mode=0.42, 
+                            conf = 0.90, 
+                            imsure="less than", 
+                            x=0.75)  
+
+# Computing the value for the 50th percentile for the gamma distribution for psi 
+ninety <- ninety.psi$shape1 + fifty.psi$shape2 
+ninety
+```
+  
+Using this methodology, we obtained the 50th and 90th percentiles for the gamma distribution for *psi* of `r fifty` and `r ninety`, respectively. Finally, these percentiles can be translated to obtain the shape and rate parameters of the corresponding gamma distribution.  
+  
+To achieve this in R, we can use the `GammaParmsFromQuantile.R` function that was developed by [Patrick Brisle from McGill U](https://www.medicine.mcgill.ca/epidemiology/Joseph/PBelisle/GammaParmsFromQuantiles.html#download). This function is not currently part of `R` package. It has to be downloaded from [Patrick Brisle website](https://www.medicine.mcgill.ca/epidemiology/Joseph/PBelisle/GammaParmsFromQuantiles.html#download). You can save the function on your computer, we did save it in a folder named "Functions". In the chunk below, the function is called and then used to identify the two parameters (shape and rate) for *psi*'s gamma distribution.     
+```{r}
+source('Functions/GammaParmsFromQuantiles.R')
+psi.gamma <- gamma.parms.from.quantiles(q=c(fifty, ninety), p=c(0.50, 0.90), plot=T)
+
+psi.shapea <- psi.gamma$shape   # a shape parameter for gamma
+psi.shapea
+psi.shapeb <- psi.gamma$rate    # b shape parameter for gamma
+psi.shapeb
+```
+  
+A gamma (`r psi.gamma$shape`, `r psi.gamma$rate`) distribution can, therefore, be used to represent hyperprior information on *psi*.  
+  
+### Extensions  
+Of course, the hierarchical model presented could be extended as we have seen before to add, for instance, covariance terms between tests (thus, allowing for conditional dependence between tests). We could also extend the likelihood function to compare 3 (or 4, or 5, etc) tests.  
+  
