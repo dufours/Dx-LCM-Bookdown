@@ -78,9 +78,16 @@ curve(dunif(x,
 ```
   
 ### Beta distribution
-Beta distributions are another type of distributions that will specifically be used for parameters that are proportions (i.e., bounded between 0.0 and 1.0). <b>For this specific workshop, they will be very handy, since sensitivity, specificity, and prevalence are all proportions </b>. The `epi.betabuster()` function from the `epiR` library can be used to define a given prior distribution based on previous knowledge. When you use the `epi.betabuster()` function, it creates a new `R` object containing different elements. Among these, one element will be named *shape1* and another *shape2*. These correspond to the *a* and *b* shape parameters of the corresponding Beta distribution.   
+Beta distributions are another type of distributions that will specifically be used for parameters that are proportions (i.e., bounded between 0.0 and 1.0). <b>For this specific workshop, they will be very handy, since sensitivity, specificity, and prevalence are all proportions</b>. Beta distributions are defined by two shape parameters (*a*) and (*b*), but these parameters have no direct interpretation, as compared for instance, to the normal distribution where the first parameter is the mean and the second parameter is a measure of the variance (e.g., the standard deviation, the variance, or the inverse of the variance, depending on the software used). Nonetheless, the *a* and *b* parameters of a beta distribution are also related to the mean and the variance of this distribution, but as follow:  
   
-For instance, we may know that the most likely value for the sensitivity of a given test is 0.85 and that we are 97.5% certain that it is greater than 0.75. With these values, we will be able to find the a and b shape parameters of the corresponding Beta distribution.  
+$a = mu*psi$  
+$b = psi*(1-mu)$  
+  
+Where *mu* is the mean of the distribution and *psi* is a measure of the variance of this distribution. Moreover, *psi* is also the sum of the *a* and *b* parameters of the beta distribution.  
+  
+Given that there is not direct interpretation of the *a* and *b* parameters of a beta distribution, it is easier to rely on software to find the *a* and *b* parameters that will correspond to a desired distribution with a certain mode (or mean) and variance. The `epi.betabuster()` function from the `epiR` library can be used to define a given prior distribution based on previous knowledge. When we use the `epi.betabuster()` function, it creates a new `R` object containing different elements. Among these, one element will be named *shape1* and another *shape2*. These correspond to the *a* and *b* shape parameters of the corresponding beta distribution.   
+  
+For instance, we may know that the most likely value for the sensitivity of a given test is 0.85 and that we are 97.5% certain that it is greater than 0.75. With these values, we will be able to find the *a* and *b* shape parameters of the corresponding beta distribution.  
   
 Within the `epi.betabuster()` function, the `imsure=` argument will be important to indicate whether the next argument `x=0.75` describe the:  
 - 2.5th percentile (`imsure="greater than"`) or the   

@@ -84,33 +84,33 @@ To run such a model, we simply need to provide a dataset where *n1*, *n2*, *n3*,
 datalist <- list(n=c(138,1,10,113))
 ```
   
-Moreover, we will need the following information to generate the *a* and *b* shape parameters of the various distributions. These values will be included in the text file presenting the JAGS model. Note that we have made use below of the `paste0()` function to produce a model in which you could modify the tests "labels". You could thus use the JAGS model that will be described next as a generic model for various diagnostic tests, and still obtain "meaningful" outputs.  
+Moreover, we will need the following information to generate the *a* and *b* shape parameters of the various distributions. These values will be included in the text file presenting the `JAGS` model. Note that we have made use below of the `paste0()` function to produce a model in which you could modify the tests "labels". You could thus use the `JAGS` model that will be described next as a generic model for various diagnostic tests, and still obtain "meaningful" outputs.  
   
 ```{r}
-#I could first create labels for TestA and TestB
+#We could first create labels for TestA and TestB
 TestA <- "US"
 TestB <- "PAG"
 
 #Provide information for the prior distributions (all beta distributions) for the 5 unknown parameters 
-#Below, I have used informative priors for Prev, and Se and Sp of Test A. The values used are not seldom important at this stage.
+#Below, we have used informative priors for Prev, and Se and Sp of Test A. The values used are not seldom important at this stage.
 Prev.shapea <- 4.2         #a shape parameter for Prev    
 Prev.shapeb <- 5.4         #b shape parameter for Prev
 
 Se.TestA.shapea <- 131     #a shape parameter for Se of TestA
-Se.TestA.shapeb <- 15     #b shape parameter for Se of TestA
+Se.TestA.shapeb <- 15      #b shape parameter for Se of TestA
 Sp.TestA.shapea <- 100     #a shape parameter for Sp of TestA
-Sp.TestA.shapeb <- 6     #b shape parameter for Sp of TestA
+Sp.TestA.shapeb <- 6       #b shape parameter for Sp of TestA
 
-Se.TestB.shapea <- 1     #a shape parameter for Se of TestB
-Se.TestB.shapeb <- 1     #b shape parameter for Se of TestB
-Sp.TestB.shapea <- 1     #a shape parameter for Sp of TestB
-Sp.TestB.shapeb <- 1     #b shape parameter for Sp of TestB
+Se.TestB.shapea <- 1       #a shape parameter for Se of TestB
+Se.TestB.shapeb <- 1       #b shape parameter for Se of TestB
+Sp.TestB.shapea <- 1       #a shape parameter for Sp of TestB
+Sp.TestB.shapeb <- 1       #b shape parameter for Sp of TestB
 
-#I will also need the total number of individuals tested (n)
+#We will also need the total number of individuals tested (n)
 n <- sapply(datalist, sum)
 ```
   
-With that, we have everything that is needed to write the JAGS model.  
+With that, we have everything that is needed to write the `JAGS` model.  
   
 ```{r}
 #Create the JAGS text file
@@ -144,7 +144,7 @@ write.table(model_2tests_1pop_indep,
 
 ```
   
-With this code, you could simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the JAGS model will automatically be updated. Currently, it looks like this:  
+With this code, you could simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the `JAGS` model will automatically be updated. Currently, it looks like this:  
   
 ![Text file with the model for 2 independent diagnostic tests in 1 single population.](Figures/model_2tests_1pop_indep.png)
   
@@ -228,7 +228,7 @@ $P2 = P*(SeA*(1-SeB)-covp) + (1-P)*((1-SpA)*SpB-covn)$
 $P3 = P*((1-SeA)*SeB-covp) + (1-P)*(SpA*(1-SpB)-covn)$  
 $P3 = P*((1-SeA)*(1-SeB)+covp) + (1-P)*(SpA*SpB+covn)$  
   
-Thus, a small quantity (*covp*) is added to the sensitivities of the tests when they agree on a positive individual, and that same quantity is substracted when the tests disagree. *covp* thus represents the positive covariance between tests. Similarly, *covn* represents the negative covariance between tests. The effect of these covariances, if greater than zero, will be to penalize our estimates of the tests sensitivities and specificities to account for their conditional dependence.  
+Thus, a small quantity (*covp*) is added to the sensitivities of the tests when they agree on a positive individual, and that same quantity is substracted when the tests disagree. *covp* thus represents the positive covariance between tests. Similarly, *covn* represents the negative covariance between tests. The effect of these covariances, if greater than zero, will be to penalize our estimates of the tests sensitivities and specificities to account for their conditional dependence. Note that having covariance terms equal to 0.0 (i.e., conditional independence) is a possibility. This model, therefore, **is not imposing a conditional dependence between tests, it rather allows for conditional dependence**.    
   
 Moreover, [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x) proposed constraints on these covariance terms based on the inferred test sensitivities and specificities. This latter aspect allows to specify "natural limits" for the covariance terms prior distributions. Briefly, they demonstrated that:  
   
@@ -280,9 +280,9 @@ write.table(model_2tests_1pop_dep,
 
 ```  
   
-Again, with this code, you could simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the JAGS model will automatically be updated. Currently, it looks like this:  
+Again, with this code, you could simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the `JAGS` model will automatically be updated. Currently, it looks like this:  
   
-![Text file with the model for 2 conditionally dependent diagnostic tests in 1 single population.](Figures/model_2tests_1pop_dep.png)
+![Text file with the model for 2 possibly conditionally dependent diagnostic tests in 1 single population.](Figures/model_2tests_1pop_dep.png)
   
 If we do not modify the other priors nor the dataset used previously we could run this model using the `jags()` function. However, we now have to add initial values for *covp* and *covn*. Also, note that we have added *covp* and *covn* to the list of parameters that we would like to monitor and we have increased substantially the number of iterations. The model allowing for conditional dependence between tests tends to be more difficult to solve. We will thus need a substantial number of iterations to get a decent ESS.  
   
@@ -343,4 +343,9 @@ print(bug.out, digits.summary=3)
 effectiveSize(bug.mcmc)
 print(bug.out, digits.summary=3) 
 ```    
-The ESS is still just around 2,000 for some parameters (e.g., *Se_PAG*), if it was for publication, we would possibly let it run for more iterations.
+The ESS is still just around 2,000 for some parameters (e.g., *Se_PAG*), if it was for publication, we would possibly let it run for more iterations.  
+  
+The model proposed by [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x) can be used to model conditional dependence between two tests only. In Chapter 9 we will see that we can also used models where > 2 tests are compared (e.g., 3, 4, 5 tests). In such cases, the method described above could be used to evaluate pairwise dependence between tests (i.e., *TestA vs. TestB*, then *TestA vs. TestC*, and, finally, *TestB vs. TestC*). If you are "lucky", perhaps just one (or none) pair of tests will yield covariance terms that are substantially different from 0.0. Then, a model with just one (or no) set of covariance terms could be used.  
+  
+If you prefer to include, in a single model, all potential covariance terms between 3 tests (or > 3 tests), then a different modelling approach will have to be used. As an example, [Denis-Robichaud et al. (2024)](https://doi.org/10.3168/jds.2024-24693) published a study where conditional dependence between 3 tests was allowed. The `R` script used for their analyses, along with the original dataset, was also published in this [Dataverse](https://doi.org/10.7910/DVN/EATTYD).  
+  
