@@ -7,6 +7,6 @@ model{
 
 #=== PRIOR	===#
 
-  Prev ~ dbeta(1, 1) 	## Prior for Prev
+  Prev ~ dbeta(81.872, 243.616) 	## Prior for Prev
 
 }

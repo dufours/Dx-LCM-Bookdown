@@ -67,11 +67,11 @@ library(epiR)
 
 # US sensitivity ----------------------------------------------------------
 # Sensitivity of US:  Mode=0.90, and we are 97.5% sure >0.85 
-Se.US <- epi.betabuster(mode=0.90, conf=0.975, greaterthan=T, x=0.85)  
+Se.US <- epi.betabuster(mode=0.90, conf=0.975, imsure="greater than", x=0.85)  
 
 # US specificity ----------------------------------------------------------
 # Specificity of US:  Mode=0.95, and we are 97.5% sure >0.90 
-Sp.US <- epi.betabuster(mode=0.95, conf=0.975, greaterthan=T, x=0.90)  
+Sp.US <- epi.betabuster(mode=0.95, conf=0.975, imsure="greater than", x=0.90)  
 
 #Provide information for the prior distributions (all beta distributions) for the unknown parameters 
 Prev0.shapea <- 1         #a shape parameter for Prev in Z=0    
