@@ -25,24 +25,24 @@ knitr::write_bib(c(
 
 In this document we have described some of the "main" LCM. More specifically we described LCMs that can be used with:  
   
-  -**Two** conditionally **independent** diagnostic tests applied in **one single population**  
-  -**Two** conditionally **dependent** diagnostic tests applied in **one single population**  
-  -**Two** conditionally **independent** diagnostic tests applied in **more than one population**  
-  -**Two** conditionally **dependent** diagnostic tests applied in **more than one population**  
-  -**More than two** conditionally **independent** diagnostic tests applied in **one single population**  
-  -**More than two** diagnostic tests applied in **one single population** and with conditional **dependence** between two of the tests  
-  -**Two** conditionally **independent** diagnostic tests, but with **accuracy of one or both tests varying as function of a characteristic of the individual tested**    
+  -**Two** conditionally **independent** diagnostic tests applied in **one single population**;  
+  -**Two** conditionally **dependent** diagnostic tests applied in **one single population**;  
+  -**Two** conditionally **independent** diagnostic tests applied in **more than one population** (using a conventional or hierarchical model);  
+  -**Two** conditionally **dependent** diagnostic tests applied in **more than one population** (using a conventional or hierarchical model);  
+  -**More than two** conditionally **independent** diagnostic tests applied in **one single population**;  
+  -**More than two** diagnostic tests applied in **one single population** and with conditional **dependence** between two of the tests;  
+  -**Two** conditionally **independent** diagnostic tests, but with **accuracy of one or both tests varying as function of a characteristic of the individual tested**;    
     
 From here, it is up to you to adapt these LCMs to fit your needs. For instance, you could have a study where three tests were applied to one population, but two of these tests were also applied to a second population. For two of the tests, you may want to relax the assumption of conditional dependence by including covariance terms between them. Finally, you may want to allow the Se and Sp of one of the test to vary as function of a characteristic of the individual tested.  
   
 When working with a "customized" LCM, the principles that we have discussed still apply. It will always be a good starting point to:  
   
-  -Count the number of unknown parameters to estimate  
-  -Organize the dataset(s)  
-  -Evaluate whether some tests combinations are not observed  
-  -Count the number of degrees of freedom available  
-  -Identify the number of informative priors that will be needed  
-  -Consider whether scientific literature will be available to develop the needed informative priors
+  -Count the number of unknown parameters to estimate;  
+  -Organize the dataset(s);  
+  -Evaluate whether some tests combinations are not observed;  
+  -Count the number of degrees of freedom available;  
+  -Identify the number of informative priors that will be needed;  
+  -Consider whether scientific literature will be available to develop the needed informative priors;
     
 Based on this initial assessment, you will be able to decide whether running this LCM is doable, or if it would be better to revise your plans.
   

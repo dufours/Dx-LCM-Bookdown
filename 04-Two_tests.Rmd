@@ -345,7 +345,7 @@ print(bug.out, digits.summary=3)
 ```    
 The ESS is still just around 2,000 for some parameters (e.g., *Se_PAG*), if it was for publication, we would possibly let it run for more iterations.  
   
-The model proposed by [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x) can be used to model conditional dependence between two tests only. In Chapter 9 we will see that we can also used models where > 2 tests are compared (e.g., 3, 4, 5 tests). In such cases, the method described above could be used to evaluate pairwise dependence between tests (i.e., *TestA vs. TestB*, then *TestA vs. TestC*, and, finally, *TestB vs. TestC*). If you are "lucky", perhaps just one (or none) pair of tests will yield covariance terms that are substantially different from 0.0. Then, a model with just one (or no) set of covariance terms could be used.  
+The model proposed by [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x) can be used to model conditional dependence between two tests only. In Chapter 9 we will see that we can also used models where > 2 tests are compared (e.g., 3, 4, 5 tests). In such cases, the method described above could be used to evaluate pairwise dependence between tests (i.e., *TestA vs. TestB*, then *TestA vs. TestC*, and, finally, *TestB vs. TestC*).   
   
-If you prefer to include, in a single model, all potential covariance terms between 3 tests (or > 3 tests), then a different modelling approach will have to be used. As an example, [Denis-Robichaud et al. (2024)](https://doi.org/10.3168/jds.2024-24693) published a study where conditional dependence between 3 tests was allowed. The `R` script used for their analyses, along with the original dataset, was also published in this [Dataverse](https://doi.org/10.7910/DVN/EATTYD).  
+
   

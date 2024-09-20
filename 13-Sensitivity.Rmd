@@ -22,15 +22,33 @@ knitr::write_bib(c(
 
 
 # Sensitivity analyses
-An important step of any Bayesian analysis is to evaluate whether the results are strongly affected by the choice of priors and/or to the assumptions made.  
+An important step of any Bayesian analysis is to evaluate whether the results are strongly affected by the model's assumptions and/or the choice of priors.  
   
-## Choice of LCM
-Regarding the sensitivity of our results to the assumptions made, this could be assessed by comparing the results from the LCM where a given assumption was made *vs.* the ones from a LCM where the assumption was relaxed. Of course, to fully "isolate" the effect of a given assumption, the same priors would have to be used in both LCM. This is, however, not always possible since the "relaxed" LCM will often need a larger number of informative priors to make it identifiable.  
+## Model's assumptions
+Regarding the sensitivity of our results to the assumptions made, this could be assessed by comparing the results from the LCM where a given assumption was made *vs.* the ones from a LCM where the assumption was relaxed. Of course, **to fully "isolate" the effect of a given assumption, the same priors would have to be used in both LCM**. This is, however, not always possible since, sometimes, the "relaxed" LCM may require a larger number of informative priors to make it identifiable.  
   
-In the end, providing the results from an "alternative" LCM could help the readers understand what was the influence of the model chosen on the presented results. As author, you would probably want to use the LCM that is the most "biologically relevant" as your main model.      
+In the end, providing the results from an "alternative" LCM could help the readers understand what was the influence of the model chosen on the presented results. As author, you would probably want to use the LCM that is the most "biologically relevant" as your main model, but present the results of these alternative models to illustrate how the choice of model may have impacted the results.  
   
-## Perturbing informative priors  
-Whenever informative priors are used in a LCM, the sensitivity of the LCM to the choice of priors should be assessed. This can be done by running the same LCM, but with "perturbed" and usually "more diffuse" priors. [Johnson et al. (2019)](https://doi.org/10.1016/j.prevetmed.2019.01.010) recommended, for instance, to move the mode of the prior distribution of a given parameter by a few percentage-points and to increase the width of its prior distribution. Then, the results from the LCM using the scientific literature-derived priors can be compared to those of the LCM using perturbed priors to assess how sensitive to the choice of priors the results are. The amount and direction by which the mode will be moved and the level of increase of the width of the distribution will depend on the problem at hand.  
+Below are some of the main assumptions that you may want to evaluate.  
+  
+### Conditional independence between tests  
+Even if two tests rely on very different biological processes, it would be a good practice to evaluate whether allowing for conditional dependence between tests would produce different results. You could do this using the model described in Chapter 5.  
+  
+### Constant test accuracy across populations  
+To evaluate whether test's accuracy is constant across populations, the following options could be used:  
+  
+- Check if the accuracy vary as function of a characteristic of the tested individuals (e.g., age, breed, etc);  
+- If a substantial number of populations were studied:  
+  - We could run the model after removing one of the population and repeat this process for each populations. If the results (e.g., the test's accuracy parameters) differ substantially for one of the model, this could indicate that the test accuracy is different in this population;  
+  - We could allow for different accuracy in one or many of the populations. For instance, we may define *TestA* accuracy as *SeA-2* and *SpA-2* in one (or some) of the populations studied and as *SeA* and *SpA* for all other populations. If the *SeA* and *SeA-2* (or *SpA* and *SpA-2*) parameters differ substantially, this may, again, indicate that the test accuracy is different in this population.  
+  
+### Prevalence varies from one population to another  
+This latter assumption is important for the [Hui and Walter (1980)](https://www.jstor.org/stable/2530508?seq=1) model and other similar models. One thing that can be done is to “eyeball” the initial tests' results and/or the estimated prevalence to confirm some differences between populations in, respectively, the apparent and/or true prevalence.  
+  
+Besides, [Gustafson et al. (2005)](https://projecteuclid.org/journals/statistical-science/volume-20/issue-2/On-Model-Expansion-Model-Contraction-Identifiability-and-Prior-Information/10.1214/088342305000000098.full) have reviewed the impacts of having two populations with very similar prevalence and the only impact was a lack of identifiability of the model. This latter issue would results in non-converging Markov chains for one or a few of the unknown parameters. If the Markov chains converged, then the assumption of varying prevalence between population is probably not a problem.      
+  
+## Choice of priors  
+Whenever informative priors are used in a LCM, the sensitivity of the LCM to the choice of priors should be assessed. This can be done by running the same LCM, but with "perturbed" and usually "more diffuse" priors. [Johnson et al. (2019)](https://doi.org/10.1016/j.prevetmed.2019.01.010) recommended, for instance, to move the mode of the prior distribution of a given parameter by a few percentage-points (e.g., -15 percentage-points) and to increase the width of its prior distribution. Then, the results from the LCM using the scientific literature-derived priors can be compared to those of the LCM using perturbed priors to assess how sensitive to the choice of priors the results are. The amount and direction by which the mode will be moved and the level of increase of the width of the distribution will depend on the problem at hand.  
 
 For instance, in the preceding sections we used the [Romano et al. (2006)](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub) results, to inform the priors for the Se and Sp of a US exam conducted between 28-45 days post-insemination:  
   -Se = 0.90 (95CI: 0.85, 0.95)  
@@ -42,7 +60,7 @@ We thus came up with these prior distributions for US' Se and sp.
 library(epiR)
 # US sensitivity ----------------------------------------------------------
 # Sensitivity of US:  Mode=0.90, and we are 97.5% sure >0.85 
-Se.US <- epi.betabuster(mode=0.90, conf=0.975, greaterthan=T, x=0.85)  
+Se.US <- epi.betabuster(mode=0.90, conf=0.975, imsure="greater than", x=0.85)  
 #plot the Se prior distribution
 curve(dbeta(x, shape1=Se.US$shape1, shape2=Se.US$shape2), from=0, to=1, 
       main="Prior for ultrasound exam sensitivity", xlab = "Proportion", ylab = "Density")
@@ -54,18 +72,18 @@ curve(dbeta(x, shape1=Se.US$shape1, shape2=Se.US$shape2), from=0, to=1,
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 # US specificity ----------------------------------------------------------
 # Specificity of US:  Mode=0.95, and we are 97.5% sure >0.90 
-Sp.US <- epi.betabuster(mode=0.95, conf=0.975, greaterthan=T, x=0.90)  
+Sp.US <- epi.betabuster(mode=0.95, conf=0.975, imsure="greater than", x=0.90)  
 #plot the Sp prior distribution
 curve(dbeta(x, shape1=Sp.US$shape1, shape2=Sp.US$shape2), from=0, to=1, 
       main="Prior for ultrasound exam specificity", xlab = "Proportion", ylab = "Density")
 ```
   
-Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se:0.80 and mode for Sp:0.85) and to increase the with of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:  
+Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se:0.80 and mode for Sp:0.85) and to increase the width of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:  
   
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 # US sensitivity ----------------------------------------------------------
 # Sensitivity of US:  Mode=0.80, and we are 97.5% sure >0.55 
-Se.US <- epi.betabuster(mode=0.80, conf=0.975, greaterthan=T, x=0.55)  
+Se.US <- epi.betabuster(mode=0.80, conf=0.975, imsure="greater than", x=0.55)  
 #plot the Se prior distribution
 curve(dbeta(x, shape1=Se.US$shape1, shape2=Se.US$shape2), from=0, to=1, 
       main="Perturbed prior for ultrasound exam sensitivity", xlab = "Proportion", ylab = "Density")
@@ -75,7 +93,7 @@ curve(dbeta(x, shape1=Se.US$shape1, shape2=Se.US$shape2), from=0, to=1,
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 # US specificity ----------------------------------------------------------
 # Specificity of US:  Mode=0.85, and we are 97.5% sure >0.60 
-Sp.US <- epi.betabuster(mode=0.85, conf=0.975, greaterthan=T, x=0.60)  
+Sp.US <- epi.betabuster(mode=0.85, conf=0.975, imsure="greater than", x=0.60)  
 #plot the Sp prior distribution
 curve(dbeta(x, shape1=Sp.US$shape1, shape2=Sp.US$shape2), from=0, to=1, 
       main="Perturbed prior for ultrasound exam specificity", xlab = "Proportion", ylab = "Density")
@@ -108,11 +126,11 @@ library(epiR)
 
 # US sensitivity ----------------------------------------------------------
 # Sensitivity of US:  Mode=0.90, and we are 97.5% sure >0.85 
-Se.US <- epi.betabuster(mode=0.90, conf=0.975, greaterthan=T, x=0.85)  
+Se.US <- epi.betabuster(mode=0.90, conf=0.975, imsure="greater than", x=0.85)  
 
 # US specificity ----------------------------------------------------------
 # Specificity of US:  Mode=0.95, and we are 97.5% sure >0.90 
-Sp.US <- epi.betabuster(mode=0.95, conf=0.975, greaterthan=T, x=0.90)  
+Sp.US <- epi.betabuster(mode=0.95, conf=0.975, imsure="greater than", x=0.90)  
 
 # Assign values generated -------------------------------------------------
 Prev1.shapea <- 1         #a shape parameter for Prev in population 1    
@@ -243,11 +261,11 @@ print(bug.out, digits.summary=3)
 
 # US sensitivity ----------------------------------------------------------
 # Sensitivity of US:  Mode=0.80, and we are 97.5% sure >0.55 
-Se.US <- epi.betabuster(mode=0.80, conf=0.975, greaterthan=T, x=0.55)  
+Se.US <- epi.betabuster(mode=0.80, conf=0.975, imsure="greater than", x=0.55)  
 
 # US specificity ----------------------------------------------------------
 # Specificity of US:  Mode=0.85, and we are 97.5% sure >0.60 
-Sp.US <- epi.betabuster(mode=0.85, conf=0.975, greaterthan=T, x=0.60)  
+Sp.US <- epi.betabuster(mode=0.85, conf=0.975, imsure="greater than", x=0.60)  
 
 # Assign values generated -------------------------------------------------
 Se.TestA.shapea <- Se.US$shape1     #a shape parameter for Se of TestA

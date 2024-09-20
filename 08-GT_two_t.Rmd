@@ -221,7 +221,7 @@ print(bug.out, digits.summary=3)
 ```
   
 ## Conditional dependence
-With LCM where >2 diagnostic tests are used, we could, again, relax the assumption of conditional independence by adding covariance terms representing the conditional dependence between tests [(Dendukuri and Joseph, 2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x). However, a LCM including every covariance term between every test is rarely feasible. A more pragmatic approach is to consider pair-wise covariance terms between two tests.  
+With LCM where >2 diagnostic tests are used, we could, again, relax the assumption of conditional independence by adding covariance terms representing the conditional dependence between tests [(Dendukuri and Joseph, 2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x). However, a LCM including every covariance term between every test is not always feasible. A more pragmatic approach would be to consider pair-wise covariance terms between two of the three tests.  
   
 For instance, using the example from the preceding section, we could assume that US and TRE, which are both based on recognition (tactile or visual) of the amniotic vesicle or embryo, are possibly conditionally **dependent** (as compared to the PAG test, which measure a glycoprotein associated with the placenta). We could thus include covariance terms between these two specific tests. Remember, we had set up US as Test A and TRE as Test C. It will be easier, however, to manage the covariance terms if the dependent tests are next to each other within the likelihood function. I will, therefore, re-assign the tests as follows, and reorganized the dataset with that new tests configuration.  
   -Test A: US  
@@ -314,3 +314,9 @@ mcmcplot(bug.mcmc, title="Diagnostic plots")
 effectiveSize(bug.mcmc)
 print(bug.out, digits.summary=3) 
 ```
+  
+In cases where you would like to consider potential conditional dependence between all tests, you could either:  
+  
+- Run a number of models where you include, each time, one pairwise conditional dependence. For instance, with three tests: 1) model with *TestA* *vs.* *TestB*; 2) model with *TestA* *vs.* *TestC*; and 3) model with *TestB* *vs.* *TestC*. If you are "lucky", perhaps just one (or none) pair of tests will yield covariance terms that are substantially different from 0.0. Then, a model with just one (or no) set of covariance terms could be used. 
+  
+- Include, in a single model, all potential covariance terms between 3 tests (or > 3 tests). For this, a different modelling approach will have to be used. As an example, [Denis-Robichaud et al. (2024)](https://doi.org/10.3168/jds.2024-24693) published a study where conditional dependence between 3 tests was allowed. The `R` script used for their analyses, along with the original dataset, was also published in this [Dataverse](https://doi.org/10.7910/DVN/EATTYD).  
