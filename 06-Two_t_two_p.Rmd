@@ -418,7 +418,7 @@ $p[i,2] = prevInHerd[i]*SeA*(1-SeB) + (1-prevInHerd[i])*(1-SpA)*SpB$
 $p[i,3] = prevInHerd[i]*(1-SeA)*SeB + (1-prevInHerd[i])*SpA*(1-SpB)$  
 $p[i,4] = prevInHerd[i]*(1-SeA)*(1-SeB) + (1-prevInHerd[i])*SpA*SpB$ 
   
-$prevInHerd[i] \sim dbeta(alpha, beta)$ 
+$prevInHerd[i] \sim dbeta(alpha, beta)$  
 $alpha = mu*psi$  
 $beta = psi*(1-mu)$  
 
