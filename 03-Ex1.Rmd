@@ -93,8 +93,9 @@ Can you think of a way to estimate the true prevalence, rather than the apparent
   
 **Answer:** I chose to run a model with 3 chains of 10,000 iterations each (11,000 iterations minus a burn-in of 1,000). I have obtained the following diagnostic plots:  
   
-![Diagnostic plot](Figures\Ex1_Q1_Dx.png)
+![**Diagnostic plot**](Figures\Ex1_Q1_Dx.png)  
   
+<br/>    
 Convergence of the 3 chains was achieved, all three chains appear to be moving in the same space (see trace plot). The 1,000 iterations burn-in period is probably more than needed for this very simple problem. Autocorrelation plot is just perfect with correlation declining very rapidly close to zero at lag of 1! The effective sample size for the *Prev* parameter is >18,000 values. So, plenty of precision to report the median and 2.5th and 97.5th percentiles.        
   
 The median pregnancy prevalence estimate (95% CI) was 53.0% (46.9, 59.0).  
@@ -113,9 +114,9 @@ Thus, we have a Frequentist estimated proportion of 53.1% with a Frequentist 95 
   
 **Answer:** That was a tricky question don't you think? Below is the model we used for that:  
   
-![Model used to estimate true prevalence](Figures\model_single_prop_true_prev.png)
+![**Model used to estimate true prevalence**](Figures\model_single_prop_true_prev.png)  
   
-  
+<br/>    
 It may a bit disturbing at first sight, but we did not try to isolate the true prevalence (*Prev*) to the left side of the equation relating the apparent (*AppPrev*) and true prevalence (*Prev*). This is because Bayesian models are not necessarily read from left to right, but rather as a big "spaghetti bowl". In short, there is no need for a left to right form of mathematical writing. As long as we explain how the two parameters *AppPrev* and *Prev* are linked, the model will make sense of this.  
   
 Then, you may also have noticed that we provided prior distributions for *Prev*, an unknown parameter, and also for US sensitivity and specificity (*Se* and *Sp*). But we did not specified any prior distribution for the apparent prevalence (*AppPrev*). Indeed, *AppPrev* is also an unknown parameter, but it was directly defined by the equation linking the true (*Prev*) and apparent prevalence (*AppPrev*). Therefore, there is no need for specifying a prior distribution for *AppPrev*.  

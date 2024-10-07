@@ -35,8 +35,9 @@ In such case, it would be better to consider a LCM where conditional dependence 
 ## Assuming conditional independence
 When two tests are conditionally independent, then obtaining a given combination of results to Test A and Test B, as function of the true disease prevalence (*P*) and of the accuracy of each test (*SeA*, *SpA*, *SeB*, *SpB*) can be described as illustrated below:  
   
-![Illustration of the different potential results when applying two conditionally independent tests in a population.](Figures/cond_indep.png)
+![**Illustration of the different potential results when applying two conditionally independent tests in a population.**](Figures/cond_indep.png)  
   
+<br/>    
 From that illustration, we can deduce that the probability of testing positive to both tests is the sum of the first and fifth rows:  
   
 $P(TestA+ TestB+) = P*SeA*SeB + (1-P)*(1-SpA)*(1-SpB)$  
@@ -60,7 +61,7 @@ dp_data2 <- data.frame(Results, TestA_positive, TestA_negative)
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
 library(kableExtra)
-kable(dp_data2, col.names=c(" ", "Test A+", "Test A-"), caption="Cross-classified results from two diagnostic tests")%>%
+kable(dp_data2, label=NA, col.names=c(" ", "Test A+", "Test A-"), caption="Cross-classified results from two diagnostic tests")%>%
   kable_styling()
 ```
   
@@ -146,9 +147,9 @@ write.table(model_2tests_1pop_indep,
   
 With this code, you could simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the `JAGS` model will automatically be updated. Currently, it looks like this:  
   
-![Text file with the model for 2 independent diagnostic tests in 1 single population.](Figures/model_2tests_1pop_indep.png)
+![**Text file with the model for 2 independent diagnostic tests in 1 single population.**](Figures/model_2tests_1pop_indep.png)
   
-
+<br/>    
 We will also need to provide a list of initial values (one per Markov chain) for all unknown parameters.   
   
 ```{r}
@@ -282,8 +283,9 @@ write.table(model_2tests_1pop_dep,
   
 Again, with this code, you could simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the `JAGS` model will automatically be updated. Currently, it looks like this:  
   
-![Text file with the model for 2 possibly conditionally dependent diagnostic tests in 1 single population.](Figures/model_2tests_1pop_dep.png)
+![**Text file with the model for 2 possibly conditionally dependent diagnostic tests in 1 single population.**](Figures/model_2tests_1pop_dep.png)
   
+<br/>    
 If we do not modify the other priors nor the dataset used previously we could run this model using the `jags()` function. However, we now have to add initial values for *covp* and *covn*. Also, note that we have added *covp* and *covn* to the list of parameters that we would like to monitor and we have increased substantially the number of iterations. The model allowing for conditional dependence between tests tends to be more difficult to solve. We will thus need a substantial number of iterations to get a decent ESS.  
   
 ```{r, message=FALSE, warning=FALSE}

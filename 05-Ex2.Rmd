@@ -86,16 +86,18 @@ Thus, the 10 cows that were PAG+ and US- where all considered to be a failure of
   
 **Answer:** Beforehand, we would say no, it will not work! We have 5 unknown parameters and only 3 degrees of freedom. The model is non-identifiable. With some data sets, though, it will sometimes work (if the number of potential solutions is very limited). This is the case here, there is so little disagreement between tests that the Markov chains were able to converge. However, they have a strange behaviour, for all parameters, we always have two chains converging in one area and another one converging at the exact opposite (see figure below). This is a case where we have a mirror solution. When such situation arise, we could consider adding informative priors for at least one other parameter (to make the model identifiable). However, remember that **mirror solutions may arise even in LCM that are identifiable**. In this latter case, we would have to exclude the Markov chain  producing the "biologically impossible" results or to modify the set of initial values of the problematic Markov chain.  
   
-![Diagnostic plot - Mirror solution](Figures\mirror.png) 
+![**Diagnostic plot - Mirror solution**](Figures\mirror.png)   
   
+<br/>      
 **3.** Build a model where conditional dependency is a possibility. How many unknown parameters and degrees of freedom do you have? Are your Markov chains behaving OK? What do you observe? Try to play with the number of iterations to reach an effective sample size (**ESS**) > 3,000. How are your results differing from that of question 1 (where you assumed conditional independence)?  
 
 **Answer:** We have 7 unkown parameters (PAG's *Se* and *Sp*, US' *Se* and *Sp*, *P*, *covp*, and *covn*). We still only have 3 degrees of freedom, so we need informative priors on 4 parameters. We can use the [Romano et al. (2006)](https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub) derived priors for US' *Se* and *Sp*, and use our pregnancy prevalence informative prior. We can use the natural bounds of *covp* and *covn* proposed by [Dendukuri and Joseph (2001)](https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x) as priors for these parameters.  
   
 We initially ran the LCM for 11,000 iterations (with a burn-in of 1,000). The Markov chains were still cycling up and down for some of the parameters (*Se_PAG* and *covp* were the worst; see *Se_PAG* below). But it is still cycling in a very tight space (i.e., check the Y-axis scale). Autocorrelation seems to be a problem (especially for *Se_pag* and *covp*, again).  
   
-![Diagnostic plot - 11,000 iterations](Figures\Ex2 Q3 11000 it.png)
+![**Diagnostic plot - 11,000 iterations**](Figures\Ex2 Q3 11000 it.png)  
   
+<br/>      
 The ESS for these two parameters were both around 170. So, despite the 30,000 values (3 chains times 11,000 iterations, minus the 1,000 burn-in of each chain) stored during the Monte Carlo simulation, there is just the equivalent of 170 independent values.  This would be quite a small sample to report with precision the median, 2.5th, and 97.5th estimates. Using the exact same model, but with a number of iteration of 201,000, we obtained ESS >3,500 for all parameters.  
   
 **Table.** Results of the LCM assuming or not conditional independence  between diagnostic tests.  

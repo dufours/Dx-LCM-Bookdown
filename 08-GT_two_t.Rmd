@@ -160,8 +160,9 @@ write.table(model_3tests_1pop_indep,
   
 With this code, you could, again, simply modify the labels for Test A, Test B, and Test C, and the shape parameters for the prior distributions. The text file with the JAGS model will automatically be updated. Currently, it looks like this:  
   
-![Text file with the LCM for 3 independent diagnostic tests applied to one population.](Figures/model_3tests_1pop_indep.png)
+![**Text file with the LCM for 3 independent diagnostic tests applied to one population.**](Figures/model_3tests_1pop_indep.png)  
   
+<br/>     
 Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful again, we now have three tests.    
   
 ```{r}
@@ -289,8 +290,9 @@ write.table(model_3tests_1pop_dep,
   
 The text file would look as follows:  
   
-![Text file with the LCM for 3 diagnostic tests applied to one population and allowing for conditional dependence between two of the tests (US and TRE).](Figures/model_3tests_1pop_dep.png)
+![**Text file with the LCM for 3 diagnostic tests applied to one population and allowing for conditional dependence between two of the tests (US and TRE).**](Figures/model_3tests_1pop_dep.png)  
   
+<br/>    
 We could run the model using `jags()` function and then produce the diagnostic plots, compute the ESS, and print out our results as we did previously (results not shown).  
   
 ```{r, message=FALSE, warning=FALSE, results=FALSE}

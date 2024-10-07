@@ -149,8 +149,9 @@ write.table(model_2tests_covariate,
   
 With this code, you could, again, simply modify the labels for Test A and Test B, and for Z0 and Z1, and the shape parameters for the prior distributions. The text file with the JAGS model will automatically be updated. Currently, it looks like this:  
   
-![Text file with the LCM for 2 independent diagnostic tests applied to one population but with one of the test accuracy varying as function of a covariate.](Figures/model_2tests_covariate.png)  
+![**Text file with the LCM for 2 independent diagnostic tests applied to one population but with one of the test accuracy varying as function of a covariate.**](Figures/model_2tests_covariate.png)    
   
+<br/>    
 Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful, we now have two tests, but two Se and Sp for one of the test, and two prevalence.    
   
 ```{r}

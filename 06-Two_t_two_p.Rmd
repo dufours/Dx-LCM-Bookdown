@@ -169,9 +169,9 @@ write.table(model_2tests_2pop_indep,
   
 With this code, you could, again, simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions. The text file with the `JAGS` model will automatically be updated. Currently, it looks like this:  
   
-![Text file with the model for 2 independent diagnostic tests applied to two populations.](Figures/model_2tests_2pop_indep.png)  
-    
-    
+![**Text file with the model for 2 independent diagnostic tests applied to two populations.**](Figures/model_2tests_2pop_indep.png)  
+  
+<br/>        
 Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful again, we now have two prevalence (*Prev1* and *Prev2*).    
   
 ```{r}
@@ -314,9 +314,9 @@ write.table(model_2tests_2pop_dep,
   
 This text file looks like this:  
   
-![Text file with the model for 2 DEPENDENT diagnostic tests applied to two populations.](Figures/model_2tests_2pop_dep.png)  
+![**Text file with the model for 2 DEPENDENT diagnostic tests applied to two populations.**](Figures/model_2tests_2pop_dep.png)    
   
-     
+<br/>         
 Again, the list of initial values will have to be modified to include (*covp* and *covn*).    
   
 ```{r}
@@ -390,9 +390,9 @@ Nevertheless, this would be an identifiable model and we would not necessarily r
   
 On the other hand, [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) have proposed a slightly different, and possibly more elegant and efficient, modelling approach named the hierarchical latent class model. Actually, in most cases, **estimating the disease prevalence in each of the sub-populations (e.g., in each of the 18 herds in the PAG study) is of no interest as compared to estimating** test accuracy and/or **the distribution of within-herd prevalence in the population of herds from which these herds were sampled (i.e., the source population)**. In such case, we could use the model described in the figure below.  
   
-![Diagrammatic representation of Hanson et al. (2005) hierarchical latent class model. Rectangles represent observed variables (results of the two tests), ovals represent latent variable (individual herd's disease prevalence and population’s distribution of within-herd prevalence), and circles represent the unknown accuracy parameters (Se and Sp of the two tests). ](Figures/Hierarchical model.png)  
+![**Diagrammatic representation of Hanson et al. (2005) hierarchical latent class model. Rectangles represent observed variables (results of the two tests), ovals represent latent variable (individual herd's disease prevalence and population’s distribution of within-herd prevalence), and circles represent the unknown accuracy parameters (Se and Sp of the two tests).** ](Figures/Hierarchical model.png)  
   
-  
+<br/>     
 Briefly, in this model we would assume that each of the recruited herds originated from a large population of herds (the source population). We would then only need to describe the distribution of within-herd prevalence of the source population (rather than the prevalence of sick individuals of each herd, as we did so far). We could propose a *beta(a, b)* distribution as prior for this distribution of within-herd prevalence. Given the hierarchical nature of the priors (i.e., the priors are on the source population, not on the studied sub-populations), we will rather refer to them as **hyperpriors**.  In the hierarchical model, instead of providing hyperpriors for *a* and *b*, we will instead provide hyperpriors for *mu* and *psi*. Remember from Chapter 2 that:  
   
 - *mu* represents how the mean within-herd prevalence varies in the source population of herds;  
@@ -509,9 +509,9 @@ Sp.TestB.shapeb <- 1       #b shape parameter for Sp of TestB
 ### Write the JAGS model  
 The text file we would like to generate would look as the screen capture below.  
   
-![Text file for the hierarchical model. ](Figures/Hierarchical model text file.png)  
+![**Text file for the hierarchical model.**](Figures/Hierarchical model text file.png)  
   
-    
+<br/>        
 The script below can be used to generate this text file.  
 ```{r}
 #Create the JAGS text file
@@ -634,7 +634,7 @@ curve(dbeta(x,
             shape1=alpha, 
             shape2=beta), 
       from=0, to=1, 
-      main="Distribution of within-herd prevalence in the source population", 
+      main="Distribution of prevalence in the source population", 
       xlab = "Proportion", 
       ylab = "Density")
 

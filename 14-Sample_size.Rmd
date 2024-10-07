@@ -123,8 +123,9 @@ Below is a screen capture of the spreadsheet. In this case, we proposed to study
 - Desired width of the 95% CI for sensitivity ($Se1$ and $Se2$) would be 0.20;  
 - Desired width of the 95% CI for specificity ($Sp1$ and $Sp2$) would be 0.10;  
 
-![Excel spreadsheet used to estimate sample size for BLCM comparing two independent tests in two populations](Figures/Georgiadis spreadsheet.png)
+![**Excel spreadsheet used to estimate sample size for BLCM comparing two independent tests in two populations.**](Figures/Georgiadis spreadsheet.png)  
   
+<br/>    
 Additional information are provided in the spreadsheet, but we can already see that we would need to sample 134 individuals from the low (10%) prevalence population (*N1*) and 402 from the high (70%) prevalence population (*N2*) to obtain the desired 95%CI.   
   
 Again, this will work if our guess estimates were not too "off the mark". One additional note, when using the [Georgiadis et al. (2005)](https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub) method, we are not considering any informative priors hat we may want to use. Typically, if we were to use informative priors on some or all of the unknown parameters the width of the 95%CI will possibly be modified. For instance, if we provided relatively narrow priors for a given parameter, and if these priors agree closely with the observed data, than the 95%CI could be more precise than anticipated (i.e., narrower). On the other hand, a narrow priors which is not consistent with the observed data would possibly yield larger 95%CI.

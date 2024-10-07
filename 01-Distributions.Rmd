@@ -169,7 +169,7 @@ dp_data2 <- data.frame(Results, TestA_positive, TestA_negative)
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
 library(kableExtra)
-kable(dp_data2, col.names=c(" ", "Test A+", "Test A-"), caption="Cross-classified results from two diagnostic tests")%>%
+kable(dp_data2, label=NA, col.names=c(" ", "Test A+", "Test A-"), caption="Cross-classified results from two diagnostic tests")%>%
   kable_styling()
 ```
   
