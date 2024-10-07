@@ -25,7 +25,7 @@ knitr::write_bib(c(
 When using latent class models (**LCM**) to estimate disease prevalence or diagnostic test accuracy, we will need to use various distributions. There are two situations where we will use distributions:  
   
 1) as prior distributions to describe our <i>a priori</i> knowledge on a given unknown parameter.  
-2) as a part of the likelihood function that will be used to linked observed data with unknown parameters.  
+2) as a part of the likelihood function that will be used to link observed data with unknown parameters.  
   
 Some distributions will more often be used for the first objective, others will mainly be used for the latter objective. In the following sections, we will cover the most useful distributions.
 
@@ -78,14 +78,20 @@ curve(dunif(x,
 ```
   
 ### Beta distribution
-Beta distributions are another type of distributions that will specifically be used for parameters that are proportions (i.e., bounded between 0.0 and 1.0). <b>For this specific workshop, they will be very handy, since sensitivity, specificity, and prevalence are all proportions</b>. Beta distributions are defined by two shape parameters (*a*) and (*b*), but these parameters have no direct interpretation, as compared for instance, to the normal distribution where the first parameter is the mean and the second parameter is a measure of the variance (e.g., the standard deviation, the variance, or the inverse of the variance, depending on the software used). Nonetheless, the *a* and *b* parameters of a beta distribution are also related to the mean and the variance of this distribution, but as follow:  
+Beta distributions are another type of distributions that will specifically be used for parameters that are proportions (i.e., bounded between 0.0 and 1.0). <b>For this specific workshop, they will be very handy, since sensitivity, specificity, and prevalence are all proportions</b>. Beta distributions are defined by two shape parameters (*a*) and (*b*), but these parameters have no direct interpretation, as compared for instance, to the normal distribution where the first parameter is the mean and the second parameter is a measure of the variance (e.g., the standard deviation, the variance, or the inverse of the variance, depending on the software used). Nonetheless, the *a* and *b* parameters of a beta distribution are also related to the mean and the spread of this distribution, but as follows:  
   
 $a = mu*psi$  
 $b = psi*(1-mu)$  
   
-Where *mu* is the mean of the distribution and *psi* is a measure of the variance of this distribution. Moreover, *psi* is also the sum of the *a* and *b* parameters of the beta distribution.  
+Where *mu* is the mean of the distribution and *psi* is a factor that controls the spread of the distribution. Moreover, *psi* is also the sum of the *a* and *b* parameters of the beta distribution:  
   
-Given that there is not direct interpretation of the *a* and *b* parameters of a beta distribution, it is easier to rely on software to find the *a* and *b* parameters that will correspond to a desired distribution with a certain mode (or mean) and variance. The `epi.betabuster()` function from the `epiR` library can be used to define a given prior distribution based on previous knowledge. When we use the `epi.betabuster()` function, it creates a new `R` object containing different elements. Among these, one element will be named *shape1* and another *shape2*. These correspond to the *a* and *b* shape parameters of the corresponding beta distribution.   
+$psi = a+b$  
+  
+From the above equations, we could also deduct that the mean of a beta distribution, *mu*, can be computed as:    
+  
+$mu = a/(a+b)$   
+  
+Given that there is not direct interpretation of the *a* and *b* parameters of a beta distribution, it is easier to rely on a software to find the *a* and *b* parameters that will correspond to a desired distribution with a certain mode (or mean) and variance. The `epi.betabuster()` function from the `epiR` library can be used to define a given prior distribution based on previous knowledge. When we use the `epi.betabuster()` function, it creates a new `R` object containing different elements. Among these, one element will be named *shape1* and another *shape2*. These correspond to the *a* and *b* shape parameters of the corresponding beta distribution.   
   
 For instance, we may know that the most likely value for the sensitivity of a given test is 0.85 and that we are 97.5% certain that it is greater than 0.75. With these values, we will be able to find the *a* and *b* shape parameters of the corresponding beta distribution.  
   
@@ -132,14 +138,14 @@ curve(dbeta(x,
 ## Distributions for likelihood functions  
 In many situations, a distribution will be used as a part of the likelihood function to link observed data to unknown parameters. The ones we will most frequently use are:
   
-**- Binomial distribution:** For variables that can take the value 0 or 1. Binomial distributions are defined by the probability that the variable takes the value 1, (*P*), and a number of "trials", (*n*).   
+**- Binomial distribution:** For variables that can take the value 0 or 1. Binomial distributions are defined by the probability (*P*) that the variable takes the value 1 and a number of "trials" (*n*).   
 **Notation: dBin(*P*, *n*)**   
   
-**- Multinomial distribution:** made up of a number of probabilities, all bounded between 0 and 1, and that, together, will sum up to 1. Multinomial distributions are defined by k probabilities (*P1*, *P2*, ..., *Pk*) and the number of observations (*n*).  
+**- Multinomial distribution:** For qualitative variables that can take more than 2 values. We can use the multinomial distribution to represent multiple probabilities, all bounded between 0 and 1, and that together will add up to 1. Multinomial distributions are defined by k probabilities (*P1*, *P2*, ..., *Pk*) and the number of observations (*n*).  
 **Notation: dmulti(*P[1:k]*, *n*)**     
     
 ### Binomial distribution  
-If we have a variable that can take only two values, healthy or diseased (0 or 1), we can estimate an unknown parameter such as the proportion (*P*) of diseased individuals (i.e., the disease prevalence), based on the observed data (a number of positive individuals, *T* AND a total number of individuals, *n*). For instance, if we had 30 diseased (*T* = 30) out of 100 tested individuals (*n*=100) we could estimate the unknown parameter *P* using this very simple likelihood function:  
+If we have a variable that can take only two values, healthy or diseased (0 or 1), we can estimate an unknown parameter such as the proportion (*P*) of diseased individuals (i.e., the disease prevalence), based on the observed data (a number of positive individuals (*T*) AND a total number of individuals (*n*)). For instance, if we had 30 diseased (*T* = 30) out of 100 tested individuals (*n* = 100) we could estimate the unknown parameter *P* using this very simple likelihood function:  
   
 $T \sim dbin(P, n)$
     
