@@ -57,14 +57,14 @@ A free `RStudio Desktop Open Source License` can be downloaded [here](https://ww
 
 To install a given `R` library, open `RStudio`, click `Packages`, choose `load package`, choose the package you need (e.g., `epiR`).  
   
-For the workshop, these different `R` packages will be used:  
+For the workshop, the following `R` packages will be used:  
   
 #### R2jags 
-**Version 0.8-5** [R2jags manual](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cran.r-project.org/web/packages/R2jags/R2jags.pdf)
-The `R2JAGS` package provides convenient functions to call `rjags` (see next) and then `JAGS` (a software specialized in Bayesian analyses; see below) from `R`. It automatically writes the data and scripts in a format readable by `JAGS`. After the `JAGS` process has finished, it is possible either to read the resulting data into `R` using the facilities of the `coda` and `mcmcplots` packages for further analyses of the output.  
+**Version 0.8-5** [R2jags manual](/https://cran.r-project.org/web/packages/R2jags/R2jags.pdf)
+The `R2JAGS` package provides convenient functions to call `rjags` (see next) and `JAGS` (a software specialized in Bayesian analyses; see below) from `R`. It automatically writes the data and scripts in a format readable by `JAGS`. After the `JAGS` process has finished, it is possible  to read the resulting data into `R` using the facilities of the `coda` and `mcmcplots` packages for further analyses of the output.  
   
 #### rjags  
-**Version 4-15** [rjags manual](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https:/cran.r-project.org/web/packages/rjags/rjags.pdf) 
+**Version 4-15** [rjags manual](https:/cran.r-project.org/web/packages/rjags/rjags.pdf) 
 The `rjags` package provides an interface from `R` to the `JAGS` library for Bayesian data analysis. `JAGS` uses Markov Chain Monte Carlo (**MCMC**) to generate a sequence of dependent samples from the posterior distribution of the parameters.  
   
 #### coda 
@@ -80,7 +80,7 @@ The `mcmcplots` package provides a function (`mcmcplot`) that produces common MC
 The `epiR` package contains tools for the analysis of epidemiological and surveillance data. For the workshop we will mainly use `epiR` functions that can return shape parameters for different distributions, based on expert elicitation, to produce and visualize prior distributions.  
   
 ### JAGS  
-`JAGS` is a free software package for performing Bayesian inference Using Gibbs Sampling. `JAGS` stand for “Just Another Gibbs Sampler”. It is a program for analysis of Bayesian hierarchical models using MCMC simulation.  
+`JAGS` is a free software package for performing Bayesian inference Using Gibbs Sampling. `JAGS` stands for “Just Another Gibbs Sampler”. It is a program for analysis of Bayesian models using MCMC simulation.  
   
 You will have to install `JAGS` on your computer for the `R2JAGS` library to work. `JAGS` can be downloaded [here](https://sourceforge.net/projects/mcmc-jags/files/).  
   
@@ -102,7 +102,7 @@ For instance, this is a `R` code where I am simply asking to show main descripti
 summary(cars$speed)
 ```
   
-Throughout the document, in the text we will use:  
+Throughout this document we will use:  
 - Italics for datasets or variables. For instance, the *speed* variable of the dataset *cars*.  
 - Shaded boxes for `R` libraries (e.g., `episensr`) and functions (e.g., `summary()`).  
   
