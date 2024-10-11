@@ -30,7 +30,7 @@ When using latent class models (**LCM**) to estimate disease prevalence or diagn
 Some distributions will more often be used for the first objective, others will mainly be used for the latter objective. In the following sections, we will cover the most useful distributions.
 
 ## Prior distributions
-One of the first things that you will need for any Bayesian analysis is a way to generate and visualize a prior distribution corresponding to some scientific knowledge that you have about an unknown parameter. Generally, you will use information such as the mean and variance or the mode and the 2.5th (or 97.5th) percentile to find a corresponding distribution. Here we present three of the most important distributions. We will give more details on each of them in the following sections:  
+One of the first things that we will need for any Bayesian analysis is a way to generate and visualize a prior distribution corresponding to some scientific knowledge that we have about an unknown parameter. Generally, we will use information such as the mean and variance or the mode and the 2.5th (or 97.5th) percentile to find a corresponding distribution. Here we present three of the most important distributions. We will give more details on each of them in the following sections:  
   
 **- Normal distribution:** defined by a mean (*mu*) and its standard deviation (*SD*) or variance (*tau*). In some `R` packages and software, `rjags` and JAGS for instance, the inverse of the variance (*1/tau*) is used to specify a given normal distribution.   
 **Notation: dNorm(*mu*, *1/tau*)**  
