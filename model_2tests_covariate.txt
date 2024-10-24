@@ -1,0 +1,30 @@
+model{
+
+#=== LIKELIHOOD	===#
+  #For Z=0
+  Z0[1:4] ~ dmulti(p0[1:4], 292)
+  p0[1] <- Prev_28_35days*Se_US*Se_PAG_28_35days + (1-Prev_28_35days)*(1-Sp_US)*(1-Sp_PAG_28_35days)
+  p0[2] <- Prev_28_35days*Se_US*(1-Se_PAG_28_35days) + (1-Prev_28_35days)*(1-Sp_US)*Sp_PAG_28_35days
+  p0[3] <- Prev_28_35days*(1-Se_US)*Se_PAG_28_35days + (1-Prev_28_35days)*Sp_US*(1-Sp_PAG_28_35days)
+  p0[4] <- Prev_28_35days*(1-Se_US)*(1-Se_PAG_28_35days) + (1-Prev_28_35days)*Sp_US*Sp_PAG_28_35days
+  
+  #For Z=1
+  Z1[1:4] ~ dmulti(p1[1:4], 204)
+  p1[1] <- Prev_36_45days*Se_US*Se_PAG_36_45days + (1-Prev_36_45days)*(1-Sp_US)*(1-Sp_PAG_36_45days)
+  p1[2] <- Prev_36_45days*Se_US*(1-Se_PAG_36_45days) + (1-Prev_36_45days)*(1-Sp_US)*Sp_PAG_36_45days
+  p1[3] <- Prev_36_45days*(1-Se_US)*Se_PAG_36_45days + (1-Prev_36_45days)*Sp_US*(1-Sp_PAG_36_45days)
+  p1[4] <- Prev_36_45days*(1-Se_US)*(1-Se_PAG_36_45days) + (1-Prev_36_45days)*Sp_US*Sp_PAG_36_45days
+   
+
+#=== PRIOR	===#
+
+  Prev_28_35days ~ dbeta(1, 1) 	## Prior for Prev in Z=0
+  Prev_36_45days ~ dbeta(1, 1) 	## Prior for Prev in Z=1
+  Se_US ~ dbeta(100, 12) 	## Prior for Se of Test A
+  Sp_US ~ dbeta(100, 6.21052631578948) 	## Prior for Sp of Test A
+  Se_PAG_28_35days ~ dbeta(1, 1) 	## Prior for Se of Test B in Z=0
+  Sp_PAG_28_35days ~ dbeta(1, 1) 	## Prior for Sp of Test B in Z=0
+  Se_PAG_36_45days ~ dbeta(1, 1) 	## Prior for Se of Test B in Z=1
+  Sp_PAG_36_45days ~ dbeta(1, 1) 	## Prior for Sp of Test B in Z=1
+  
+}

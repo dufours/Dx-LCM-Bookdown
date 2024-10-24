@@ -1,0 +1,12 @@
+model{
+
+#=== LIKELIHOOD	===#
+
+  T ~ dbin(Prev, n)
+
+
+#=== PRIOR	===#
+
+  Prev ~ dbeta(81.872, 243.616) 	## Prior for Prev
+
+}

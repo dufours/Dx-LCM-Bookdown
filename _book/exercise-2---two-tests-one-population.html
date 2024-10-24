@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Exercise 2 - Two tests, one population | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
+  <meta name="description" content="Chapitre 6" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Exercise 2 - Two tests, one population | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapitre 6" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Exercise 2 - Two tests, one population | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  
+  <meta name="twitter:description" content="Chapitre 6" />
+  
+
+<meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
+
+
+<meta name="date" content="2022-05-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="two-imperfect-tests-one-population.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian latent class models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#prior-distributions"><i class="fa fa-check"></i><b>2.1</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.1.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
+<li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-functions"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood functions</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html"><i class="fa fa-check"></i><b>3</b> Running Bayesian models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-data"><i class="fa fa-check"></i><b>3.1</b> The data</a></li>
+<li class="chapter" data-level="3.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-model"><i class="fa fa-check"></i><b>3.2</b> The model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-likelihood-function"><i class="fa fa-check"></i><b>3.2.1</b> The likelihood function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#priors-for-unkown-parameters"><i class="fa fa-check"></i><b>3.2.2</b> Priors for unkown parameters</a></li>
+<li class="chapter" data-level="3.2.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#creating-the-jags-model"><i class="fa fa-check"></i><b>3.2.3</b> Creating the JAGS model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#generating-initial-values"><i class="fa fa-check"></i><b>3.3</b> Generating initial values</a></li>
+<li class="chapter" data-level="3.4" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#running-a-model-in-jags"><i class="fa fa-check"></i><b>3.4</b> Running a model in JAGS</a></li>
+<li class="chapter" data-level="3.5" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#model-diagnostic"><i class="fa fa-check"></i><b>3.5</b> Model diagnostic</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#convergence-and-burn-in"><i class="fa fa-check"></i><b>3.5.1</b> Convergence and burn-in</a></li>
+<li class="chapter" data-level="3.5.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#number-of-iterations"><i class="fa fa-check"></i><b>3.5.2</b> Number of iterations</a></li>
+<li class="chapter" data-level="3.5.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#auto-correlation"><i class="fa fa-check"></i><b>3.5.3</b> Auto-correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#getting-our-estimates"><i class="fa fa-check"></i><b>3.6</b> Getting our estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
+<li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests-one-population.html"><a href="two-imperfect-tests-one-population.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests, one population</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests-one-population.html"><a href="two-imperfect-tests-one-population.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests-one-population.html"><a href="two-imperfect-tests-one-population.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests-one-population.html"><a href="exercise-2---two-tests-one-population.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests, one population</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests-one-population.html"><a href="exercise-2---two-tests-one-population.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests-one-population.html"><a href="exercise-2---two-tests-one-population.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exercise-2---two-tests-one-population" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Exercise 2 - Two tests, one population<a href="exercise-2---two-tests-one-population.html#exercise-2---two-tests-one-population" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="questions-1" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Questions<a href="exercise-2---two-tests-one-population.html#questions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Open up the <code>R</code> project for Exercise 2 (i.e., the R project file named <em>Exercise 2.Rproj</em>).</p>
+<p>In the Exercise 2 folder, you will find partially completed <code>R</code> scripts. To answer the questions, try to complete the missing parts (they are highlighted by a <strong>#TO COMPLETE#</strong> comment). We also provided complete <code>R</code> scripts, but try to work it out on your own first!</p>
+<p><strong>1. Start from the partially completed <em>Question 1.R</em> script located in Exercise 2 folder.</strong> We could try to estimate the Se and Sp of the PAG-based ELISA test when compared to US as the reference test. We could, however, explicitly acknowledge that the US exam is not a gold-standard test. At first, we could assume that these tests are conditionally independent. We will use data from one population (herd #1). In herd #1, the cross-tabulated PAG by US results were as follows:</p>
+<p><strong>Table.</strong> Cross-classified results of the PAG and US tests in herd #1.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center"><strong>US+</strong></th>
+<th align="center"><strong>US-</strong></th>
+<th align="center"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>PAG+</strong></td>
+<td align="center">138</td>
+<td align="center">10</td>
+<td align="center">148</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>PAG-</strong></td>
+<td align="center">1</td>
+<td align="center">113</td>
+<td align="center">114</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Total</strong></td>
+<td align="center">139</td>
+<td align="center">13</td>
+<td align="center">262</td>
+</tr>
+</tbody>
+</table>
+<p>How many unknown parameters do you have to estimate and how many degrees of freedom do you have? Therefore, how many informative priors will you need? Estimate PAG’s Se and Sp, and true pregnancy prevalence using informative priors on US’ Se and Sp, and on pregnancy’s prevalence. Compare your results to those of Exercise 1 (question 4) where you estimated PAG’s Se and Sp, but assuming that US was a gold standard test.</p>
+<p><strong>Some literature to help you with Informative priors:</strong><br />
+In 2006, <a href="https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub">Romano et al.</a> reported, for a US exam conducted between 28-45 days post-insemination:<br />
+-Se = 0.90 (95CI: 0.85, 0.95)<br />
+-Sp = 0.95 (95CI: 0.90, 0.97)</p>
+<p>Moreover, in a recent study conducted on 30 Canadian herds they reported an expected pregnancy prevalence of 42% with 97.5% percentile of 74%.</p>
+<p><strong>2. Start from the <code>R</code> script that you completed in Question 1.</strong> Now run the same model, but use vague priors on all unknown parameters. Do you think it will work? What do you observe regarding the Markov chains?</p>
+<p><strong>3. Start from the partially completed <em>Question 3.R</em> script located in Exercise 2 folder.</strong> Now, we could consider that some conditional dependency exist between the two tests. For instance, it was reported that PAG concentration is higher in first parity cows (<a href="https://doi.org/10.3168/jds.2014-8974">Ricci et al., 2015</a>, <a href="https://doi.org/10.3168/jds.2015-10595">Mercadante et al., 2016</a>). US exams may also be easier to
+conduct on first parity cows and, thus, Se of both tests may be higher in first parity cows and lower in older cows. Build a model where conditional dependency is a possibility. How many unknown parameters and degrees of freedom do you have? Are your Markov chains behaving OK? What do you observe? Try to play with the number of iterations to reach an effective sample size (<strong>ESS</strong>) &gt; 3,000. How are your results differing from that of question 1 (where you assumed conditional independence)?</p>
+</div>
+<div id="answers-1" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Answers<a href="exercise-2---two-tests-one-population.html#answers-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>1.</strong> We could try to estimate the Se and Sp of the PAG-based ELISA test using US as the reference test. We could, however, explicitly acknowledge that the US exam is not a gold-standard test. At first, we could assume that these tests are conditionally independent. How many unknown parameters do you have to estimate and how many degrees of freedom do you have? Therefore, how many informative priors will you need? Estimate PAG’s Se and Sp, and true pregnancy prevalence using informative priors on US’ Se and Sp, and on pregnancy’s prevalence. Compare your results to those of Exercise 1 (question 4) where you estimated PAG’s Se and Sp, but assuming that US was a gold standard test.</p>
+<p><strong>Answer:</strong> We now have 5 unknown parameters (PAG’s <em>Se</em> and <em>Sp</em>, US’ <em>Se</em> and <em>Sp</em>, and pregnancy prevalence, <em>P</em>) and we have 3 degrees of freedom (i.e., one 2x2 table where three cells are providing valuable information and the content of the 4th cell can be deduced from the total number of observations minus the content of the other three cells). Thus, we need informative priors for at least 2 parameters. As suggested, we will use informative priors for 3 parameters ( US’ <em>Se</em> and <em>Sp</em>, and <em>P</em>), so the model is identifiable.</p>
+<p><strong>Table.</strong> Results assuming <strong>US is not perfect</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>Parameters</strong></th>
+<th align="center"><strong>Median</strong></th>
+<th align="center"><strong>95CI</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>PAG Se</strong></td>
+<td align="center">0.993</td>
+<td align="center">0.968, 1.00</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>PAG Sp</strong></td>
+<td align="center">0.979</td>
+<td align="center">0.922, 0.999</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>US Se</strong></td>
+<td align="center">0.923</td>
+<td align="center">0.885, 0.955</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>US Sp</strong></td>
+<td align="center">0.970</td>
+<td align="center">0.941, 0.987</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Prevalence</strong></td>
+<td align="center">0.554</td>
+<td align="center">0.493, 0.614</td>
+</tr>
+</tbody>
+</table>
+<p>As a comparison, in question 4 of Exercise 1 where we assumed that US was a perfect test, we assumed that US <em>Se</em> and <em>Sp</em> was 1.0, thus prevalence of pregnancy was 0.531 (139/262) and we estimates accuracy of PAG as:</p>
+<p><strong>Table.</strong> Results assuming <strong>US is perfect</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>Parameters</strong></th>
+<th align="center"><strong>Median</strong></th>
+<th align="center"><strong>95CI</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>PAG Se</strong></td>
+<td align="center">0.99</td>
+<td align="center">0.97, 1.0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>PAG Sp</strong></td>
+<td align="center">0.91</td>
+<td align="center">0.87, 0.94</td>
+</tr>
+</tbody>
+</table>
+<p>Thus, the 10 cows that were PAG+ and US- where all considered to be a failure of the PAG test (i.e., False+ on PAG). This resulted in a lower estimated PAG specificity. Now that we indicated that US is not perfect, these disagreements are not exclusively attributed to the PAG test, hence the higher estimated PAG specificity.</p>
+<p><strong>2.</strong> Now run the same model, but use vague priors on all unknown parameters. Do you think it will work? What do you observe regarding the Markov chains?</p>
+<p><strong>Answer:</strong> Beforehand, we would say no, it will not work! We have 5 unknown parameters and only 3 degrees of freedom. The model is non-identifiable. With some data sets, though, it will sometimes work (if the number of potential
+solutions is very limited). This is the case here, there is so little disagreement between tests that the Markov chains were able to converge. However, they have a strange behaviour, for all parameters, we always have two chains converging
+in one area and another one converging at the exact opposite (see figure below). This is a case where we have a mirror solution.</p>
+<div class="figure">
+<img src="Figures/mirror.png" alt="" />
+<p class="caption">Diagnostic plot - Mirror solution</p>
+</div>
+<p><strong>3.</strong> Build a model where conditional dependency is a possibility. How many unknown parameters and degrees of freedom do you have? Are your Markov chains behaving OK? What do you observe? Try to play with the number of iterations to reach an effective sample size (<strong>ESS</strong>) &gt; 3,000. How are your results differing from that of question 1 (where you assumed conditional independence)?</p>
+<p><strong>Answer:</strong> We have 7 unkown parameters (PAG’s <em>Se</em> and <em>Sp</em>, US’ <em>Se</em> and <em>Sp</em>, <em>P</em>, <em>covp</em>, and <em>covn</em>). We still only have 3 degrees of freedom, so we need informative priors on 4 parameters. We can use the Romano et al. (2006) derived priors for US’ <em>Se</em> and <em>Sp</em>, and use our pregnancy prevalence informative prior. We can use the natural bounds of <em>covp</em> and <em>covn</em> proposed by Dendukuri et Joseph (2001) as priors for these parameters.</p>
+<p>We initially ran the LCM for 11,000 iterations (with a burn-in of 1,000). The Markov chains were still cycling up and down for some of the parameters (<em>Se_PAG</em> and <em>covp</em> were the worst; see <em>Se_PAG</em> below). But it is still cycling in a very tight space (i.e., check the Y-axis scale). Autocorrelation seems to be a problem (especially for <em>Se_pag</em> and <em>covp</em>, again).</p>
+<div class="figure">
+<img src="Figures/Ex2%20Q3%2011000%20it.png" alt="" />
+<p class="caption">Diagnostic plot - 11,000 iterations</p>
+</div>
+<p>The ESS for these two parameters were both around 170. So, despite the 30,000 values (3 chains times 11,000 iterations, minus the 1,000 burn-in of each chain) stored during the Monte Carlo simulation, there is just the equivalent of 170 independent values. This would be quite a small sample to report with precision the median, 2.5th, and 97.5th estimates. Using the exact same model, but with a number of iteration of 201,000, we obtained ESS &gt;3,500 for all parameters.</p>
+<p><strong>Table.</strong> Results of the LCM assuming or not conditional independence between diagonstic tests.</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="30%" />
+<col width="12%" />
+<col width="2%" />
+<col width="28%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center"><strong>Conditional independence LCM</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"><strong>Conditional dependence LCM</strong></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Parameters</strong></td>
+<td align="center"><strong>Median</strong></td>
+<td align="center"><strong>95CI</strong></td>
+<td align="center"></td>
+<td align="center"><strong>Median</strong></td>
+<td align="center"><strong>95CI</strong></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>PAG Se</strong></td>
+<td align="center">0.993</td>
+<td align="center">0.968, 1.00</td>
+<td align="center"></td>
+<td align="center">0.952</td>
+<td align="center">0.866, 0.998</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>PAG Sp</strong></td>
+<td align="center">0.979</td>
+<td align="center">0.922, 0.999</td>
+<td align="center"></td>
+<td align="center">0.924</td>
+<td align="center">0.833, 0.988</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>US Se</strong></td>
+<td align="center">0.923</td>
+<td align="center">0.885, 0.955</td>
+<td align="center"></td>
+<td align="center">0.906</td>
+<td align="center">0.847, 0.947</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>US Sp</strong></td>
+<td align="center">0.970</td>
+<td align="center">0.941, 0.987</td>
+<td align="center"></td>
+<td align="center">0.951</td>
+<td align="center">0.899, 0.981</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>covp</strong></td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center"></td>
+<td align="center">0.035</td>
+<td align="center">0.000, 0.104</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>covn</strong></td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center"></td>
+<td align="center">0.032</td>
+<td align="center">0.002, 0.079</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Prevalence</strong></td>
+<td align="center">0.554</td>
+<td align="center">0.493, 0.614</td>
+<td align="center"></td>
+<td align="center">0.555</td>
+<td align="center">0.479, 0.634</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="two-imperfect-tests-one-population.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-Ex2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

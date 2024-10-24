@@ -1,0 +1,244 @@
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 15
+output: html_document
+---
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+
+options(scipen=999)
+```
+
+
+# Sample size  
+  
+When designing a study for estimating disease prevalence or diagnostic test accuracy we will want to evaluate the required sample size to achieve a certain precision in our test accuracy and disease prevalence estimates. In the following sections, we will first present very basic methods which can be used to estimate the sample size needed when a gold standard is used for comparison. Although this method may not be appropriate when the reference test is not a gold standard, it could still provide a "best case scenario" initial assessment. 
+
+Then we will present a method specific for BLCM, which may provide a more accurate sample size estimation. This latter method will also be very helpful to quantify the impacts of choosing a given reference test over another, or for choosing the prevalence that we should aim for in a second population of individuals.     
+
+  
+## Basic method when comparing to a gold standard
+Remember, the main parameters we want to estimate are a disease prevalence and one (or many) sensitivity and specificity, and these are all proportions. More precisely:  
+  
+- The prevalence is $\frac{\text{Number of diseased}}{\text{Number individuals}}$  
+  
+- The sensitivity is $\frac{\text{Number of test+}}{\text{Number diseased}}$  
+  
+- The specificity is $\frac{\text{Number of test-}}{\text{Number healthy}}$  
+  
+For any of these fractions, increasing the denominator will result in a decrease in the width of the 95% confidence interval (i.e., a greater precision). To determine the denominator (i.e., the sample size) that could generate a given width for the 95%CI, we could use the following, very simple Frequentist methods.  
+  
+$n=p*(1-p)*(\frac{1.96}{E})^{2}$  
+  
+Where *n* is the required denominator, *p* is the expected proportion, and *E* is the width of the 95%CI we would like to achieve.  
+  
+Alternatively, we could compute the width of the 95%CI as function of a given denominator.  
+  
+$E=1.96*\sqrt{\frac{p*(1-p)}{n}}$  
+  
+Therefore, in order to estimate the required sample size, we would first need to provide an educated guess regarding:  
+- The true prevalence of disease we will observe;  
+- The sensitivity and specificity of the test under investigation.  
+  
+As an example, if we were to plan a study:  
+- On a population where we think the prevalence will be around 30%;  
+- Using a test  that we think will have a sensitivity of 85% and specificity of 95%;  
+- Where we would like to have a width of the 95%CI of 10 percentage-points (i.e., +/- 5% on each side of the median estimate).  
+  
+We could use the following scripts to get an estimate of the required sample size.  
+```{r}
+#Sample size for the prevalence
+p <- 0.30
+E <- 0.10
+
+n <- p*(1-p)*(1.96/E)^2
+n
+```
+For the prevalence, we would need `r round(n, digits=0)` individuals to obtain a 95%CI width of 10 percentage-points if the prevalence is around 30%.  
+  
+Note that, to obtain a 95%CI width of 5 percentage-points:
+```{r}
+#Sample size for the prevalence
+p <- 0.30
+E <- 0.05
+
+n <- p*(1-p)*(1.96/E)^2
+n
+```
+We would now need `r round(n, digits=0)` individuals.  
+  
+Regarding the sensitivity, remember that the denominator will be the truly diseased individuals, rather than all sampled individuals.
+```{r}
+#Sample size for the sensitivity
+p <- 0.85
+E <- 0.10
+
+n <- p*(1-p)*(1.96/E)^2
+n
+```
+We would need `r round(n, digits=0)` **diseased individuals** to obtain a 95%CI width of 10 percentage-points if the sensitivity is around 85%.  
+  
+Regarding the specificity, again the denominator will be the truly healthy individuals, rather than all sampled individuals.
+```{r}
+#Sample size for the specificity
+p <- 0.95
+E <- 0.10
+
+n <- p*(1-p)*(1.96/E)^2
+n
+```
+We would need `r round(n, digits=0)` **healthy individuals** to obtain a 95%CI width of 10 percentage-points if the specificity is around 95%.  
+
+Now, we need to reunite these different estimates together. For instance, we saw that measuring 81 individuals was enough to get the precision we needed for the prevalence of disease. But, with 81 individuals and a prevalence of 30%, we would, theoretically, have 24 diseased (30% of 81) and 57 healthy (70% of 81) individuals. And we just computed that we needed 49 diseased individuals to get a precise estimate of the test's sensitivity.  
+  
+In this case, we can see that the sensitivity is the most limiting parameter. We could, thus, possibly recruit **a minimum** of 150 individuals and, hopefully, 50 will be diseased and 100 will be healthy. With that latter sample, we would possibly achieve the precision needed for the test's sensitivity, and we would exceed what we needed for the test's specificity and for disease prevalence. Of course this will work if our guess estimates were not too "off the mark".   
+  
+**This basic method, however, is not considering the loss of power that will occur when comparing imperfect tests with one another (as compared to comparing a novel test to a gold-standard test). This should, therefore, be considered as an overoptimistic scenario if the test used for comparison is not a gold standard.**
+  
+## Method for the Hui-Walter BLCM
+[Georgiadis et al. (2005)](https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub) proposed a method to calculate sample size to estimate disease prevalence, sensitivity and specificity with a desired precision, when using the [Hui and Walter (1980)](https://www.jstor.org/stable/2530508?seq=1) model (two conditionally independent tests for screening individuals from two populations). In their article, [Georgiadis et al. (2005)](https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub) provided the hyperlink to an Excel spreadsheet template. We included this spreadsheet in the course material.  
+  
+Briefly, we need to provide our best guess on:  
+- Disease prevalence in population 1 ($\pi1$);  
+- Disease prevalence in population 2 ($\pi2$);  
+- Sensitivity of the first ($Se1$) and second test ($Se2$);  
+- Specificity of the first ($Sp1$) and second test ($Sp2$).  
+  
+And, then, the desired 95% BCI width for these different parameters.  
+  
+Below is a screen capture of the spreadsheet. In this case, we proposed to study two populations where:  
+- Disease prevalence ($\pi1$ and $\pi2$) would be 0.10 and 0.70;  
+- Sensitivity of the two tests ($Se1$ and $Se2$) would be 0.85 and 0.95;  
+- Specificity of the two tests ($Sp1$ and $Sp2$) would both be 0.95;  
+- Desired width of the 95% BCI for disease prevalence ($\pi1$ and $\pi2$) would be 0.15;  
+- Desired width of the 95% BCI for sensitivity ($Se1$ and $Se2$) would be 0.20;  
+- Desired width of the 95% BCI for specificity ($Sp1$ and $Sp2$) would be 0.10;  
+
+![**Excel spreadsheet used to estimate sample size for BLCM comparing two independent tests in two populations.**](Figures/Georgiadis spreadsheet.png)  
+  
+<br/>    
+Additional information are provided in the spreadsheet, but we can already see that we would need to sample 134 individuals from the low (10%) prevalence population (*N1*) and 402 from the high (70%) prevalence population (*N2*) to obtain the desired width for the 95% BCIs.   
+  
+Again, this will work if our guess estimates were not too "off the mark". One additional note, when using the [Georgiadis et al. (2005)](https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub) method, we are not considering any informative priors that we may want to use. Typically, if we were to use informative priors on some or all of the unknown parameters the width of the 95% BCI will possibly be modified. For instance, if we provided relatively narrow priors for a given parameter, and if these priors agree closely with the observed data, than the 95% BCI could be more precise than anticipated (i.e., narrower). On the other hand, narrow priors which are not consistent with the observed data would possibly yield larger 95% BCI.
+
+Nevertheless, this spreadsheet is quite handy to get rough sample size estimates. It is also quite useful to explore, for instance, how larger differences in disease prevalence between populations can improve the study power. It is also very interesting to investigate how the choice of reference test will affect the study power.  
+
+  
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(readxl)
+dt <- read_xlsx("Data/Samplesize.xlsx")
+```
+
+As an example, in the following figure we illustrated, for the [Hui and Walter (1980)](https://www.jstor.org/stable/2530508?seq=1) model, how the difference in prevalence between the two populations would impact sample size. As you can see, for this specific scenario, targeting populations with more important prevalence differences could have a tremendous impact on power of the study. For instance, in this example, **with prevalence of 0.10 and 0.20 in the first and second population, a total of `r dt[1,11]` individuals would have to be tested to achieve the desired precision. On the other hand, with prevalence of 0.10 and 0.70 in the first and second population, only `r dt[6,11]` individuals would have to be tested.**      
+  
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Number of individuals to test as function of prevalence in the 2nd population. For these calculations we assumed that: 1) the first population has a prevalence of disease of 0.10; 2) the two tests are expected to have Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of the first test; and 4) we wish to obtain a 95 BCI width of <20 percentage-points (i.e., < +/- 10 percentage points) when reporting accuracy of the first test."}
+
+library(dplyr)
+library(ggplot2)
+library(ggbreak)
+
+dt2 <- filter(dt, Param=="pi2")
+
+a <- dt2[, c(3, 9)] 
+a <- a %>% rename(n = n1) 
+a$Population <- "Population 1 (Prev=10%)"
+
+b <- dt2[, c(3, 10)] 
+b <- b%>% rename(n = n2) 
+b$Population <- "Population 2"
+
+c <- rbind(a,b)
+
+
+ggplot(data=c, 
+       aes(y=n, x=pi2, fill=Population)) + 
+    geom_bar(position="stack", stat="identity") +
+    geom_text(aes(label=n), position = position_stack(vjust = 0.5), size=4) + 
+  theme_bw() +
+  theme(legend.position="bottom") +
+  labs(y="Number of individuals to test",
+       x="Prevalence in population 2") +
+  scale_x_continuous(breaks=c(0.2, 0.3, 0.4, 0.5, 0.6, 0.7)) +
+  scale_y_break(c(600, 800), space=.1) +
+  scale_y_break(c(1400, 2200), space=.1) +
+  scale_y_break(c(3000, 13500), space=.1)
+
+```
+  
+Now, we could use two populations with expected disease prevalence of 0.10 and 0.50, but we are, this time, wondering what would be the best reference test to use so we can achieve the required precision with the smallest possible sample size. Below, we quantified how a change in the specificity of the test would affect the require sample size. We see that, **if the reference test has a specificity of 0.70, we will need to test `r dt[7,11]` individuals to achieve the desired precision. On the other hand, if the reference test specificity is 1.0 (i.e., no false positive results), only `r dt[10,11]` individuals would have to be tested.**        
+  
+  
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Number of individuals to test as function of specificity of the reference test. For these calculations we assumed that: 1) the first and second population have disease prevalence of 0.10 and 0.50; 2) the test under investigation is expected to have a Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of this first test; 4) we wish to obtain a 95 BCI width of <20 percentage-points (i.e., < +/- 10 percentage points) when reporting accuracy of the first test; and 5) the reference test is expected to have a sensitivity of 0.90."}
+
+dt2 <- filter(dt, Param=="Sp2")
+
+a <- dt2[, c(7, 9)] 
+a <- a %>% rename(n = n1) 
+a$Population <- "Population 1 (Prev=10%)"
+
+b <- dt2[, c(7, 10)] 
+b <- b%>% rename(n = n2) 
+b$Population <- "Population 2"
+
+c <- rbind(a,b)
+
+
+ggplot(data=c, 
+       aes(y=n, x=Sp2, fill=Population)) + 
+    geom_bar(position="stack", stat="identity") +
+    geom_text(aes(label=n), position = position_stack(vjust = 0.5), size=4) + 
+  theme_bw() +
+  theme(legend.position="bottom") +
+  labs(y="Number of individuals to test",
+       x="Specificity of the reference test") +
+  scale_x_continuous(breaks=c(0.7, 0.8, 0.9, 1.0)) 
+
+``` 
+  
+We could also quantify how a change in the sensitivity of the test would affect the require sample size. We see that, **if the reference test has a sensitivity of 0.70, we will need to test `r dt[11,11]` individuals to achieve the desired precision. On the other hand, if the reference test sensitivity is 1.0 (i.e., no false negative results), only `r dt[14,11]` individuals would have to be tested.**        
+  
+  
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Number of individuals to test as function of sensitivity of the reference test. For these calculations we assumed that: 1) the first and second population have disease prevalence of 0.10 and 0.50; 2) the test under investigation is expected to have a Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of this first test; 4) we wish to obtain a 95 BCI width of <20 percentage-points (i.e., < +/- 10 percentage points) when reporting accuracy of the first test; and 5) the reference test is expected to have a specificity of 0.90."}
+
+dt2 <- filter(dt, Param=="Se2")
+
+a <- dt2[, c(5, 9)] 
+a <- a %>% rename(n = n1) 
+a$Population <- "Population 1 (Prev=10%)"
+
+b <- dt2[, c(5, 10)] 
+b <- b%>% rename(n = n2) 
+b$Population <- "Population 2"
+
+c <- rbind(a,b)
+
+
+ggplot(data=c, 
+       aes(y=n, x=Se2, fill=Population)) + 
+    geom_bar(position="stack", stat="identity") +
+    geom_text(aes(label=n), position = position_stack(vjust = 0.5), size=4) + 
+  theme_bw() +
+  theme(legend.position="bottom") +
+  labs(y="Number of individuals to test",
+       x="Sensitivity of the reference test") +
+  scale_x_continuous(breaks=c(0.7, 0.8, 0.9, 1.0)) 
+
+```   
+  
+For this specific scenario, we can see that there is a greater gain in study power, when improving the specificity of the reference test, in comparison to improving its sensitivity. Indeed, with prevalence of 0.10 and 0.50 in the two populations, we have more healthy individuals than diseased individuals. As a consequence, in this example improving one of the tests specificity will result in less misclassification issues than improving its sensitivity. Finding a reference test with the latter properties is often doable. For instance, for many diseases we have tests that can lead to the isolation of the microorganism and, if the microorganism is a strict pathogen, then such a test would be deemed to be 100% specific. As a comparison, using the same example, if we would have used a gold standard test as reference, `r dt[15,11]` individuals would have to be tested, as compared to `r dt[10,11]` when using a reference test with perfect specificity and a sensitivity of 0.90.  Not a huge difference... And in many cases, the reference test would be cheaper than a gold standard test (and that is when a gold standard test is actually available, often it is not).  
+  
+As we can see, conducting an *a priori* sample size estimation is extremely important when designing a diagnostic test validation study, since relatively minor decisions regarding the study design can greatly affect its power. One final note, if we are planning a study with more than two populations, or more than two tests, this spreadsheet could still be used to obtain a "worst-case scenario" sample size estimation (i.e., study power would mainly be increased, not decreased, by adding extra populations and tests).   
+

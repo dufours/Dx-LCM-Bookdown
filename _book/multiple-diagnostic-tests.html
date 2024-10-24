@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Multiple diagnostic tests | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
+  <meta name="description" content="Chapitre 9" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Multiple diagnostic tests | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapitre 9" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Multiple diagnostic tests | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  
+  <meta name="twitter:description" content="Chapitre 9" />
+  
+
+<meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
+
+
+<meta name="date" content="2022-06-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exercise-3---multiple-populations.html"/>
+<link rel="next" href="exercise-4---multiple-tests.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian latent class models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#prior-distributions"><i class="fa fa-check"></i><b>2.1</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.1.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
+<li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-functions"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood functions</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html"><i class="fa fa-check"></i><b>3</b> Running Bayesian models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-data"><i class="fa fa-check"></i><b>3.1</b> The data</a></li>
+<li class="chapter" data-level="3.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-model"><i class="fa fa-check"></i><b>3.2</b> The model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-likelihood-function"><i class="fa fa-check"></i><b>3.2.1</b> The likelihood function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#priors-for-unkown-parameters"><i class="fa fa-check"></i><b>3.2.2</b> Priors for unkown parameters</a></li>
+<li class="chapter" data-level="3.2.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#creating-the-jags-model"><i class="fa fa-check"></i><b>3.2.3</b> Creating the JAGS model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#generating-initial-values"><i class="fa fa-check"></i><b>3.3</b> Generating initial values</a></li>
+<li class="chapter" data-level="3.4" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#running-a-model-in-jags"><i class="fa fa-check"></i><b>3.4</b> Running a model in JAGS</a></li>
+<li class="chapter" data-level="3.5" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#model-diagnostic"><i class="fa fa-check"></i><b>3.5</b> Model diagnostic</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#convergence-and-burn-in"><i class="fa fa-check"></i><b>3.5.1</b> Convergence and burn-in</a></li>
+<li class="chapter" data-level="3.5.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#number-of-iterations"><i class="fa fa-check"></i><b>3.5.2</b> Number of iterations</a></li>
+<li class="chapter" data-level="3.5.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#auto-correlation"><i class="fa fa-check"></i><b>3.5.3</b> Auto-correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#getting-our-estimates"><i class="fa fa-check"></i><b>3.6</b> Getting our estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
+<li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-diagnostic-tests" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Multiple diagnostic tests<a href="multiple-diagnostic-tests.html#multiple-diagnostic-tests" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In some situations, individuals studied will be tested using more than two diagnostic tests. For instance, if all individuals were tested using three different diagnostic tests (Test A, Test B, and Test C) we could present the cross-classified results of the three tests as follows:</p>
+<p><strong>Table.</strong> Cross-classified results from three diagnostic tests in one population.</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="3%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Test C+</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"><strong>Test C-</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>Test A+</strong></td>
+<td align="center"><strong>Test A-</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><strong>Test A+</strong></td>
+<td align="center"><strong>Test A-</strong></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Test B+</strong></td>
+<td align="center">n1</td>
+<td align="center">n3</td>
+<td align="center"></td>
+<td align="center"><strong>Test B+</strong></td>
+<td align="center">n5</td>
+<td align="center">n7</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Test B-</strong></td>
+<td align="center">n2</td>
+<td align="center">n4</td>
+<td align="center"></td>
+<td align="center"><strong>Test B-</strong></td>
+<td align="center">n6</td>
+<td align="center">n8</td>
+</tr>
+</tbody>
+</table>
+<p>Contrarily to the case where we had two tests in 2 populations, we can see from the preceding table that we have 7 degrees of freedom available. Indeed, we need to know the total number of individuals (<em>n</em>) and the content of seven of the eight cells to “guess” the value in the last cell. Moreover, with three diagnostic tests, we would have seven unknown parameters (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, <em>SeC</em> and <em>SpC</em>,and the population’s prevalence, <em>P</em>) to estimate. The model is, therefore, identifiable. Again, we can refer to <a href="https://doi.org/10.20506/rst.40.1.3224">Cheung et al. (2021)</a> to describe how the number of unknown parameters and degrees of freedom vary as function of the number of diagnostic tests used (see below).</p>
+<p><strong>Table.</strong> Number of degrees of freedom and of unknown parameters when comparing an increasing number of conditionally independent diagnostic tests in one single population (adapted from <a href="https://doi.org/10.20506/rst.40.1.3224">Cheung et al. (2021)</a>).</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="26%" />
+<col width="26%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Number of Tests</strong></th>
+<th align="center"><strong>Number of unknown parameters (np)</strong></th>
+<th align="center"><strong>Number of degrees of freedom (df)</strong></th>
+<th align="center"><strong>Minimum number of informative priors needed</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">3</td>
+<td align="center">7</td>
+<td align="center">7</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">4</td>
+<td align="center">9</td>
+<td align="center">15</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">k</td>
+<td align="center">2*k+1</td>
+<td align="center">2^k -1</td>
+<td align="center">if df &lt; np, then np-df</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see, adding diagnostic tests could be an extremely valuable option to make a LCM identifiable. The gain in statistical power, however, will be maximized if:</p>
+<p>-We used many <strong>conditionally independent</strong> diagnostic tests<br />
+-The sample size is sufficient so <strong>all tests combinations are represented</strong> (i.e., no empty cells in the table presenting the cross-classified results)</p>
+<div id="likelihood-function-with-3-tests" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Likelihood function with 3 tests<a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With three diagnostic tests applied to a single population, the likelihood function that could be used to link the observed data (<em>n1</em>, …, <em>n8</em>) to the unknown parameters (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, <em>SeC</em> and <em>SpC</em>,and <em>P</em>) can be described as follows:</p>
+<p><span class="math inline">\(n[1:8] \sim dmulti(P[1:8], n)\)</span></p>
+<p><span class="math inline">\(P1 = P*SeA*SeB*SeC + (1-P)*(1-SpA)*(1-SpB)*(1-SpC)\)</span><br />
+<span class="math inline">\(P2 = P*SeA*(1-SeB)*SeC + (1-P)*(1-SpA)*SpB*(1-SpC)\)</span><br />
+<span class="math inline">\(P3 = P*(1-SeA)*SeB*SeC + (1-P)*SpA*(1-SpB)*(1-SpC)\)</span><br />
+<span class="math inline">\(P4 = P*(1-SeA)*(1-SeB)*SeC + (1-P)*SpA*SpB*(1-Spc)\)</span>
+<span class="math inline">\(P5 = P*SeA*SeB(1-SeC) + (1-P)*(1-SpA)*(1-SpB)*SpC\)</span><br />
+<span class="math inline">\(P6 = P*SeA*(1-SeB)*(1-SeC) + (1-P)*(1-SpA)*SpB*SpC\)</span><br />
+<span class="math inline">\(P7 = P*(1-SeA)*SeB*(1-Sec) + (1-P)*SpA*(1-SpB)*SpC\)</span><br />
+<span class="math inline">\(P8 = P*(1-SeA)*(1-SeB)*(1-SeC) + (1-P)*SpA*SpB*SpC\)</span></p>
+<p>Again, if we put that in words, the number of individuals in cell <em>n1</em> (i.e., TestA+ and TestB+ and TestC+) is determined by the number of individuals tested (<em>n</em>) and the probability (<em>P1</em>) of falling in that cell. The latter itself depends on the true prevalence of disease in the population (<em>P</em>), and on each of the tests sensitivity (<em>SeA</em>, <em>SeB</em>, and <em>SeC</em>) and specificity (<em>SpA</em>, <em>SpB</em>, and <em>SpC</em>). We can use similar reasoning for <em>n2</em> to <em>n8</em>. Finally, the multinomial distribution would further impose that the eight probabilities (<em>P1</em> to <em>P8</em>) have to sum up to 1.0 (i.e., 100%).</p>
+</div>
+<div id="organizing-the-data-with-3-tests" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Organizing the data with 3 tests<a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To run such a model, we simply need to provide a dataset where <em>n1</em>, <em>n2</em>, <em>n3</em>, <em>n4</em>, <em>n5</em>, <em>n6</em>, <em>n7</em>, and <em>n8</em> are listed (in that order). For instance, in the PAG <em>vs.</em> US study, we have a number of cows that also had a conventional transrectal exam (<strong>TRE</strong>). The results of the three tests can be presented as follows:</p>
+<p><strong>Table.</strong> Cross-classified results from a PAG, US, and TRE diagnostic tests in one population.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>TRE+</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"><strong>TRE-</strong></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>US+</strong></td>
+<td align="center"><strong>US-</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><strong>US+</strong></td>
+<td align="center"><strong>US-</strong></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>PAG+</strong></td>
+<td align="center">240</td>
+<td align="center">12</td>
+<td align="center"></td>
+<td align="center"><strong>PAG+</strong></td>
+<td align="center">15</td>
+<td align="center">9</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>PAG-</strong></td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center"></td>
+<td align="center"><strong>PAG-</strong></td>
+<td align="center">1</td>
+<td align="center">216</td>
+</tr>
+</tbody>
+</table>
+<p>The dataset could, thus be created as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="multiple-diagnostic-tests.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#n is of the form : (TestA+ TestB+ Test C+), (TestA+ TestB- TestC+), (TestA- TestB+ TestC+), (TestA- TestB- TestC+), (TestA+ TestB+ TestC-), (TestA+ TestB- TestC-), (TestA- TestB+ TestC-), (TestA- Test- TestC-)</span></span>
+<span id="cb1-2"><a href="multiple-diagnostic-tests.html#cb1-2" aria-hidden="true" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">c</span>(<span class="dv">240</span>, <span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">216</span>))</span></code></pre></div>
+</div>
+<div id="the-jags-model-with-3-tests" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> The JAGS model with 3 tests<a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Again, we could provide the values that will be used to describe the prior distributions as we did before (they will then become included in the LCM text file). The only difference is that we now have three Se and Sp to describe. In the example below, I will use vague priors for all parameters.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="multiple-diagnostic-tests.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#We could first create labels for TestA, TestB, and TestC</span></span>
+<span id="cb2-2"><a href="multiple-diagnostic-tests.html#cb2-2" aria-hidden="true" tabindex="-1"></a>TestA <span class="ot">&lt;-</span> <span class="st">&quot;US&quot;</span></span>
+<span id="cb2-3"><a href="multiple-diagnostic-tests.html#cb2-3" aria-hidden="true" tabindex="-1"></a>TestB <span class="ot">&lt;-</span> <span class="st">&quot;PAG&quot;</span></span>
+<span id="cb2-4"><a href="multiple-diagnostic-tests.html#cb2-4" aria-hidden="true" tabindex="-1"></a>TestC <span class="ot">&lt;-</span> <span class="st">&quot;TRE&quot;</span></span>
+<span id="cb2-5"><a href="multiple-diagnostic-tests.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="multiple-diagnostic-tests.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Provide information for the prior distributions (all beta distributions) for the 7 unknown parameters </span></span>
+<span id="cb2-7"><a href="multiple-diagnostic-tests.html#cb2-7" aria-hidden="true" tabindex="-1"></a>Prev.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev     </span></span>
+<span id="cb2-8"><a href="multiple-diagnostic-tests.html#cb2-8" aria-hidden="true" tabindex="-1"></a>Prev.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev </span></span>
+<span id="cb2-9"><a href="multiple-diagnostic-tests.html#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="multiple-diagnostic-tests.html#cb2-10" aria-hidden="true" tabindex="-1"></a>Se.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestA</span></span>
+<span id="cb2-11"><a href="multiple-diagnostic-tests.html#cb2-11" aria-hidden="true" tabindex="-1"></a>Se.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestA</span></span>
+<span id="cb2-12"><a href="multiple-diagnostic-tests.html#cb2-12" aria-hidden="true" tabindex="-1"></a>Sp.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestA</span></span>
+<span id="cb2-13"><a href="multiple-diagnostic-tests.html#cb2-13" aria-hidden="true" tabindex="-1"></a>Sp.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestA</span></span>
+<span id="cb2-14"><a href="multiple-diagnostic-tests.html#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="multiple-diagnostic-tests.html#cb2-15" aria-hidden="true" tabindex="-1"></a>Se.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestB</span></span>
+<span id="cb2-16"><a href="multiple-diagnostic-tests.html#cb2-16" aria-hidden="true" tabindex="-1"></a>Se.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestB</span></span>
+<span id="cb2-17"><a href="multiple-diagnostic-tests.html#cb2-17" aria-hidden="true" tabindex="-1"></a>Sp.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestB</span></span>
+<span id="cb2-18"><a href="multiple-diagnostic-tests.html#cb2-18" aria-hidden="true" tabindex="-1"></a>Sp.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestB</span></span>
+<span id="cb2-19"><a href="multiple-diagnostic-tests.html#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="multiple-diagnostic-tests.html#cb2-20" aria-hidden="true" tabindex="-1"></a>Se.TestC.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestC</span></span>
+<span id="cb2-21"><a href="multiple-diagnostic-tests.html#cb2-21" aria-hidden="true" tabindex="-1"></a>Se.TestC.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestC</span></span>
+<span id="cb2-22"><a href="multiple-diagnostic-tests.html#cb2-22" aria-hidden="true" tabindex="-1"></a>Sp.TestC.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestC</span></span>
+<span id="cb2-23"><a href="multiple-diagnostic-tests.html#cb2-23" aria-hidden="true" tabindex="-1"></a>Sp.TestC.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestC</span></span>
+<span id="cb2-24"><a href="multiple-diagnostic-tests.html#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="multiple-diagnostic-tests.html#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#I will also need the total number of individuals tested </span></span>
+<span id="cb2-26"><a href="multiple-diagnostic-tests.html#cb2-26" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sapply</span>(datalist, sum)</span></code></pre></div>
+<p>We now have everything that is needed to write the JAGS model.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="multiple-diagnostic-tests.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
+<span id="cb3-2"><a href="multiple-diagnostic-tests.html#cb3-2" aria-hidden="true" tabindex="-1"></a>model_3tests_1pop_indep <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb3-3"><a href="multiple-diagnostic-tests.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="multiple-diagnostic-tests.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb3-5"><a href="multiple-diagnostic-tests.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="multiple-diagnostic-tests.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">  n[1:8] ~ dmulti(p[1:8], &quot;</span>,n,<span class="st">&quot;)</span></span>
+<span id="cb3-7"><a href="multiple-diagnostic-tests.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">  p[1] &lt;- Prev*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot;*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb3-8"><a href="multiple-diagnostic-tests.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  p[2] &lt;- Prev*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;)*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb3-9"><a href="multiple-diagnostic-tests.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">  p[3] &lt;- Prev*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot;*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb3-10"><a href="multiple-diagnostic-tests.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">  p[4] &lt;- Prev*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;)*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb3-11"><a href="multiple-diagnostic-tests.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-12"><a href="multiple-diagnostic-tests.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">  p[5] &lt;- Prev*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot;*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb3-13"><a href="multiple-diagnostic-tests.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">  p[6] &lt;- Prev*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;)*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb3-14"><a href="multiple-diagnostic-tests.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  p[7] &lt;- Prev*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot;*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb3-15"><a href="multiple-diagnostic-tests.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">  p[8] &lt;- Prev*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;)*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb3-16"><a href="multiple-diagnostic-tests.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-17"><a href="multiple-diagnostic-tests.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-18"><a href="multiple-diagnostic-tests.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb3-19"><a href="multiple-diagnostic-tests.html#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="multiple-diagnostic-tests.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev ~ dbeta(&quot;</span>,Prev.shapea,<span class="st">&quot;, &quot;</span>,Prev.shapeb,<span class="st">&quot;)    ## Prior for Prevalence</span></span>
+<span id="cb3-21"><a href="multiple-diagnostic-tests.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestA.shapea,<span class="st">&quot;, &quot;</span>,Se.TestA.shapeb,<span class="st">&quot;)  ## Prior for Se of Test A</span></span>
+<span id="cb3-22"><a href="multiple-diagnostic-tests.html#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestA.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestA.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
+<span id="cb3-23"><a href="multiple-diagnostic-tests.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.shapeb,<span class="st">&quot;)  ## Prior for Se of Test B</span></span>
+<span id="cb3-24"><a href="multiple-diagnostic-tests.html#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test B</span></span>
+<span id="cb3-25"><a href="multiple-diagnostic-tests.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestC, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestC.shapea,<span class="st">&quot;, &quot;</span>,Se.TestC.shapeb,<span class="st">&quot;)  ## Prior for Se of Test C</span></span>
+<span id="cb3-26"><a href="multiple-diagnostic-tests.html#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestC, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestC.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestC.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test C</span></span>
+<span id="cb3-27"><a href="multiple-diagnostic-tests.html#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-28"><a href="multiple-diagnostic-tests.html#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb3-29"><a href="multiple-diagnostic-tests.html#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="multiple-diagnostic-tests.html#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb3-31"><a href="multiple-diagnostic-tests.html#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(model_3tests_1pop_indep, </span>
+<span id="cb3-32"><a href="multiple-diagnostic-tests.html#cb3-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_3tests_1pop_indep.txt&quot;</span>, </span>
+<span id="cb3-33"><a href="multiple-diagnostic-tests.html#cb3-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb3-34"><a href="multiple-diagnostic-tests.html#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb3-35"><a href="multiple-diagnostic-tests.html#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb3-36"><a href="multiple-diagnostic-tests.html#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>With this code, you could, again, simply modify the labels for Test A, Test B, and Test C, and the shape parameters for the prior distributions. The text file with the JAGS model will automatically be updated. Currently, it looks like this:</p>
+<div class="figure">
+<img src="Figures/model_3tests_1pop_indep.png" alt="" />
+<p class="caption">Text file with the LCM for 3 independent diagnostic tests applied to one population.</p>
+</div>
+<p>Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful again, we now have three tests.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="multiple-diagnostic-tests.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Initializing values for the parameters Prev, and the Ses and Sps of the two tests for the 3 chains.</span></span>
+<span id="cb4-2"><a href="multiple-diagnostic-tests.html#cb4-2" aria-hidden="true" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.50</span>,</span>
+<span id="cb4-3"><a href="multiple-diagnostic-tests.html#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-4"><a href="multiple-diagnostic-tests.html#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-5"><a href="multiple-diagnostic-tests.html#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-6"><a href="multiple-diagnostic-tests.html#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-7"><a href="multiple-diagnostic-tests.html#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_TRE=</span><span class="fl">0.90</span>,</span>
+<span id="cb4-8"><a href="multiple-diagnostic-tests.html#cb4-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_TRE=</span><span class="fl">0.90</span>),</span>
+<span id="cb4-9"><a href="multiple-diagnostic-tests.html#cb4-9" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb4-10"><a href="multiple-diagnostic-tests.html#cb4-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.60</span>,</span>
+<span id="cb4-11"><a href="multiple-diagnostic-tests.html#cb4-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-12"><a href="multiple-diagnostic-tests.html#cb4-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-13"><a href="multiple-diagnostic-tests.html#cb4-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-14"><a href="multiple-diagnostic-tests.html#cb4-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-15"><a href="multiple-diagnostic-tests.html#cb4-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_TRE=</span><span class="fl">0.80</span>,</span>
+<span id="cb4-16"><a href="multiple-diagnostic-tests.html#cb4-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_TRE=</span><span class="fl">0.80</span>),</span>
+<span id="cb4-17"><a href="multiple-diagnostic-tests.html#cb4-17" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb4-18"><a href="multiple-diagnostic-tests.html#cb4-18" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.40</span>,</span>
+<span id="cb4-19"><a href="multiple-diagnostic-tests.html#cb4-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-20"><a href="multiple-diagnostic-tests.html#cb4-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-21"><a href="multiple-diagnostic-tests.html#cb4-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-22"><a href="multiple-diagnostic-tests.html#cb4-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-23"><a href="multiple-diagnostic-tests.html#cb4-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_TRE=</span><span class="fl">0.70</span>,</span>
+<span id="cb4-24"><a href="multiple-diagnostic-tests.html#cb4-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_TRE=</span><span class="fl">0.70</span>)</span>
+<span id="cb4-25"><a href="multiple-diagnostic-tests.html#cb4-25" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
+<p>We can run the model using <code>jags()</code> function as seen before.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="multiple-diagnostic-tests.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb5-2"><a href="multiple-diagnostic-tests.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb5-3"><a href="multiple-diagnostic-tests.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="multiple-diagnostic-tests.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb5-5"><a href="multiple-diagnostic-tests.html#cb5-5" aria-hidden="true" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
+<span id="cb5-6"><a href="multiple-diagnostic-tests.html#cb5-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_3tests_1pop_indep.txt&quot;</span>,     </span>
+<span id="cb5-7"><a href="multiple-diagnostic-tests.html#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev&quot;</span>, <span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG&quot;</span>, <span class="st">&quot;Sp_PAG&quot;</span>, <span class="st">&quot;Se_TRE&quot;</span>, <span class="st">&quot;Sp_TRE&quot;</span>),               </span>
+<span id="cb5-8"><a href="multiple-diagnostic-tests.html#cb5-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
+<span id="cb5-9"><a href="multiple-diagnostic-tests.html#cb5-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                </span>
+<span id="cb5-10"><a href="multiple-diagnostic-tests.html#cb5-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">11000</span>,                                </span>
+<span id="cb5-11"><a href="multiple-diagnostic-tests.html#cb5-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              </span>
+<span id="cb5-12"><a href="multiple-diagnostic-tests.html#cb5-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
+<span id="cb5-13"><a href="multiple-diagnostic-tests.html#cb5-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                   </span></code></pre></div>
+<p>Then we could produce the diagnostic plots, compute the ESS, and print out our results as we did previously (results not shown).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="multiple-diagnostic-tests.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb6-2"><a href="multiple-diagnostic-tests.html#cb6-2" aria-hidden="true" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
+<span id="cb6-3"><a href="multiple-diagnostic-tests.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
+<span id="cb6-4"><a href="multiple-diagnostic-tests.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span>
+<span id="cb6-5"><a href="multiple-diagnostic-tests.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+</div>
+<div id="conditional-dependence-1" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Conditional dependence<a href="multiple-diagnostic-tests.html#conditional-dependence-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With LCM where &gt;2 diagnostic tests are used, we could, again, relax the assumption of conditional independence by adding covariance terms representing the conditional dependence between tests <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x">(Dendukuri and Joseph, 2001)</a>. However, a LCM including every covariance term between every test is rarely feasible. A more pragmatic approach is to consider pair-wise covariance terms between two tests.</p>
+<p>For instance, using the example from the preceding section, we could assume that US and TRE, which are both based on recognition (tactile or visual) of the amniotic vesicle or embryo, are possibly conditionally <strong>dependent</strong> (as compared to the PAG test, which measure a glycoprotein associated with the placenta). We could thus include covariance terms between these two specific tests. Remember, we had set up US as Test A and TRE as Test C. It will be easier, however, to manage the covariance terms if the dependent tests are next to each other within the likelihood function. I will, therefore, re-assign the tests as follows, and reorganized the dataset with that new tests configuration.<br />
+-Test A: US<br />
+-Test B: TRE<br />
+-Test C: PAG</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="multiple-diagnostic-tests.html#cb7-1" aria-hidden="true" tabindex="-1"></a>TestA <span class="ot">&lt;-</span> <span class="st">&quot;US&quot;</span></span>
+<span id="cb7-2"><a href="multiple-diagnostic-tests.html#cb7-2" aria-hidden="true" tabindex="-1"></a>TestB <span class="ot">&lt;-</span> <span class="st">&quot;TRE&quot;</span></span>
+<span id="cb7-3"><a href="multiple-diagnostic-tests.html#cb7-3" aria-hidden="true" tabindex="-1"></a>TestC <span class="ot">&lt;-</span> <span class="st">&quot;PAG&quot;</span></span>
+<span id="cb7-4"><a href="multiple-diagnostic-tests.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="multiple-diagnostic-tests.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#n is of the form : (TestA+ TestB+ Test C+), (TestA+ TestB- TestC+), (TestA- TestB+ TestC+), (TestA- TestB- TestC+), (TestA+ TestB+ Test C-), (TestA+ TestB- TestC-), (TestA- TestB+ TestC-), (TestA- TestB- TestC-)</span></span>
+<span id="cb7-6"><a href="multiple-diagnostic-tests.html#cb7-6" aria-hidden="true" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">c</span>(<span class="dv">240</span>, <span class="dv">15</span>, <span class="dv">12</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">216</span>))</span>
+<span id="cb7-7"><a href="multiple-diagnostic-tests.html#cb7-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sapply</span>(datalist, sum)</span>
+<span id="cb7-8"><a href="multiple-diagnostic-tests.html#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="multiple-diagnostic-tests.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
+<span id="cb7-10"><a href="multiple-diagnostic-tests.html#cb7-10" aria-hidden="true" tabindex="-1"></a>model_3tests_1pop_dep <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb7-11"><a href="multiple-diagnostic-tests.html#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="multiple-diagnostic-tests.html#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb7-13"><a href="multiple-diagnostic-tests.html#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="multiple-diagnostic-tests.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">  n[1:8] ~ dmulti(p[1:8], &quot;</span>,n,<span class="st">&quot;)</span></span>
+<span id="cb7-15"><a href="multiple-diagnostic-tests.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">  p[1] &lt;- Prev*(Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + covp)*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) + covn)*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb7-16"><a href="multiple-diagnostic-tests.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">  p[2] &lt;- Prev*(Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) - covp)*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot; - covn)*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb7-17"><a href="multiple-diagnostic-tests.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">  p[3] &lt;- Prev*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; - covp)*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) - covn)*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb7-18"><a href="multiple-diagnostic-tests.html#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">  p[4] &lt;- Prev*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + covp)*Se_&quot;</span>, TestC, <span class="st">&quot; + (1-Prev)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot; + covn)*(1-Sp_&quot;</span>, TestC,<span class="st">&quot;)</span></span>
+<span id="cb7-19"><a href="multiple-diagnostic-tests.html#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-20"><a href="multiple-diagnostic-tests.html#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">  p[5] &lt;- Prev*(Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + covp)*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) + covn)*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb7-21"><a href="multiple-diagnostic-tests.html#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">  p[6] &lt;- Prev*(Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) - covp)*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot; - covn)*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb7-22"><a href="multiple-diagnostic-tests.html#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="st">  p[7] &lt;- Prev*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; - covp)*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) - covn)*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb7-23"><a href="multiple-diagnostic-tests.html#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">  p[8] &lt;- Prev*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + covp)*(1-Se_&quot;</span>, TestC,<span class="st">&quot;) + (1-Prev)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot; + covn)*Sp_&quot;</span>, TestC,<span class="st">&quot;</span></span>
+<span id="cb7-24"><a href="multiple-diagnostic-tests.html#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-25"><a href="multiple-diagnostic-tests.html#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-26"><a href="multiple-diagnostic-tests.html#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb7-27"><a href="multiple-diagnostic-tests.html#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="multiple-diagnostic-tests.html#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev ~ dbeta(&quot;</span>,Prev.shapea,<span class="st">&quot;, &quot;</span>,Prev.shapeb,<span class="st">&quot;)    ## Prior for Prevalence</span></span>
+<span id="cb7-29"><a href="multiple-diagnostic-tests.html#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestA.shapea,<span class="st">&quot;, &quot;</span>,Se.TestA.shapeb,<span class="st">&quot;)  ## Prior for Se of Test A</span></span>
+<span id="cb7-30"><a href="multiple-diagnostic-tests.html#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestA.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestA.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
+<span id="cb7-31"><a href="multiple-diagnostic-tests.html#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.shapeb,<span class="st">&quot;)  ## Prior for Se of Test B</span></span>
+<span id="cb7-32"><a href="multiple-diagnostic-tests.html#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test B</span></span>
+<span id="cb7-33"><a href="multiple-diagnostic-tests.html#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestC, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestC.shapea,<span class="st">&quot;, &quot;</span>,Se.TestC.shapeb,<span class="st">&quot;)  ## Prior for Se of Test C</span></span>
+<span id="cb7-34"><a href="multiple-diagnostic-tests.html#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestC, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestC.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestC.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test C</span></span>
+<span id="cb7-35"><a href="multiple-diagnostic-tests.html#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-36"><a href="multiple-diagnostic-tests.html#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="st">  #=== CONDITIONAL DEPENDENCE STRUCTURE ===#</span></span>
+<span id="cb7-37"><a href="multiple-diagnostic-tests.html#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="multiple-diagnostic-tests.html#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="st">  covp ~ dunif(minp,maxp)</span></span>
+<span id="cb7-39"><a href="multiple-diagnostic-tests.html#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="st">  covn ~ dunif(minn,maxn)</span></span>
+<span id="cb7-40"><a href="multiple-diagnostic-tests.html#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="st">  minp &lt;- (1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(Se_&quot;</span>, TestB, <span class="st">&quot;-1)</span></span>
+<span id="cb7-41"><a href="multiple-diagnostic-tests.html#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="st">  minn &lt;- (Sp_&quot;</span>, TestA, <span class="st">&quot;-1)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb7-42"><a href="multiple-diagnostic-tests.html#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="st">  maxp &lt;- min(Se_&quot;</span>, TestA, <span class="st">&quot;,Se_&quot;</span>, TestB, <span class="st">&quot;) - Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot;    </span></span>
+<span id="cb7-43"><a href="multiple-diagnostic-tests.html#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="st">  maxn &lt;- min(Sp_&quot;</span>, TestA, <span class="st">&quot;,Sp_&quot;</span>, TestB, <span class="st">&quot;) - Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;  </span></span>
+<span id="cb7-44"><a href="multiple-diagnostic-tests.html#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-45"><a href="multiple-diagnostic-tests.html#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb7-46"><a href="multiple-diagnostic-tests.html#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="multiple-diagnostic-tests.html#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb7-48"><a href="multiple-diagnostic-tests.html#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(model_3tests_1pop_dep, </span>
+<span id="cb7-49"><a href="multiple-diagnostic-tests.html#cb7-49" aria-hidden="true" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_3tests_1pop_dep.txt&quot;</span>, </span>
+<span id="cb7-50"><a href="multiple-diagnostic-tests.html#cb7-50" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb7-51"><a href="multiple-diagnostic-tests.html#cb7-51" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb7-52"><a href="multiple-diagnostic-tests.html#cb7-52" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb7-53"><a href="multiple-diagnostic-tests.html#cb7-53" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>The text file would look as follows:</p>
+<div class="figure">
+<img src="Figures/model_3tests_1pop_dep.png" alt="" />
+<p class="caption">Text file with the LCM for 3 diagnostic tests applied to one population and allowing for conditional dependence between two of the tests (US and TRE).</p>
+</div>
+<p>We could run the model using <code>jags()</code> function and then produce the diagnostic plots, compute the ESS, and print out our results as we did previously (results not shown).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="multiple-diagnostic-tests.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb8-2"><a href="multiple-diagnostic-tests.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb8-3"><a href="multiple-diagnostic-tests.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="multiple-diagnostic-tests.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb8-5"><a href="multiple-diagnostic-tests.html#cb8-5" aria-hidden="true" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
+<span id="cb8-6"><a href="multiple-diagnostic-tests.html#cb8-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_3tests_1pop_dep.txt&quot;</span>,     </span>
+<span id="cb8-7"><a href="multiple-diagnostic-tests.html#cb8-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev&quot;</span>, <span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG&quot;</span>, <span class="st">&quot;Sp_PAG&quot;</span>, <span class="st">&quot;Se_TRE&quot;</span>, <span class="st">&quot;Sp_TRE&quot;</span>, <span class="st">&quot;covp&quot;</span>, <span class="st">&quot;covn&quot;</span>),               </span>
+<span id="cb8-8"><a href="multiple-diagnostic-tests.html#cb8-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
+<span id="cb8-9"><a href="multiple-diagnostic-tests.html#cb8-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                </span>
+<span id="cb8-10"><a href="multiple-diagnostic-tests.html#cb8-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">11000</span>,                                </span>
+<span id="cb8-11"><a href="multiple-diagnostic-tests.html#cb8-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              </span>
+<span id="cb8-12"><a href="multiple-diagnostic-tests.html#cb8-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
+<span id="cb8-13"><a href="multiple-diagnostic-tests.html#cb8-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                   </span>
+<span id="cb8-14"><a href="multiple-diagnostic-tests.html#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="multiple-diagnostic-tests.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb8-16"><a href="multiple-diagnostic-tests.html#cb8-16" aria-hidden="true" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
+<span id="cb8-17"><a href="multiple-diagnostic-tests.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
+<span id="cb8-18"><a href="multiple-diagnostic-tests.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span>
+<span id="cb8-19"><a href="multiple-diagnostic-tests.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exercise-3---multiple-populations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercise-4---multiple-tests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/08-GT_two_t.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

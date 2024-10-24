@@ -1,0 +1,36 @@
+model{
+
+#=== LIKELIHOOD	===#
+
+  #=== POPULATION 1 ===#
+  Pop1[1:4] ~ dmulti(p1[1:4], 262)
+  p1[1] <- Prev1*Se_US*Se_PAG + (1-Prev1)*(1-Sp_US)*(1-Sp_PAG)
+  p1[2] <- Prev1*Se_US*(1-Se_PAG) + (1-Prev1)*(1-Sp_US)*Sp_PAG
+  p1[3] <- Prev1*(1-Se_US)*Se_PAG + (1-Prev1)*Sp_US*(1-Sp_PAG)
+  p1[4] <- Prev1*(1-Se_US)*(1-Se_PAG) + (1-Prev1)*Sp_US*Sp_PAG
+
+  #=== POPULATION 2 ===#  
+  Pop2[1:4] ~ dmulti(p2[1:4], 148)
+  p2[1] <- Prev2*Se_US*Se_PAG + (1-Prev2)*(1-Sp_US)*(1-Sp_PAG)
+  p2[2] <- Prev2*Se_US*(1-Se_PAG) + (1-Prev2)*(1-Sp_US)*Sp_PAG
+  p2[3] <- Prev2*(1-Se_US)*Se_PAG + (1-Prev2)*Sp_US*(1-Sp_PAG)
+  p2[4] <- Prev2*(1-Se_US)*(1-Se_PAG) + (1-Prev2)*Sp_US*Sp_PAG
+
+  #=== POPULATION 3 ===#  
+  Pop3[1:4] ~ dmulti(p3[1:4], 87)
+  p3[1] <- Prev3*Se_US*Se_PAG + (1-Prev3)*(1-Sp_US)*(1-Sp_PAG)
+  p3[2] <- Prev3*Se_US*(1-Se_PAG) + (1-Prev3)*(1-Sp_US)*Sp_PAG
+  p3[3] <- Prev3*(1-Se_US)*Se_PAG + (1-Prev3)*Sp_US*(1-Sp_PAG)
+  p3[4] <- Prev3*(1-Se_US)*(1-Se_PAG) + (1-Prev3)*Sp_US*Sp_PAG  
+  
+#=== PRIOR	===#
+
+  Prev1 ~ dbeta(1, 1) 	## Prior for Prevalence in population 1
+  Prev2 ~ dbeta(1, 1) 	## Prior for Prevalence in population 2
+  Prev3 ~ dbeta(1, 1) 	## Prior for Prevalence in population 3
+  Se_US ~ dbeta(13.577, 4.14425) 	## Prior for Se of Test A
+  Sp_US ~ dbeta(13.959, 3.28688235294118) 	## Prior for Sp of Test A
+  Se_PAG ~ dbeta(1, 1) 	## Prior for Se of Test B
+  Sp_PAG ~ dbeta(1, 1) 	## Prior for Sp of Test B
+  
+}
