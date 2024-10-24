@@ -39,7 +39,7 @@ To evaluate whether test's accuracy is constant across populations, the followin
   
 - Check if the accuracy vary as function of a characteristic of the tested individuals (e.g., age, breed, etc);  
 - If a substantial number of populations were studied:  
-  - We could run the model after removing one of the population and repeat this process for each populations. If the results (e.g., the test's accuracy parameters) differ substantially for one of the model, this could indicate that the test accuracy is different in this population;  
+  - We could run the model after removing one of the population and repeat this process for each population. If the results (e.g., the test's accuracy parameters) differ substantially for one of the model, this could indicate that the test accuracy is different in this population;  
   - We could allow for different accuracy in one or many of the populations. For instance, we may define *TestA* accuracy as *SeA-2* and *SpA-2* in one (or some) of the populations studied and as *SeA* and *SpA* for all other populations. If the *SeA* and *SeA-2* (or *SpA* and *SpA-2*) parameters differ substantially, this may, again, indicate that the test accuracy is different in this population.  
   
 ### Prevalence varies from one population to another  
@@ -78,7 +78,7 @@ curve(dbeta(x, shape1=Sp.US$shape1, shape2=Sp.US$shape2), from=0, to=1,
       main="Prior for ultrasound exam specificity", xlab = "Proportion", ylab = "Density")
 ```
   
-Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se:0.80 and mode for Sp:0.85) and to increase the width of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:  
+Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se: 0.80 and mode for Sp: 0.85) and to increase the width of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:  
   
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 # US sensitivity ----------------------------------------------------------

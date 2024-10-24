@@ -70,7 +70,7 @@ conduct on first parity cows and, thus, Se of both tests may be higher in first 
 |    **US Sp**   |    0.970   | 0.941, 0.987 |
 | **Prevalence** |    0.554   | 0.493, 0.614 |     
   
-As a comparison, in question 4 of Exercise 1, where we assumed that US was a perfect test, we assumed that US *Se* and *Sp* was 1.0 and we estimated accuracy of PAG as:  
+As a comparison, in question 4 of Exercise 1, where we considered that US was a perfect test, we assumed that US *Se* and *Sp* was 1.0 and we estimated accuracy of PAG as:  
   
 **Table.** Results assuming **US is perfect**  
     
@@ -113,6 +113,6 @@ The ESS for these two parameters were both around 170. So, despite the 30,000 va
 |    **covn**    |                NA                |      NA      |   |              0.032             | 0.002, 0.079 |
 | **Prevalence** |               0.554              | 0.493, 0.614 |   |              0.555             | 0.479, 0.634 |  
   
-When we compare the LCM assuming or not conditional independence, we can see that the tests' Se and Sp estimates are slightly lower in the model allowing for conditional dependence. Indeed, in that model the covariance terms, *covp* and *covn*, where small, but positive. Remember, in the model allowing for conditional dependence, the agreement between tests is now due to the PAG and US accuracy parameters (e.g., their Se) **plus a small value** due to their covariance (e.g., *covp*). Therefore, the tests accuracy parameters estimates will be reduced as their covariance is increased. 
+When we compare the LCM assuming conditional independence *vs.* the one allowing conditional dependence, we can see that the tests' Se and Sp estimates are slightly lower in the model allowing conditional dependence. Indeed, in that model the covariance terms, *covp* and *covn*, where small, but positive. Remember, in the model allowing for conditional dependence, the agreement between tests is now due to the PAG and US accuracy parameters (e.g., their Se) **plus a small value** due to their covariance (e.g., *covp*). Therefore, the tests accuracy parameters estimates will be reduced as their covariance is increased. 
   
 

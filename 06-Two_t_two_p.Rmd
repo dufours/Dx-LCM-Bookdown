@@ -388,7 +388,7 @@ In a given study, you may have measured individuals from a substantial number of
   
 Nevertheless, this would be an identifiable model and we would not necessarily require informative priors.  
   
-On the other hand, [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) have proposed a slightly different, and possibly more elegant and efficient, modelling approach named the hierarchical latent class model. Actually, in most cases, **estimating the disease prevalence in each of the sub-populations (e.g., in each of the 18 herds in the PAG study) is of no interest as compared to estimating** test accuracy and/or **the distribution of within-herd prevalence in the population of herds from which these herds were sampled (i.e., the source population)**. In such case, we could use the model described in the figure below.  
+On the other hand, [Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) have proposed a slightly different, and possibly more elegant and efficient, modelling approach named the hierarchical latent class model. Actually, in most cases, **estimating the disease prevalence in each of the sub-populations (e.g., in each of the 18 herds in the PAG study) is not a primary objective as compared to estimating** test accuracy and/or **the distribution of within-herd prevalence in the population of herds from which these herds were sampled (i.e., the source population)**. In such case, we could use the model described in the figure below.  
   
 ![**Diagrammatic representation of Hanson et al. (2005) hierarchical latent class model. Rectangles represent observed variables (results of the two tests), ovals represent latent variable (individual herd's disease prevalence and population’s distribution of within-herd prevalence), and circles represent the unknown accuracy parameters (Se and Sp of the two tests).** ](Figures/Hierarchical model.png)  
   
@@ -403,7 +403,7 @@ And also, in a *beta(a,b)* distribution:
 $a = mu*psi$  
 $b = psi*(1-mu)$  
   
-For *mu*, it would be quite natural to use a beta distribution as hyperprior, given that the mean within-herd prevalence need to be bounded by 0.0 and 1.0. For *psi*, which represent a variance, a gamma distribution could be used as hyperprior.  
+For *mu*, it would be quite natural to use a beta distribution as hyperprior, given that the mean within-herd prevalence need to be bounded by 0.0 and 1.0. For *psi*, which represent a variance, a gamma distribution would be a better option for this hyperprior.  
   
 We have not discussed gamma distributions in Chapter 2, since they are not used in the other BLCM presented in this document. Briefly, the gamma distribution is also defined by two parameters *α* and *β*. The *α* parameter is also known as the *shape* parameter and the *β* parameter is known as the *rate* parameter. Gamma distributions can take different forms, but are bounded to values between 0 and ∞. Moreover, a **Gamma(0.001, 0.001) would correspond to a vague gamma distribution.**  
   
@@ -605,8 +605,8 @@ bug.out <- jags(data=datalist,
                 DIC=FALSE)  
 ```
   
-### Model diagnostic  
-Model's diagnostic can be generated as we did before (results not shown).
+### Model diagnostics  
+Model's diagnostics can be generated as we did before (results not shown).
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 library(mcmcplots)
 bug.mcmc <- as.mcmc(bug.out)          
@@ -641,7 +641,7 @@ curve(dbeta(x,
 ```
   
 ### Generating informative hyperpriors for mu and psi  
-[Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) proposed to use a **beta distribution as a hyperprior for *mu* and a gamma distribution for *psi***. They also provided a method to elicit values for these hyperpriors. This method is, however, slightly more technical than what with have done so far.  
+[Hanson et al. (2003)](https://link.springer.com/article/10.1198/1085711031526) proposed to use a **beta distribution as a hyperprior for *mu* and a gamma distribution for *psi***. They also provided a method to elicit values for these hyperpriors. This method is, however, slightly more technical than what we have done so far.  
   
 #### mu    
 For *mu*, (the mean within-herd prevalence) we could use a method similar to the one we used before. For instance, we could have some literature, external data, or experts opinion, indicating a most likely (mode) mean within-herd prevalence in the source population, and we could provide the 97.5th (or another) percentile for this mean within-herd prevalence. As an example, in the PAG *vs.* ultrasound study, [Dufour et al. (2017)](https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub) used reproductive data from 30 other herds from the same region as the 18 recruited herds. They computed the within-herd pregnancy prevalence at testing for these 30 herds and found a 50th and 95th percentiles of 42% and 74%, respectively. Using the `epiR` `epi.betabuster` function we could find the corresponding beta distribution as follow:      

@@ -42,7 +42,7 @@ During the study comparing PAG to US, a third test (a trans-rectal manual exam; 
   
 **1.** How many degrees of freedom and unknown parameters do you have? How many informative priors will be needed?  
   
-**2. Start from the partially completed *Question 2.R* script located in Exercise 4 folder.** Run a model using informative priors for US' Se and Sp and pregnancy prevalence and with vague priors on all other parameters. Then run a second model with vague priors on all parameters. We will assume conditional independence between tests and we will also assume that this is one single population. Do you expect any problem with the model using vague priors on all parameters?
+**2. Start from the partially completed *Question 2.R* script located in Exercise 4 folder.** Run a model using informative priors for US' Se and Sp and pregnancy prevalence and with vague priors on all other parameters. Then run a second model with vague priors on all parameters. We will assume conditional independence between tests and we will also assume that this is one single population. Do you expect any problems with the model using vague priors on all parameters?
   
   
 ## Answers

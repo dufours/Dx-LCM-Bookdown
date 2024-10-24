@@ -23,7 +23,7 @@ knitr::write_bib(c(
 
 # Multiple diagnostic tests
   
-In some situations, individuals studied will be tested using more than two diagnostic tests. For instance, if all individuals were tested using three different diagnostic tests (Test A, Test B, and Test C) we could present the cross-classified results of the three tests as follows:  
+In some situations, individuals will be tested using more than two diagnostic tests. For instance, if all individuals were tested using three different diagnostic tests (Test A, Test B, and Test C) we could present the cross-classified results of the three tests as follows:  
   
 **Table.** Cross-classified results from three diagnostic tests in one population.  
   

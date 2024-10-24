@@ -45,7 +45,7 @@ Some anecdotic reports suggest that expression of PAG may vary as function of nu
 ## Answers
 **1.** How many degrees of freedom do you have and how many unknown parameters do you need to estimate? Based on your results, would you conclude that PAG accuracy is influenced by number of days since breeding?   
   
-**Answer:**  We would have 6 degrees of freedom and 8 unknown parameters to estimate (one Se and one Sp for US, 2 Se and 2 Sp for PAG, and two prevalence). We need two informative priors to make the LCM identifiable.   
+**Answer:**  We have 6 degrees of freedom and 8 unknown parameters to estimate (one Se and one Sp for US, 2 Se and 2 Sp for PAG, and two prevalence). We need two informative priors to make the LCM identifiable.   
   
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
@@ -206,7 +206,7 @@ The results from this LCM are below.
 |   **Sp PAG 28-35 days**   |    0.980   | 0.927, 0.999 |
 |   **Sp PAG 36-45 days**   |    0.962   | 0.879, 0.998 |  
   
-There was little difference between the 28-35 days since breeding *vs.* 36-45 days since breeding accuracy parameters. Below, we have plotted the two PAG Sp posterior distributions to illustrate how similar they are. However, since we are not in a Frequentist framework, "testing" whether the 28-35 days *vs.* 36-45 days accuracy parameters are statistically different is not straightforward.  
+There was little difference between the 28-35 days since breeding *vs.* 36-45 days since breeding accuracy parameters. Below, we have plotted the two PAG Sp posterior distributions to illustrate how similar they are. However, since we are not in a Frequentist framework, "testing" whether the 28-35 days *vs.* 36-45 days accuracy parameters are statistically different is not straightforward. Note that Bayesian methods can be used to compute the probability that a given parameter is larger (or smaller) than another parameter, or than an estimate previously reported in the literature [(see Arango-Sabogal et al., 2021](https://doi.org/10.1016/j.prevetmed.2021.105510) for an applied example.    
   
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Posterior distributions for PAG specificity at 28-35 days (black) and 36-45 days (red) post-breeding."}
 library(dplyr)
