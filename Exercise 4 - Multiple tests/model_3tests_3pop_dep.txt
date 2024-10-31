@@ -1,0 +1,63 @@
+model{
+
+#=== LIKELIHOOD	===#
+
+  #=== POPULATION 1 ===#
+  Pop1[1:8] ~ dmulti(p1[1:8], 216)
+  p1[1] <- Prev1*Se_PCR*(Se_ELISA1*Se_ELISA2 + covp) + (1-Prev1)*(1-Sp_PCR)*((1-Sp_ELISA1)*(1-Sp_ELISA2) + covn)
+  p1[2] <- Prev1*Se_PCR*((1-Se_ELISA1)*Se_ELISA2 - covp) + (1-Prev1)*(1-Sp_PCR)*(Sp_ELISA1*(1-Sp_ELISA2) - covn)
+  p1[3] <- Prev1*(1-Se_PCR)*(Se_ELISA1*Se_ELISA2 + covp) + (1-Prev1)*Sp_PCR*((1-Sp_ELISA1)*(1-Sp_ELISA2) + covn)
+  p1[4] <- Prev1*(1-Se_PCR)*((1-Se_ELISA1)*Se_ELISA2 - covp) + (1-Prev1)*Sp_PCR*(Sp_ELISA1*(1-Sp_ELISA2) - covn)
+  
+  p1[5] <- Prev1*Se_PCR*(Se_ELISA1*(1-Se_ELISA2) - covp) + (1-Prev1)*(1-Sp_PCR)*((1-Sp_ELISA1)*Sp_ELISA2 - covn)
+  p1[6] <- Prev1*Se_PCR*((1-Se_ELISA1)*(1-Se_ELISA2) + covp) + (1-Prev1)*(1-Sp_PCR)*(Sp_ELISA1*Sp_ELISA2 + covn)
+  p1[7] <- Prev1*(1-Se_PCR)*(Se_ELISA1*(1-Se_ELISA2) - covp) + (1-Prev1)*Sp_PCR*((1-Sp_ELISA1)*Sp_ELISA2 - covn)
+  p1[8] <- Prev1*(1-Se_PCR)*((1-Se_ELISA1)*(1-Se_ELISA2) + covp) + (1-Prev1)*Sp_PCR*(Sp_ELISA1*Sp_ELISA2 + covn)
+  
+ 
+  #=== POPULATION 2 ===#  
+  Pop2[1:8] ~ dmulti(p2[1:8], 438)
+  p2[1] <- Prev2*Se_PCR*(Se_ELISA1*Se_ELISA2 + covp) + (1-Prev2)*(1-Sp_PCR)*((1-Sp_ELISA1)*(1-Sp_ELISA2) + covn)
+  p2[2] <- Prev2*Se_PCR*((1-Se_ELISA1)*Se_ELISA2 - covp) + (1-Prev2)*(1-Sp_PCR)*(Sp_ELISA1*(1-Sp_ELISA2) - covn)
+  p2[3] <- Prev2*(1-Se_PCR)*(Se_ELISA1*Se_ELISA2 + covp) + (1-Prev2)*Sp_PCR*((1-Sp_ELISA1)*(1-Sp_ELISA2) + covn)
+  p2[4] <- Prev2*(1-Se_PCR)*((1-Se_ELISA1)*Se_ELISA2 - covp) + (1-Prev2)*Sp_PCR*(Sp_ELISA1*(1-Sp_ELISA2) - covn)
+  
+  p2[5] <- Prev2*Se_PCR*(Se_ELISA1*(1-Se_ELISA2) - covp) + (1-Prev2)*(1-Sp_PCR)*((1-Sp_ELISA1)*Sp_ELISA2 - covn)
+  p2[6] <- Prev2*Se_PCR*((1-Se_ELISA1)*(1-Se_ELISA2) + covp) + (1-Prev2)*(1-Sp_PCR)*(Sp_ELISA1*Sp_ELISA2 + covn)
+  p2[7] <- Prev2*(1-Se_PCR)*(Se_ELISA1*(1-Se_ELISA2) - covp) + (1-Prev2)*Sp_PCR*((1-Sp_ELISA1)*Sp_ELISA2 - covn)
+  p2[8] <- Prev2*(1-Se_PCR)*((1-Se_ELISA1)*(1-Se_ELISA2) + covp) + (1-Prev2)*Sp_PCR*(Sp_ELISA1*Sp_ELISA2 + covn)
+  
+  #=== POPULATION 3 ===#  
+  Pop3[1:8] ~ dmulti(p3[1:8], 68)
+  p3[1] <- Prev3*Se_PCR*(Se_ELISA1*Se_ELISA2 + covp) + (1-Prev3)*(1-Sp_PCR)*((1-Sp_ELISA1)*(1-Sp_ELISA2) + covn)
+  p3[2] <- Prev3*Se_PCR*((1-Se_ELISA1)*Se_ELISA2 - covp) + (1-Prev3)*(1-Sp_PCR)*(Sp_ELISA1*(1-Sp_ELISA2) - covn)
+  p3[3] <- Prev3*(1-Se_PCR)*(Se_ELISA1*Se_ELISA2 + covp) + (1-Prev3)*Sp_PCR*((1-Sp_ELISA1)*(1-Sp_ELISA2) + covn)
+  p3[4] <- Prev3*(1-Se_PCR)*((1-Se_ELISA1)*Se_ELISA2 - covp) + (1-Prev3)*Sp_PCR*(Sp_ELISA1*(1-Sp_ELISA2) - covn)
+  
+  p3[5] <- Prev3*Se_PCR*(Se_ELISA1*(1-Se_ELISA2) - covp) + (1-Prev3)*(1-Sp_PCR)*((1-Sp_ELISA1)*Sp_ELISA2 - covn)
+  p3[6] <- Prev3*Se_PCR*((1-Se_ELISA1)*(1-Se_ELISA2) + covp) + (1-Prev3)*(1-Sp_PCR)*(Sp_ELISA1*Sp_ELISA2 + covn)
+  p3[7] <- Prev3*(1-Se_PCR)*(Se_ELISA1*(1-Se_ELISA2) - covp) + (1-Prev3)*Sp_PCR*((1-Sp_ELISA1)*Sp_ELISA2 - covn)
+  p3[8] <- Prev3*(1-Se_PCR)*((1-Se_ELISA1)*(1-Se_ELISA2) + covp) + (1-Prev3)*Sp_PCR*(Sp_ELISA1*Sp_ELISA2 + covn)
+    
+#=== PRIOR	===#
+
+  Prev1 ~ dbeta(2.248, 5.992) 	## Prior for Prevalence in population 1
+  Prev2 ~ dbeta(2.248, 5.992) 	## Prior for Prevalence in population 2
+  Prev3 ~ dbeta(2.248, 5.992) 	## Prior for Prevalence in population 3
+  Se_PCR ~ dbeta(4.216, 8.504) 	## Prior for Se of Test A
+  Sp_PCR ~ dbeta(47.627, 3.45405263157895) 	## Prior for Sp of Test A
+  Se_ELISA1 ~ dbeta(3.923, 1.73075) 	## Prior for Se of Test B
+  Sp_ELISA1 ~ dbeta(56.663, 7.18477777777778) 	## Prior for Sp of Test B
+  Se_ELISA2 ~ dbeta(3.923, 1.73075) 	## Prior for Se of Test C
+  Sp_ELISA2 ~ dbeta(56.663, 7.18477777777778) 	## Prior for Sp of Test C  
+  
+#=== CONDITIONAL DEPENDENCE STRUCTURE ===#
+
+  covp ~ dunif(minp,maxp)
+  covn ~ dunif(minn,maxn)
+  minp <- (1-Se_ELISA1)*(Se_ELISA2-1)
+  minn <- (Sp_ELISA1-1)*(1-Sp_ELISA2)
+  maxp <- min(Se_ELISA1,Se_ELISA2) - Se_ELISA1*Se_ELISA2	
+  maxn <- min(Sp_ELISA1,Sp_ELISA2) - Sp_ELISA1*Sp_ELISA2  
+  
+}
