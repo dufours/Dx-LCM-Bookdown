@@ -30,7 +30,7 @@ Open up the `R` project for Exercise 2 (i.e., the R project file named *Exercise
 In the Exercise 2 folder, you will find partially completed `R` scripts. To answer the questions, try to complete the missing parts (they are highlighted by a **#TO COMPLETE#** comment). We also provided complete `R` scripts, but try to work it out on your own first! 
   
   
-**1. Start from the partially completed *Question 1.R* script located in Exercise 2 folder.** We could try to estimate the Se and Sp of the PAG-based ELISA test when compared to US as the reference test. We could, however, explicitly acknowledge that the US exam is not a gold-standard test. At first, we could assume that these tests are conditionally independent. We will use data from one population (herd #1). In herd #1, the cross-tabulated PAG by US results were as follows:  
+**1. Start from the partially completed *Question 1.R* script located in Exercise 2 folder.** We could try to estimate the Se and Sp of the PAG-based ELISA test when compared to US. We could, however, explicitly acknowledge that the US exam is not a gold-standard test. At first, we could assume that these tests are conditionally independent. We will use data from one population (herd #1). In herd #1, the cross-tabulated PAG by US results were as follows:  
   
 **Table.** Cross-classified results of the PAG and US tests in herd #1.  
   
@@ -56,7 +56,7 @@ conduct on first parity cows and, thus, Se of both tests may be higher in first 
   
     
 ## Answers
-**1.** We could try to estimate the Se and Sp of the PAG-based ELISA test using US as the reference test. We could, however, explicitly acknowledge that the US exam is not a gold-standard test. At first, we could assume that these tests are conditionally independent. How many unknown parameters do you have to estimate and how many degrees of freedom do you have? Therefore, how many informative priors will you need? Estimate PAG's Se and Sp, and true pregnancy prevalence using informative priors on US' Se and Sp, and on pregnancy's prevalence. Compare your results to those of Exercise 1 (question 4) where you estimated PAG's Se and Sp, but assuming that US was a gold standard test.  
+**1.** We could try to estimate the Se and Sp of the PAG-based ELISA test using US as comparison. We could, however, explicitly acknowledge that the US exam is not a gold-standard test. At first, we could assume that these tests are conditionally independent. How many unknown parameters do you have to estimate and how many degrees of freedom do you have? Therefore, how many informative priors will you need? Estimate PAG's Se and Sp, and true pregnancy prevalence using informative priors on US' Se and Sp, and on pregnancy's prevalence. Compare your results to those of Exercise 1 (question 4) where you estimated PAG's Se and Sp, but assuming that US was a gold standard test.  
   
 **Answer:** We now have 5 unknown parameters (PAG's *Se* and *Sp*, US' *Se* and *Sp*, and pregnancy prevalence, *P*) and we have 3 degrees of freedom (i.e., one 2x2 table where three cells are providing valuable information and the content of the 4th cell can be deduced from the total number of observations minus the content of the other three cells). Thus, we need informative priors for at least 2 parameters. As suggested, we will use informative priors for 3 parameters ( US' *Se* and *Sp*, and *P*), so the model is identifiable.  
   
