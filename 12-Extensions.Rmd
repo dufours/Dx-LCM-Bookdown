@@ -10,7 +10,6 @@ bibliography:
 biblio-style: apalike
 link-citations: yes
 description: Chapitre 13
-output: html_document
 ---
 
 ```{r include=FALSE}

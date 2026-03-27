@@ -1,0 +1,11 @@
+model{
+#=== LIKELIHOOD	===#
+  T ~ dbin(AppPrev, n)
+
+  AppPrev <- Se*Prev + (1-Sp)*(1-Prev)
+
+#=== PRIOR	===#
+  Prev ~ dbeta(1, 1) 	## Prior for Prev
+  Se ~ dbeta(100, 12) 	## Prior for ultrasound sensitivity
+  Sp ~ dbeta(100, 6.21052631578948) 	## Prior for ultrasound specificity
+}

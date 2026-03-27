@@ -1,0 +1,73 @@
+---
+title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
+author: "Simon Dufour and Juan Carlos Arango Sabogal"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: Chapitre 16
+---
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Exercise 6 - Sample size estimation and study design
+## Questions
+  
+For the following questions we will work with the Microsoft Excel sheet developed by [Georgiadis et al. (2005)](https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub). You will find this document in the folder named "Exercise 6 - Sample size estimation and study design" in the course materials.  
+
+
+**1.** Imagine that you are helping a research team for planning a study aiming at estimating the accuracy of a new test for detection of *Staphylococcus aureus* intra-mammary infections (**IMI**) using milk samples from dairy cattle.  
+  
+- The diagnostic test development team is expecting that this new test will have a **sensitivity (Se) around 95%** and a **specificity (Sp) around 90%**.  
+- They would like to report accuracy of the new test with a **precision of +/- 5 percentage-points**, but they are not really interested in reporting the disease prevalence nor the second test's accuracy.  
+- In the literature, [Dohoo et al. (2011)](https://www.sciencedirect.com/science/article/pii/S0022030210006922?via%3Dihub) reported a **Se and Sp of, respectively, 90% and 100% for conventional bacteriological culture**.  
+- Moreover, a veterinary practitioner working with the test's development team indicated that, when sampling a population of cows without specific selection criteria, we could expect a *S. aureus* IMI **prevalence of 5%**.  
+- The practitioner also indicated that, **in a population of cows with persistently high somatic cells count (SCC), we would possibly have 20% of *S. aureus* IMI**.  
+  
+How would you see the study design for this study and what would be the number of cows to test?  
+  
+**2.** The diagnostic test development team was not too happy with the number of tests required by the darn epidemiologist (as usual). They told you that they have the budget for testing 400 cows and are asking what would be the precision in the accuracy parameters (Se and Sp) of the new test that they could achieve with such a sample size?  
+  
+**3.** One of the person from the test's development team suggested to use for comparison, PCR instead of conventional bacteriological culture. Indeed, PCR as a Se of 99% and Sp of 99%, so quite superior to that of culture (90% and 100%). They are asking if, with 400 cows, they could now achieve a more precise estimation of the new test accuracy?  
+  
+**4.** The research team is getting quite frustrated with your answers. The practitioner on the test's development team indicate that, when sampling cows that were  positive to *S. aureus* in the past, we could expect that 50% of them would still be positive. They are asking if this could be a "better" second population in term of study power? When comparing the new test to bacteriological culture in a population of cows selected randomly and a population of cows that were positive to *S. aureus* in the past, what would be the precision in the accuracy parameters (Se and Sp) of the new test that could be obtained using 400 cows?   
+  
+  
+  
+## Answers
+**1.** How would you see the study design for this study and what would be the number of cows to test?  
+  
+**Answer:** We could imagine a validation test study where the new test and conventional milk bacteriological culture will be applied to samples coming from a number of cows in two populations:  
+1- Randomly chosen cows (anticipated prevalence of 5%)  
+2- Cows with persistently high SCC (anticipated prevalence of 20%) 
+  
+Using this approach we would estimate that 1330 cows would be needed; 333 cows from the low prevalence population and 997 from the high prevalence population. This is, of course, assuming that the tests are conditionally independent. 
+  
+    
+**2.** What would be the precision in the accuracy parameters (Se and Sp) of the new test when testing 400 cows?  
+  
+**Answer:** In the Excel sheet, we had to play with the desired CI width for the Se and Sp of the first test until we reached a total sample size of approximately 400 cows. Therefore, you may have obtained results that are slightly different than us. But, in our case, we were approaching 400 animals (exactly 411 animals, actually) when using CI width of 0.18 for Se and of 0.16 for Sp, thus **+/- 9 and +/- 8 percentage-points around the median Se and Sp estimates, respectively**.  
+    
+**3.** What would be the precision of the new test accuracy when using PCR as comparison and with 400 cows?  
+  
+**Answer:** If we use 99% for the second test's Se and Sp and play with the first test's Se and Sp desired CI width until we get around 400 cows to test, we find that, with 400 cows (403 to be precise), **we would report Se and Sp with precision of +/- 14 and +/- 8 percentage-points around the median estimates, respectively.** It's worst than before! As you can see, when disease prevalence is low, having a second test with a perfect Sp (i.e., bacteriological milk culture in this case) can have a tremendous impact!  
+  
+**4.** What would be the precision of the new test accuracy when using a population of cow selected randomly and a population of cows that were  positive to *S. aureus* in the past, and with a total of 400 cows tested?  
+  
+**Answer:** With these parameters we would report Se and Sp with precision of **+/- 5 and +/- 7 percentage-points around the median estimates, respectively.** The test's development team is super happy with this; they now love epidemiologists. When you leave the room you hear them say:  
+  
+    
+![](Figures\scientists.png)   
+  
+  

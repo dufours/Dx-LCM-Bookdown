@@ -1,24 +1,17 @@
---- 
+---
 title: "Bayesian latent class models for prevalence estimation and diagnostic test evaluation"
 author: "Simon Dufour and Juan Carlos Arango Sabogal"
 date: "`r Sys.Date()`"
-output:
-  word_document: default
-  html_document: 
-    fig_caption: yes
-    toc: yes
-    toc_float: yes
-    number_sections: yes
-  pdf_document: default
-description: Exercises for the Dx test - LCM workshop 
+description: "Exercises for the Dx test - LCM workshop"
 documentclass: book
+site: bookdown::bookdown_site
 link-citations: yes
 bibliography:
-- book.bib
-- packages.bib
-site: bookdown::bookdown_site
+  - book.bib
+  - packages.bib
 biblio-style: apalike
 ---
+
 
 ![](Figures\Main_pic.jpg) 
 
@@ -33,7 +26,7 @@ Remember, there are often many different ways to conduct a given piece of work i
    
 ## Software and libraries used  
 
-To conduct the exercises from this book, you will need to install three software (`R`, `RStudio`, and `JAGS`) and a few `R` packages. The installation steps are described below. These instructions are reproduced in parts from [R-project.org](https://www.r-project.org/), [Rstudio.com](https://posit.co/downloads/), and various R packages’ manuals.     
+To conduct the exercises from this book, we will need to install three software (`R`, `RStudio`, and `JAGS`) and a few `R` packages. The installation steps are described below. These instructions are reproduced in parts from [R-project.org](https://www.r-project.org/), [Rstudio.com](https://posit.co/downloads/), and various R packages’ manuals.     
   
 ### R download  
 
@@ -92,7 +85,7 @@ You will have to install `JAGS` on your computer for the `R2JAGS` library to wor
   
 ## Some notation
 
-Throughout the document,  you will find examples of `R` code along with comments. **The `R` code used always appear in grey boxes** (see the following example). This is the code that you will be able to use for your own analyses. **Lines that are preceded by a # sign are comments**, they are skipped when `R` reads them. Following each grey box with `R` code, another **grey box with results from the analysis is presented**.  
+Throughout the document, you will find examples of `R` code along with comments. **The `R` code used always appear in grey boxes** (see the following example). This is the code that you will be able to use for your own analyses. **Lines that are preceded by a # sign are comments**, they are skipped when `R` reads them. Following each grey box with `R` code, another **grey box with results from the analysis is presented**.  
   
 For instance, this is a `R` code where I am simply asking to show main descriptive statistics for the *speed* variable of the *cars* dataset (note that this dataset is already part of `R`).
 ```{r cars, warning=FALSE, message=FALSE}

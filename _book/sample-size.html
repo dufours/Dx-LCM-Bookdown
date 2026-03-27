@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 Sample size | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
+  <meta name="description" content="Chapitre 16" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 Sample size | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapitre 16" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Sample size | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
+  
+  <meta name="twitter:description" content="Chapitre 16" />
+  
+
+<meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
+
+
+<meta name="date" content="2026-03-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sensitivity-analyses.html"/>
+<link rel="next" href="exercise-6---sample-size-estimation-and-study-design.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian latent class models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#software-and-libraries-used"><i class="fa fa-check"></i><b>1.1</b> Software and libraries used</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#r-download"><i class="fa fa-check"></i><b>1.1.1</b> R download</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#rstudio-download"><i class="fa fa-check"></i><b>1.1.2</b> RStudio download</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#r-libraries"><i class="fa fa-check"></i><b>1.1.3</b> R libraries</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#jags"><i class="fa fa-check"></i><b>1.1.4</b> JAGS</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.2</b> Some notation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#prior-distributions"><i class="fa fa-check"></i><b>2.1</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.1.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.1.2" data-path="distributions.html"><a href="distributions.html#uniform-distribution"><i class="fa fa-check"></i><b>2.1.2</b> Uniform distribution</a></li>
+<li class="chapter" data-level="2.1.3" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>2.1.3</b> Beta distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#distributions-for-likelihood-functions"><i class="fa fa-check"></i><b>2.2</b> Distributions for likelihood functions</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Binomial distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions.html"><a href="distributions.html#multinomial-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Multinomial distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html"><i class="fa fa-check"></i><b>3</b> Running Bayesian models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-data"><i class="fa fa-check"></i><b>3.1</b> The data</a></li>
+<li class="chapter" data-level="3.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-model"><i class="fa fa-check"></i><b>3.2</b> The model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#the-likelihood-function"><i class="fa fa-check"></i><b>3.2.1</b> The likelihood function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#priors-for-unkown-parameters"><i class="fa fa-check"></i><b>3.2.2</b> Priors for unkown parameters</a></li>
+<li class="chapter" data-level="3.2.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#creating-the-jags-model"><i class="fa fa-check"></i><b>3.2.3</b> Creating the JAGS model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#generating-initial-values"><i class="fa fa-check"></i><b>3.3</b> Generating initial values</a></li>
+<li class="chapter" data-level="3.4" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#running-a-model-in-jags"><i class="fa fa-check"></i><b>3.4</b> Running a model in JAGS</a></li>
+<li class="chapter" data-level="3.5" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#model-diagnostic"><i class="fa fa-check"></i><b>3.5</b> Model diagnostic</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#convergence-and-burn-in"><i class="fa fa-check"></i><b>3.5.1</b> Convergence and burn-in</a></li>
+<li class="chapter" data-level="3.5.2" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#number-of-iterations"><i class="fa fa-check"></i><b>3.5.2</b> Number of iterations</a></li>
+<li class="chapter" data-level="3.5.3" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#auto-correlation"><i class="fa fa-check"></i><b>3.5.3</b> Auto-correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="running-bayesian-models.html"><a href="running-bayesian-models.html#getting-our-estimates"><i class="fa fa-check"></i><b>3.6</b> Getting our estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html"><i class="fa fa-check"></i><b>4</b> Exercise 1 - Proportions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#data"><i class="fa fa-check"></i><b>4.1</b> Data</a></li>
+<li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
+<li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-populations.html"><a href="multiple-populations.html#hierarchical-latent-class-models"><i class="fa fa-check"></i><b>7.5</b> Hierarchical latent class models</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="multiple-populations.html"><a href="multiple-populations.html#the-general-idea"><i class="fa fa-check"></i><b>7.5.1</b> The general idea</a></li>
+<li class="chapter" data-level="7.5.2" data-path="multiple-populations.html"><a href="multiple-populations.html#the-likelihood-function-1"><i class="fa fa-check"></i><b>7.5.2</b> The likelihood function</a></li>
+<li class="chapter" data-level="7.5.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-data-1"><i class="fa fa-check"></i><b>7.5.3</b> The data</a></li>
+<li class="chapter" data-level="7.5.4" data-path="multiple-populations.html"><a href="multiple-populations.html#the-priors"><i class="fa fa-check"></i><b>7.5.4</b> The priors</a></li>
+<li class="chapter" data-level="7.5.5" data-path="multiple-populations.html"><a href="multiple-populations.html#write-the-jags-model"><i class="fa fa-check"></i><b>7.5.5</b> Write the JAGS model</a></li>
+<li class="chapter" data-level="7.5.6" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-initial-values-1"><i class="fa fa-check"></i><b>7.5.6</b> Generating initial values</a></li>
+<li class="chapter" data-level="7.5.7" data-path="multiple-populations.html"><a href="multiple-populations.html#running-the-model"><i class="fa fa-check"></i><b>7.5.7</b> Running the model</a></li>
+<li class="chapter" data-level="7.5.8" data-path="multiple-populations.html"><a href="multiple-populations.html#model-diagnostics"><i class="fa fa-check"></i><b>7.5.8</b> Model diagnostics</a></li>
+<li class="chapter" data-level="7.5.9" data-path="multiple-populations.html"><a href="multiple-populations.html#getting-our-estimates-1"><i class="fa fa-check"></i><b>7.5.9</b> Getting our estimates</a></li>
+<li class="chapter" data-level="7.5.10" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-informative-hyperpriors-for-mu-and-psi"><i class="fa fa-check"></i><b>7.5.10</b> Generating informative hyperpriors for mu and psi</a></li>
+<li class="chapter" data-level="7.5.11" data-path="multiple-populations.html"><a href="multiple-populations.html#extensions"><i class="fa fa-check"></i><b>7.5.11</b> Extensions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>11</b> Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.1</b> Likelihood function when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
+<li class="chapter" data-level="12.2" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="extensions-1.html"><a href="extensions-1.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
+<li class="chapter" data-level="14" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analyses</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#models-assumptions"><i class="fa fa-check"></i><b>14.1</b> Model’s assumptions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#conditional-independence-between-tests"><i class="fa fa-check"></i><b>14.1.1</b> Conditional independence between tests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#constant-test-accuracy-across-populations"><i class="fa fa-check"></i><b>14.1.2</b> Constant test accuracy across populations</a></li>
+<li class="chapter" data-level="14.1.3" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#prevalence-varies-from-one-population-to-another"><i class="fa fa-check"></i><b>14.1.3</b> Prevalence varies from one population to another</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#choice-of-priors"><i class="fa fa-check"></i><b>14.2</b> Choice of priors</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="sample-size.html"><a href="sample-size.html"><i class="fa fa-check"></i><b>15</b> Sample size</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="sample-size.html"><a href="sample-size.html#method-when-comparing-to-a-gold-standard"><i class="fa fa-check"></i><b>15.1</b> Method when comparing to a gold standard</a></li>
+<li class="chapter" data-level="15.2" data-path="sample-size.html"><a href="sample-size.html#method-for-the-hui-walter-blcm"><i class="fa fa-check"></i><b>15.2</b> Method for the Hui-Walter BLCM</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Exercise 6 - Sample size estimation and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#questions-5"><i class="fa fa-check"></i><b>16.1</b> Questions</a></li>
+<li class="chapter" data-level="16.2" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#answers-5"><i class="fa fa-check"></i><b>16.2</b> Answers</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sample-size" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Sample size<a href="sample-size.html#sample-size" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>When designing a study for estimating disease prevalence or diagnostic test accuracy we will want to evaluate the required sample size to achieve a certain precision in our test accuracy and disease prevalence estimates. In the following sections, we will first present, as a reminder, the method that can be used to estimate the sample size needed when a gold standard test is used for comparison. This method, however, is not appropriate when the test used for comparison is not a gold standard.</p>
+<p>Then we will present a method specific for BLCM, which will provide a more accurate sample size estimation when imperfect tests are compared. This latter method will also be very helpful to quantify the impacts of choosing a given comparison test over another, or for choosing the prevalence that we should aim for in a second population of individuals.</p>
+<div id="method-when-comparing-to-a-gold-standard" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Method when comparing to a gold standard<a href="sample-size.html#method-when-comparing-to-a-gold-standard" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Remember, the main parameters we want to estimate are a disease prevalence and a sensitivity and specificity, and these are all proportions. More precisely:</p>
+<ul>
+<li><p>The prevalence is <span class="math inline">\(\frac{\text{Number of diseased}}{\text{Number individuals}}\)</span></p></li>
+<li><p>The sensitivity is <span class="math inline">\(\frac{\text{Number of test+}}{\text{Number diseased}}\)</span></p></li>
+<li><p>The specificity is <span class="math inline">\(\frac{\text{Number of test-}}{\text{Number healthy}}\)</span></p></li>
+</ul>
+<p>For any of these fractions, increasing the denominator will result in a decrease in the width of the 95% confidence interval (i.e., a greater precision). To determine the denominator (i.e., the sample size) that could generate a given width for the 95%CI, we could use the following, very simple Frequentist methods.</p>
+<p><span class="math inline">\(n=p*(1-p)*(\frac{1.96}{E})^{2}\)</span></p>
+<p>Where <em>n</em> is the required denominator, <em>p</em> is the expected proportion, <em>E</em> is the width of the 95%CI we would like to achieve (i.e., the precision), and 1.96 is the <em>Z</em> value corresponding to a type-I error rate of 0.05.</p>
+<p>Alternatively, we could compute the width of the 95%CI as function of a given denominator.</p>
+<p><span class="math inline">\(E=1.96*\sqrt{\frac{p*(1-p)}{n}}\)</span></p>
+<p>Therefore, in order to estimate the required sample size, we would first need to provide an educated guess regarding:<br />
+- The true prevalence of disease we will observe;<br />
+- The sensitivity and specificity of the test under investigation.</p>
+<p>As an example, if we were to design a study:<br />
+- On a population where we think the disease prevalence will be around 30%;<br />
+- Using a test that we think will have a sensitivity of 85% and specificity of 95%;<br />
+- Where we would like to have a width of the 95%CI of 10 percentage-points (i.e., +/- 5% on each side of the median estimate).</p>
+<p>We could use the following scripts to get an estimate of the required sample size.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="sample-size.html#cb113-1" tabindex="-1"></a><span class="co">#Sample size for the prevalence</span></span>
+<span id="cb113-2"><a href="sample-size.html#cb113-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.30</span></span>
+<span id="cb113-3"><a href="sample-size.html#cb113-3" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">0.10</span></span>
+<span id="cb113-4"><a href="sample-size.html#cb113-4" tabindex="-1"></a></span>
+<span id="cb113-5"><a href="sample-size.html#cb113-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">*</span>(<span class="fl">1.96</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb113-6"><a href="sample-size.html#cb113-6" tabindex="-1"></a>n</span></code></pre></div>
+<pre><code>## [1] 80.6736</code></pre>
+<p>For the prevalence, we would need 81 individuals to obtain a 95%CI width of 10 percentage-points if the prevalence is around 30%.</p>
+<p>Note that, to obtain a 95%CI width of 5 percentage-points:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="sample-size.html#cb115-1" tabindex="-1"></a><span class="co">#Sample size for the prevalence</span></span>
+<span id="cb115-2"><a href="sample-size.html#cb115-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.30</span></span>
+<span id="cb115-3"><a href="sample-size.html#cb115-3" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb115-4"><a href="sample-size.html#cb115-4" tabindex="-1"></a></span>
+<span id="cb115-5"><a href="sample-size.html#cb115-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">*</span>(<span class="fl">1.96</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb115-6"><a href="sample-size.html#cb115-6" tabindex="-1"></a>n</span></code></pre></div>
+<pre><code>## [1] 322.6944</code></pre>
+<p>We would now need 323 individuals.</p>
+<p>Regarding the sensitivity, remember that the denominator will be the truly diseased individuals, rather than all sampled individuals.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="sample-size.html#cb117-1" tabindex="-1"></a><span class="co">#Sample size for the sensitivity</span></span>
+<span id="cb117-2"><a href="sample-size.html#cb117-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.85</span></span>
+<span id="cb117-3"><a href="sample-size.html#cb117-3" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">0.10</span></span>
+<span id="cb117-4"><a href="sample-size.html#cb117-4" tabindex="-1"></a></span>
+<span id="cb117-5"><a href="sample-size.html#cb117-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">*</span>(<span class="fl">1.96</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb117-6"><a href="sample-size.html#cb117-6" tabindex="-1"></a>n</span></code></pre></div>
+<pre><code>## [1] 48.9804</code></pre>
+<p>We would need 49 <strong>diseased individuals</strong> to obtain a 95%CI width of 10 percentage-points if the sensitivity is around 85%.</p>
+<p>Regarding the specificity, again the denominator will be the truly healthy individuals, rather than all sampled individuals.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="sample-size.html#cb119-1" tabindex="-1"></a><span class="co">#Sample size for the specificity</span></span>
+<span id="cb119-2"><a href="sample-size.html#cb119-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb119-3"><a href="sample-size.html#cb119-3" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">0.10</span></span>
+<span id="cb119-4"><a href="sample-size.html#cb119-4" tabindex="-1"></a></span>
+<span id="cb119-5"><a href="sample-size.html#cb119-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">*</span>(<span class="fl">1.96</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb119-6"><a href="sample-size.html#cb119-6" tabindex="-1"></a>n</span></code></pre></div>
+<pre><code>## [1] 18.2476</code></pre>
+<p>We would need 18 <strong>healthy individuals</strong> to obtain a 95%CI width of 10 percentage-points if the specificity is around 95%.</p>
+<p>Now, we need to reunite these different estimates together. For instance, we saw that measuring 81 individuals was enough to get the precision we needed for the prevalence of disease. But, with 81 individuals and a prevalence of 30%, we would, theoretically, have 24 diseased (30% of 81) and 57 healthy (70% of 81) individuals. And we just computed that we needed 49 diseased individuals to get a precise estimate of the test’s sensitivity.</p>
+<p>In this case, we can see that the sensitivity is the limiting parameter. We could, thus, possibly recruit <strong>a minimum</strong> of 150 individuals and, hopefully, 50 will be diseased and 100 will be healthy. With that latter sample, we would possibly achieve the precision needed for the test’s sensitivity, and we would exceed what we needed for the test’s specificity and for disease prevalence. Of course this will work if our guess estimates were not too “off the mark”.</p>
+<p><strong>This basic method, however, is not considering the loss of power that will occur when comparing imperfect tests with one another (as compared to comparing a novel test to a gold-standard test). This should, therefore, be considered as an overoptimistic scenario if the test used for comparison is not a gold standard.</strong></p>
+</div>
+<div id="method-for-the-hui-walter-blcm" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Method for the Hui-Walter BLCM<a href="sample-size.html#method-for-the-hui-walter-blcm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub">Georgiadis et al. (2005)</a> proposed a method to calculate sample size to estimate disease prevalence, sensitivity and specificity with a desired precision, when using the <a href="https://www.jstor.org/stable/2530508?seq=1">Hui and Walter (1980)</a> model (two conditionally independent tests for screening individuals from two populations). In their article, <a href="https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub">Georgiadis et al. (2005)</a> provided the hyperlink to an Excel spreadsheet template. We included this spreadsheet in the course material.</p>
+<p>Briefly, we need to provide our best guess on:<br />
+- Disease prevalence in population 1 (<span class="math inline">\(\pi1\)</span>);<br />
+- Disease prevalence in population 2 (<span class="math inline">\(\pi2\)</span>);<br />
+- Sensitivity of the first (<span class="math inline">\(Se1\)</span>) and second test (<span class="math inline">\(Se2\)</span>);<br />
+- Specificity of the first (<span class="math inline">\(Sp1\)</span>) and second test (<span class="math inline">\(Sp2\)</span>).</p>
+<p>And, then, the desired 95% BCI width for these different parameters.</p>
+<p>Below is a screen capture of the spreadsheet. In this case, we proposed to study two populations where:<br />
+- Disease prevalence (<span class="math inline">\(\pi1\)</span> and <span class="math inline">\(\pi2\)</span>) would be 0.10 and 0.70;<br />
+- Sensitivity of the two tests (<span class="math inline">\(Se1\)</span> and <span class="math inline">\(Se2\)</span>) would be 0.85 and 0.95;<br />
+- Specificity of the two tests (<span class="math inline">\(Sp1\)</span> and <span class="math inline">\(Sp2\)</span>) would both be 0.95;<br />
+- Desired width of the 95% BCI for disease prevalence (<span class="math inline">\(\pi1\)</span> and <span class="math inline">\(\pi2\)</span>) would be 0.15;<br />
+- Desired width of the 95% BCI for sensitivity (<span class="math inline">\(Se1\)</span> and <span class="math inline">\(Se2\)</span>) would be 0.20;<br />
+- Desired width of the 95% BCI for specificity (<span class="math inline">\(Sp1\)</span> and <span class="math inline">\(Sp2\)</span>) would be 0.10;</p>
+<div class="float">
+<img src="Figures/Georgiadis%20spreadsheet.png" alt="Excel spreadsheet used to estimate sample size for BLCM comparing two independent tests in two populations." />
+<div class="figcaption"><strong>Excel spreadsheet used to estimate sample size for BLCM comparing two independent tests in two populations.</strong></div>
+</div>
+<p><br/><br />
+Additional information are provided in the spreadsheet, but we can already see that we would need to sample 134 individuals from the low (10%) prevalence population (<em>N1</em>) and 402 from the high (70%) prevalence population (<em>N2</em>) to obtain the desired width for the 95% BCIs.</p>
+<p>Again, this will work if our guess estimates were not too “off the mark”. One additional note, when using the <a href="https://www.sciencedirect.com/science/article/pii/S0167587705001674?via%3Dihub">Georgiadis et al. (2005)</a> method, we are not considering any informative priors that we may want to use. Typically, if we were to use informative priors on some or all of the unknown parameters the width of the 95% BCI will possibly be modified. For instance, if we provided relatively narrow priors for a given parameter, and if these priors agree closely with the observed data, then the 95% BCI could be more precise than anticipated (i.e., narrower). On the other hand, narrow priors which are not consistent with the observed data would possibly yield larger 95% BCI.</p>
+<p>Nevertheless, this spreadsheet is quite handy to get rough sample size estimates. It is also quite useful to explore, for instance, how larger differences in disease prevalence between populations can improve the study power. It is also very interesting to investigate how the choice of the second test used for comparison will affect the study power.</p>
+<p>As an example, in the following figure we illustrated, for the <a href="https://www.jstor.org/stable/2530508?seq=1">Hui and Walter (1980)</a> model, how the <strong>difference in prevalence between the two populations</strong> would impact sample size. As you can see, for this specific scenario, targeting populations with more important prevalence differences could have a tremendous impact on power of the study. For instance, in this example, <strong>with prevalence of 0.10 and 0.20 in the first and second population, a total of 14356 individuals would have to be tested to achieve the desired precision. On the other hand, with prevalence of 0.10 and 0.70 in the first and second population, only 218 individuals would have to be tested.</strong></p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-106"></span>
+<img src="_main_files/figure-html/unnamed-chunk-106-1.png" alt="Number of individuals to test as function of the difference in prevalence between populations. For these calculations we assumed that: 1) the first population has a prevalence of disease of 0.10; 2) the two tests are expected to have Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of the first test; and 4) we wish to obtain a 95 BCI width of &lt;20 percentage-points (i.e., &lt; +/- 10 percentage points) when reporting accuracy of the first test." width="672" />
+<p class="caption">
+Figure 15.1: Number of individuals to test as function of the difference in prevalence between populations. For these calculations we assumed that: 1) the first population has a prevalence of disease of 0.10; 2) the two tests are expected to have Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of the first test; and 4) we wish to obtain a 95 BCI width of &lt;20 percentage-points (i.e., &lt; +/- 10 percentage points) when reporting accuracy of the first test.
+</p>
+</div>
+<p><br></p>
+<p>Now, we could use two populations with expected disease prevalence of 0.10 and 0.50, but we are, this time, wondering what would be the best test to use for comparison so we can achieve the required precision with the smallest possible sample size. Below, we quantified how a change in the specificity of the second test would affect the require sample size. We see that, <strong>if the test used for comparison has a specificity of 0.70, we will need to test 1664 individuals to achieve the desired precision. On the other hand, if this test specificity is 1.0 (i.e., no false positive results), only 218 individuals would have to be tested.</strong></p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-107"></span>
+<img src="_main_files/figure-html/unnamed-chunk-107-1.png" alt="Number of individuals to test as function of specificity of the test used for comparison. For these calculations we assumed that: 1) the first and second population have disease prevalence of 0.10 and 0.50; 2) the test under investigation is expected to have a Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of this first test; 4) we wish to obtain a 95 BCI width of &lt;20 percentage-points (i.e., &lt; +/- 10 percentage points) when reporting accuracy of the first test; and 5) the test used for comparison is expected to have a sensitivity of 0.90." width="672" />
+<p class="caption">
+Figure 15.2: Number of individuals to test as function of specificity of the test used for comparison. For these calculations we assumed that: 1) the first and second population have disease prevalence of 0.10 and 0.50; 2) the test under investigation is expected to have a Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of this first test; 4) we wish to obtain a 95 BCI width of &lt;20 percentage-points (i.e., &lt; +/- 10 percentage points) when reporting accuracy of the first test; and 5) the test used for comparison is expected to have a sensitivity of 0.90.
+</p>
+</div>
+<p><br></p>
+<p>We could also quantify how a change in the sensitivity of the test used for comparison would affect the require sample size. We see that, <strong>if the test has a sensitivity of 0.70, we will need to test 851 individuals to achieve the desired precision. On the other hand, if the test’s sensitivity is 1.0 (i.e., no false negative results), only 420 individuals would have to be tested.</strong></p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-108"></span>
+<img src="_main_files/figure-html/unnamed-chunk-108-1.png" alt="Number of individuals to test as function of sensitivity of the test used for comparison. For these calculations we assumed that: 1) the first and second population have disease prevalence of 0.10 and 0.50; 2) the test under investigation is expected to have a Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of this first test; 4) we wish to obtain a 95 BCI width of &lt;20 percentage-points (i.e., &lt; +/- 10 percentage points) when reporting accuracy of the first test; and 5) the test used for comparison is expected to have a specificity of 0.90." width="672" />
+<p class="caption">
+Figure 15.3: Number of individuals to test as function of sensitivity of the test used for comparison. For these calculations we assumed that: 1) the first and second population have disease prevalence of 0.10 and 0.50; 2) the test under investigation is expected to have a Se and Sp of 0.90; 3) we are only interested in estimating the accuracy of this first test; 4) we wish to obtain a 95 BCI width of &lt;20 percentage-points (i.e., &lt; +/- 10 percentage points) when reporting accuracy of the first test; and 5) the test used for comparison is expected to have a specificity of 0.90.
+</p>
+</div>
+<p><br></p>
+<p>For this specific scenario, we can see that there is a greater gain in study power, when improving the specificity of the test used for comparison <em>vs.</em> improving its sensitivity. Indeed, with prevalence of 0.10 and 0.50 in the two populations, we have more healthy individuals than diseased individuals. As a consequence, in this example, an increase in the specificity of one of the tests was a better strategy to reduce misclassification issues than increasing its sensitivity. Finding a second test with the latter properties is often doable. For instance, for many diseases we have tests that can lead to the isolation of the microorganism and, if the microorganism is a strict pathogen, then such a test would be deemed to be 100% specific. As a comparison, using the same example, if we would have used a gold standard test for comparison, 196 individuals would have to be tested, as compared to 218 when using a second test with perfect specificity and a sensitivity of 0.90. Not a huge difference… And in many cases, another imperfect test would be cheaper than a gold standard test, and that is when a gold standard test is actually available (often it is not).</p>
+<p>As we can see, conducting an <em>a priori</em> sample size estimation is extremely important when designing a diagnostic test validation study, since relatively minor decisions regarding the study design can greatly affect its power. One final note, if we are planning a study with more than two populations, or more than two tests, this spreadsheet could still be used to obtain a “worst-case scenario” sample size estimation (i.e., study power would mainly be increased, not decreased, by adding extra populations or tests).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sensitivity-analyses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercise-6---sample-size-estimation-and-study-design.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

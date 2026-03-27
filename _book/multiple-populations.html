@@ -5,33 +5,33 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Multiple populations | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
-  <meta name="description" content="Chapitre 7" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="description" content="Chapitre 16" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Multiple populations | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Chapitre 7" />
+  <meta property="og:description" content="Chapitre 16" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 7 Multiple populations | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   
-  <meta name="twitter:description" content="Chapitre 7" />
+  <meta name="twitter:description" content="Chapitre 16" />
   
 
 <meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
 
 
-<meta name="date" content="2022-05-20" />
+<meta name="date" content="2026-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exercise-2---two-tests-one-population.html"/>
-
+<link rel="prev" href="exercise-2---two-tests.html"/>
+<link rel="next" href="exercise-3---multiple-populations.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,9 +52,12 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -92,7 +95,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +108,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +122,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -138,7 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#software-and-libraries-used"><i class="fa fa-check"></i><b>1.1</b> Software and libraries used</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#r-download"><i class="fa fa-check"></i><b>1.1.1</b> R download</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#rstudio-download"><i class="fa fa-check"></i><b>1.1.2</b> RStudio download</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#r-libraries"><i class="fa fa-check"></i><b>1.1.3</b> R libraries</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#jags"><i class="fa fa-check"></i><b>1.1.4</b> JAGS</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.2</b> Some notation</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
 <ul>
@@ -179,17 +193,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
 <li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="two-imperfect-tests-one-population.html"><a href="two-imperfect-tests-one-population.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests, one population</a>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="two-imperfect-tests-one-population.html"><a href="two-imperfect-tests-one-population.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
-<li class="chapter" data-level="5.2" data-path="two-imperfect-tests-one-population.html"><a href="two-imperfect-tests-one-population.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exercise-2---two-tests-one-population.html"><a href="exercise-2---two-tests-one-population.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests, one population</a>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests-one-population.html"><a href="exercise-2---two-tests-one-population.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
-<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests-one-population.html"><a href="exercise-2---two-tests-one-population.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-populations.html"><a href="multiple-populations.html#hierarchical-latent-class-models"><i class="fa fa-check"></i><b>7.5</b> Hierarchical latent class models</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="multiple-populations.html"><a href="multiple-populations.html#the-general-idea"><i class="fa fa-check"></i><b>7.5.1</b> The general idea</a></li>
+<li class="chapter" data-level="7.5.2" data-path="multiple-populations.html"><a href="multiple-populations.html#the-likelihood-function-1"><i class="fa fa-check"></i><b>7.5.2</b> The likelihood function</a></li>
+<li class="chapter" data-level="7.5.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-data-1"><i class="fa fa-check"></i><b>7.5.3</b> The data</a></li>
+<li class="chapter" data-level="7.5.4" data-path="multiple-populations.html"><a href="multiple-populations.html#the-priors"><i class="fa fa-check"></i><b>7.5.4</b> The priors</a></li>
+<li class="chapter" data-level="7.5.5" data-path="multiple-populations.html"><a href="multiple-populations.html#write-the-jags-model"><i class="fa fa-check"></i><b>7.5.5</b> Write the JAGS model</a></li>
+<li class="chapter" data-level="7.5.6" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-initial-values-1"><i class="fa fa-check"></i><b>7.5.6</b> Generating initial values</a></li>
+<li class="chapter" data-level="7.5.7" data-path="multiple-populations.html"><a href="multiple-populations.html#running-the-model"><i class="fa fa-check"></i><b>7.5.7</b> Running the model</a></li>
+<li class="chapter" data-level="7.5.8" data-path="multiple-populations.html"><a href="multiple-populations.html#model-diagnostics"><i class="fa fa-check"></i><b>7.5.8</b> Model diagnostics</a></li>
+<li class="chapter" data-level="7.5.9" data-path="multiple-populations.html"><a href="multiple-populations.html#getting-our-estimates-1"><i class="fa fa-check"></i><b>7.5.9</b> Getting our estimates</a></li>
+<li class="chapter" data-level="7.5.10" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-informative-hyperpriors-for-mu-and-psi"><i class="fa fa-check"></i><b>7.5.10</b> Generating informative hyperpriors for mu and psi</a></li>
+<li class="chapter" data-level="7.5.11" data-path="multiple-populations.html"><a href="multiple-populations.html#extensions"><i class="fa fa-check"></i><b>7.5.11</b> Extensions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>11</b> Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.1</b> Likelihood function when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
+<li class="chapter" data-level="12.2" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="extensions-1.html"><a href="extensions-1.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
+<li class="chapter" data-level="14" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analyses</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#models-assumptions"><i class="fa fa-check"></i><b>14.1</b> Model’s assumptions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#conditional-independence-between-tests"><i class="fa fa-check"></i><b>14.1.1</b> Conditional independence between tests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#constant-test-accuracy-across-populations"><i class="fa fa-check"></i><b>14.1.2</b> Constant test accuracy across populations</a></li>
+<li class="chapter" data-level="14.1.3" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#prevalence-varies-from-one-population-to-another"><i class="fa fa-check"></i><b>14.1.3</b> Prevalence varies from one population to another</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#choice-of-priors"><i class="fa fa-check"></i><b>14.2</b> Choice of priors</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="sample-size.html"><a href="sample-size.html"><i class="fa fa-check"></i><b>15</b> Sample size</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="sample-size.html"><a href="sample-size.html#method-when-comparing-to-a-gold-standard"><i class="fa fa-check"></i><b>15.1</b> Method when comparing to a gold standard</a></li>
+<li class="chapter" data-level="15.2" data-path="sample-size.html"><a href="sample-size.html#method-for-the-hui-walter-blcm"><i class="fa fa-check"></i><b>15.2</b> Method for the Hui-Walter BLCM</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Exercise 6 - Sample size estimation and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#questions-5"><i class="fa fa-check"></i><b>16.1</b> Questions</a></li>
+<li class="chapter" data-level="16.2" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#answers-5"><i class="fa fa-check"></i><b>16.2</b> Answers</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -212,13 +295,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="multiple-populations" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Multiple populations<a href="multiple-populations.html#multiple-populations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In some situations, the diagnostic tests will be applied in two or more populations with different disease prevalence. In such cases, it could be reasonable to assume that:</p>
+<p>In some situations, the diagnostic tests will be apply to two or more populations with different disease prevalence. In such cases, it could be reasonable to assume that:</p>
 <ul>
 <li>The prevalence varies from one population to another<br />
 </li>
-<li>The tests Se and Sp are constant from one population to another</li>
+<li>The tests Se and Sp are constant across populations</li>
 </ul>
-<p>It could then be advantageous to model the different populations simultaneously in a same LCM as described by <a href="https://www.jstor.org/stable/2530508?seq=1">Hui and Walter (1980)</a>. With two populations, we would have six unknown parameters (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, and each population’s prevalence, <em>P1</em> and <em>P2</em>). When conducting two diagnostic tests in two populations, the data generated can be presented as two 2x2 tables presenting the cross-classified results of the two tests.</p>
+<p>It could then be advantageous to model the different populations simultaneously in the same LCM as described by <a href="https://www.jstor.org/stable/2530508?seq=1">Hui and Walter (1980)</a>. With two populations, we would have six unknown parameters (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, and each population’s prevalence, <em>P1</em> and <em>P2</em>). When conducting two diagnostic tests in two populations, the data generated can be presented as two 2x2 tables presenting the cross-classified results of the two tests.</p>
 <p><strong>Table.</strong> Cross-classified results from two diagnostic tests in two populations.</p>
 <table>
 <colgroup>
@@ -272,7 +355,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>We can see from these 2x2 tables that we have 6 degrees of freedom available. Indeed, in each of the 2x2 table, we have three cells that do contribute a valuable information and the information in the 4th cell can be “guessed” using the total number of observations minus the content of the other three cells. The model proposed by <a href="https://www.jstor.org/stable/2530508?seq=1">Hui and Walter (1980)</a> is, therefore, barely identifiable.</p>
-<p><a href="https://doi.org/10.20506/rst.40.1.3224">Cheung et al. (2021)</a> have described how the number of unknown parameters and the degrees of freedom vary as function of the number of population studied when comparing two conditionally independent diagnostic tests (see below).</p>
+<p><a href="https://doi.org/10.20506/rst.40.1.3224">Cheung et al. (2021)</a> have described how the number of unknown parameters and degrees of freedom vary as function of the number of populations studied when comparing two conditionally independent diagnostic tests (see below).</p>
 <p><strong>Table.</strong> Number of degrees of freedom and of unknown parameters when comparing two conditionally independent diagnostic tests across various number of populations (adapted from <a href="https://doi.org/10.20506/rst.40.1.3224">Cheung et al. (2021)</a>).</p>
 <table>
 <colgroup>
@@ -322,19 +405,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>The likelihood function that could be used to link the observed data (<em>Pop1 n1</em>, <em>Pop1 n2</em>, …, <em>Pop2 n4</em>) to the unknown parameters (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, and <em>P1</em> and <em>P2</em>) can be described as follows:</p>
-<p><span class="math inline">\(Ppop1[1:4] \sim dmulti(Pop1[1:4], nPop1)\)</span>
+<div id="likelihood-function-with-2-populations" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Likelihood function with 2 populations<a href="multiple-populations.html#likelihood-function-with-2-populations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With two populations, the likelihood function that could be used to link the observed data (<em>Pop1 n1</em>, <em>Pop1 n2</em>, …, <em>Pop2 n4</em>) to the unknown parameters (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, and <em>P1</em> and <em>P2</em>) can be described as follows:</p>
+<p><span class="math inline">\(Ppop1[1:4] \sim dmulti(Pop1[1:4], nPop1)\)</span><br />
 <span class="math inline">\(Ppop1_1 = P1*SeA*SeB + (1-P1)*(1-SpA)*(1-SpB)\)</span><br />
 <span class="math inline">\(Ppop1_2 = P1*SeA*(1-SeB) + (1-P1)*(1-SpA)*SpB\)</span><br />
 <span class="math inline">\(Ppop1_3 = P1*(1-SeA)*SeB + (1-P1)*SpA*(1-SpB)\)</span><br />
 <span class="math inline">\(Ppop1_4 = P1*(1-SeA)*(1-SeB) + (1-P1)*SpA*SpB\)</span></p>
-<p><span class="math inline">\(Ppop2[1:4] \sim dmulti(Pop2[1:4], nPop2)\)</span>
+<p><span class="math inline">\(Ppop2[1:4] \sim dmulti(Pop2[1:4], nPop2)\)</span><br />
 <span class="math inline">\(Ppop2_1 = P2*SeA*SeB + (1-P2)*(1-SpA)*(1-SpB)\)</span><br />
 <span class="math inline">\(Ppop2_2 = P2*SeA*(1-SeB) + (1-P2)*(1-SpA)*SpB\)</span><br />
 <span class="math inline">\(Ppop2_3 = P2*(1-SeA)*SeB + (1-P2)*SpA*(1-SpB)\)</span><br />
 <span class="math inline">\(Ppop2_4 = P2*(1-SeA)*(1-SeB) + (1-P2)*SpA*SpB\)</span></p>
-<p>Where <span class="math inline">\(Pop1_1\)</span> to <span class="math inline">\(Pop1_4\)</span> and <span class="math inline">\(Pop2_1\)</span> to <span class="math inline">\(Pop2_4\)</span> are the probabilities of falling in a given cell of the 2x2 table in population 1 and population 2, respectively; and <span class="math inline">\(nPop1\)</span> and <span class="math inline">\(nPop2\)</span> are the number of individuals tested in population 1 and 2, respectively. Thus, if you look carefully, <strong>we simply duplicated the likelihood function used before and we added subscripts to differentiate the cells, probabilities, and disease prevalence of the two populations.</strong> Cool hey? If you have three, four, etc populations, you can then extend the likelihood function to include them. With three or more populations, the model is not just <strong>barely</strong> identifiable anymore, it becomes fully identifiable.</p>
-<p>To run such a model, we simply need to provide, for each population, a dataset where <em>n1</em>, <em>n2</em>, <em>n3</em>, and <em>n4</em> are listed (in that order). For instance, if we use herd #1 and herd #2 from the PAG <em>vs.</em> US study, we have the following 2x2 tables:</p>
+<p>Where <span class="math inline">\(Ppop1_1\)</span> to <span class="math inline">\(Ppop1_4\)</span> and <span class="math inline">\(Ppop2_1\)</span> to <span class="math inline">\(Ppop2_4\)</span> are the probabilities of falling in a given cell of the 2x2 table in population 1 and population 2, respectively; and <span class="math inline">\(nPop1\)</span> and <span class="math inline">\(nPop2\)</span> are the number of individuals tested in population 1 and 2, respectively. Thus, if you look carefully, <strong>we simply duplicated the likelihood function used before and we added subscripts to differentiate the cells, probabilities, and disease prevalence of the two populations.</strong> Pretty cool right? If you have three, four, etc populations, you can then extend the likelihood function to include them.</p>
+</div>
+<div id="organizing-the-data-with-2-populations" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Organizing the data with 2 populations<a href="multiple-populations.html#organizing-the-data-with-2-populations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To run such a model, we simply need to provide, for each population, a dataset where <em>n1</em>, <em>n2</em>, <em>n3</em>, and <em>n4</em> are listed (in that order). For instance, if we use herd #1 and herd #2 from the PAG <em>vs.</em> US study, we will have the following 2x2 tables:</p>
 <p><strong>Table.</strong> Cross-classified results from the PAG and US diagnostic tests in herd #1 and herd #2.</p>
 <table style="width:100%;">
 <colgroup>
@@ -386,8 +474,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td align="center"><strong>PAG-</strong></td>
-<td align="center">139</td>
-<td align="center">123</td>
+<td align="center">1</td>
+<td align="center">113</td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"><strong>PAG-</strong></td>
@@ -409,141 +497,690 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>The dataset could, thus be created as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="multiple-populations.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#n is of the form : (TestA pos and TestB pos), (TestA pos and TestB neg), (TestA neg and TestB pos), then (TestA neg and TestB neg)</span></span>
-<span id="cb1-2"><a href="multiple-populations.html#cb1-2" aria-hidden="true" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Pop1=</span><span class="fu">c</span>(<span class="dv">138</span>,<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">113</span>),</span>
-<span id="cb1-3"><a href="multiple-populations.html#cb1-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Pop2=</span><span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">69</span>)</span>
-<span id="cb1-4"><a href="multiple-populations.html#cb1-4" aria-hidden="true" tabindex="-1"></a>                 )</span></code></pre></div>
-<p>We could provide the values that will be used to described the prior distributions as we did before. The only difference is that we now have two prevalence parameters (<em>P1</em> and <em>P2</em>) to describe. In the example below, I will use vague priors for all parameters (just because we can!).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="multiple-populations.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#We could first create labels for TestA and TestB</span></span>
-<span id="cb2-2"><a href="multiple-populations.html#cb2-2" aria-hidden="true" tabindex="-1"></a>TestA <span class="ot">&lt;-</span> <span class="st">&quot;US&quot;</span></span>
-<span id="cb2-3"><a href="multiple-populations.html#cb2-3" aria-hidden="true" tabindex="-1"></a>TestB <span class="ot">&lt;-</span> <span class="st">&quot;PAG&quot;</span></span>
-<span id="cb2-4"><a href="multiple-populations.html#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="multiple-populations.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Provide information for the prior distributions (all beta distributions) for the 6 unknown parameters </span></span>
-<span id="cb2-6"><a href="multiple-populations.html#cb2-6" aria-hidden="true" tabindex="-1"></a>Prev1.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev in population 1    </span></span>
-<span id="cb2-7"><a href="multiple-populations.html#cb2-7" aria-hidden="true" tabindex="-1"></a>Prev1.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev in population 1</span></span>
-<span id="cb2-8"><a href="multiple-populations.html#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="multiple-populations.html#cb2-9" aria-hidden="true" tabindex="-1"></a>Prev2.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev in population 2    </span></span>
-<span id="cb2-10"><a href="multiple-populations.html#cb2-10" aria-hidden="true" tabindex="-1"></a>Prev2.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev in population 2</span></span>
-<span id="cb2-11"><a href="multiple-populations.html#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="multiple-populations.html#cb2-12" aria-hidden="true" tabindex="-1"></a>Se.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestA</span></span>
-<span id="cb2-13"><a href="multiple-populations.html#cb2-13" aria-hidden="true" tabindex="-1"></a>Se.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestA</span></span>
-<span id="cb2-14"><a href="multiple-populations.html#cb2-14" aria-hidden="true" tabindex="-1"></a>Sp.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestA</span></span>
-<span id="cb2-15"><a href="multiple-populations.html#cb2-15" aria-hidden="true" tabindex="-1"></a>Sp.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestA</span></span>
-<span id="cb2-16"><a href="multiple-populations.html#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="multiple-populations.html#cb2-17" aria-hidden="true" tabindex="-1"></a>Se.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestB</span></span>
-<span id="cb2-18"><a href="multiple-populations.html#cb2-18" aria-hidden="true" tabindex="-1"></a>Se.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestB</span></span>
-<span id="cb2-19"><a href="multiple-populations.html#cb2-19" aria-hidden="true" tabindex="-1"></a>Sp.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestB</span></span>
-<span id="cb2-20"><a href="multiple-populations.html#cb2-20" aria-hidden="true" tabindex="-1"></a>Sp.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestB</span></span>
-<span id="cb2-21"><a href="multiple-populations.html#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="multiple-populations.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#I will also need the total number of individuals tested in each population (nPop1 and nPop2)</span></span>
-<span id="cb2-23"><a href="multiple-populations.html#cb2-23" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sapply</span>(datalist, sum)</span>
-<span id="cb2-24"><a href="multiple-populations.html#cb2-24" aria-hidden="true" tabindex="-1"></a>nPop1 <span class="ot">&lt;-</span> n[<span class="dv">1</span>]</span>
-<span id="cb2-25"><a href="multiple-populations.html#cb2-25" aria-hidden="true" tabindex="-1"></a>nPop2 <span class="ot">&lt;-</span> n[<span class="dv">2</span>]</span></code></pre></div>
-<p>With that, we have everything that is needed to write the JAGS model.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="multiple-populations.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
-<span id="cb3-2"><a href="multiple-populations.html#cb3-2" aria-hidden="true" tabindex="-1"></a>model_2tests_2pop_indep <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
-<span id="cb3-3"><a href="multiple-populations.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="multiple-populations.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
-<span id="cb3-5"><a href="multiple-populations.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="multiple-populations.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">  #=== POPULATION 1 ===#</span></span>
-<span id="cb3-7"><a href="multiple-populations.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">  Pop1[1:4] ~ dmulti(p1[1:4], &quot;</span>,nPop1,<span class="st">&quot;)</span></span>
-<span id="cb3-8"><a href="multiple-populations.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[1] &lt;- Prev1*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev1)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
-<span id="cb3-9"><a href="multiple-populations.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[2] &lt;- Prev1*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev1)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
-<span id="cb3-10"><a href="multiple-populations.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[3] &lt;- Prev1*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev1)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
-<span id="cb3-11"><a href="multiple-populations.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  p1[4] &lt;- Prev1*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev1)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
-<span id="cb3-12"><a href="multiple-populations.html#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="multiple-populations.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">  #=== POPULATION 2 ===#  </span></span>
-<span id="cb3-14"><a href="multiple-populations.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  Pop2[1:4] ~ dmulti(p2[1:4], &quot;</span>,nPop2,<span class="st">&quot;)</span></span>
-<span id="cb3-15"><a href="multiple-populations.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">  p2[1] &lt;- Prev2*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev2)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
-<span id="cb3-16"><a href="multiple-populations.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">  p2[2] &lt;- Prev2*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev2)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
-<span id="cb3-17"><a href="multiple-populations.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">  p2[3] &lt;- Prev2*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev2)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
-<span id="cb3-18"><a href="multiple-populations.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">  p2[4] &lt;- Prev2*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev2)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
-<span id="cb3-19"><a href="multiple-populations.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb3-20"><a href="multiple-populations.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb3-21"><a href="multiple-populations.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
-<span id="cb3-22"><a href="multiple-populations.html#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="multiple-populations.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev1 ~ dbeta(&quot;</span>,Prev1.shapea,<span class="st">&quot;, &quot;</span>,Prev1.shapeb,<span class="st">&quot;)     ## Prior for Prevalence in population 1</span></span>
-<span id="cb3-24"><a href="multiple-populations.html#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev2 ~ dbeta(&quot;</span>,Prev2.shapea,<span class="st">&quot;, &quot;</span>,Prev2.shapeb,<span class="st">&quot;)     ## Prior for Prevalence in population 2</span></span>
-<span id="cb3-25"><a href="multiple-populations.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestA.shapea,<span class="st">&quot;, &quot;</span>,Se.TestA.shapeb,<span class="st">&quot;)  ## Prior for Se of Test A</span></span>
-<span id="cb3-26"><a href="multiple-populations.html#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestA.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestA.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
-<span id="cb3-27"><a href="multiple-populations.html#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.shapeb,<span class="st">&quot;)  ## Prior for Se of Test B</span></span>
-<span id="cb3-28"><a href="multiple-populations.html#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test B</span></span>
-<span id="cb3-29"><a href="multiple-populations.html#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb3-30"><a href="multiple-populations.html#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
-<span id="cb3-31"><a href="multiple-populations.html#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="multiple-populations.html#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
-<span id="cb3-33"><a href="multiple-populations.html#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(model_2tests_2pop_indep, </span>
-<span id="cb3-34"><a href="multiple-populations.html#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_2tests_2pop_indep.txt&quot;</span>, </span>
-<span id="cb3-35"><a href="multiple-populations.html#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
-<span id="cb3-36"><a href="multiple-populations.html#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
-<span id="cb3-37"><a href="multiple-populations.html#cb3-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
-<span id="cb3-38"><a href="multiple-populations.html#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p>With this code, you could, again, simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions and the text file with the JAGS model will automatically be updated. Currently, it looks like this:</p>
-<div class="figure">
-<img src="Figures/model_2tests_2pop_indep.png" alt="" />
-<p class="caption">Text file with the model for 2 independent diagnostic tests applied to two populations.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="multiple-populations.html#cb55-1" tabindex="-1"></a><span class="co">#n is of the form : (TestA pos and TestB pos), (TestA pos and TestB neg), (TestA neg and TestB pos), then (TestA neg and TestB neg)</span></span>
+<span id="cb55-2"><a href="multiple-populations.html#cb55-2" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Pop1=</span><span class="fu">c</span>(<span class="dv">138</span>,<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">113</span>),</span>
+<span id="cb55-3"><a href="multiple-populations.html#cb55-3" tabindex="-1"></a>                 <span class="at">Pop2=</span><span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">69</span>)</span>
+<span id="cb55-4"><a href="multiple-populations.html#cb55-4" tabindex="-1"></a>                 )</span></code></pre></div>
 </div>
-<p>Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful again, we now have two prevalence (<em>Prev1</em> and <em>Prev2</em>).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="multiple-populations.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Initializing values for the parameters Prev, and the Ses and Sps of the two tests for the 3 chains.</span></span>
-<span id="cb4-2"><a href="multiple-populations.html#cb4-2" aria-hidden="true" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.50</span>,</span>
-<span id="cb4-3"><a href="multiple-populations.html#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.50</span>,</span>
-<span id="cb4-4"><a href="multiple-populations.html#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.90</span>,</span>
-<span id="cb4-5"><a href="multiple-populations.html#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.90</span>,</span>
-<span id="cb4-6"><a href="multiple-populations.html#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.90</span>,</span>
-<span id="cb4-7"><a href="multiple-populations.html#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.90</span>),</span>
-<span id="cb4-8"><a href="multiple-populations.html#cb4-8" aria-hidden="true" tabindex="-1"></a>              </span>
-<span id="cb4-9"><a href="multiple-populations.html#cb4-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.60</span>,</span>
-<span id="cb4-10"><a href="multiple-populations.html#cb4-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.60</span>,</span>
-<span id="cb4-11"><a href="multiple-populations.html#cb4-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.80</span>,</span>
-<span id="cb4-12"><a href="multiple-populations.html#cb4-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.80</span>,</span>
-<span id="cb4-13"><a href="multiple-populations.html#cb4-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.80</span>,</span>
-<span id="cb4-14"><a href="multiple-populations.html#cb4-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.80</span>),</span>
-<span id="cb4-15"><a href="multiple-populations.html#cb4-15" aria-hidden="true" tabindex="-1"></a>              </span>
-<span id="cb4-16"><a href="multiple-populations.html#cb4-16" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.40</span>,</span>
-<span id="cb4-17"><a href="multiple-populations.html#cb4-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.40</span>,</span>
-<span id="cb4-18"><a href="multiple-populations.html#cb4-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.70</span>,</span>
-<span id="cb4-19"><a href="multiple-populations.html#cb4-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.70</span>,</span>
-<span id="cb4-20"><a href="multiple-populations.html#cb4-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.70</span>,</span>
-<span id="cb4-21"><a href="multiple-populations.html#cb4-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.70</span>)</span>
-<span id="cb4-22"><a href="multiple-populations.html#cb4-22" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
+<div id="the-jags-model-with-2-populations" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> The JAGS model with 2 populations<a href="multiple-populations.html#the-jags-model-with-2-populations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We could provide the values that will be used to described the prior distributions as we did before (so they are included in the model text file). The only difference is that we now have two prevalence parameters (<em>P1</em> and <em>P2</em>) to describe. In the example below, I will use vague priors for all parameters (just because we can!).</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="multiple-populations.html#cb56-1" tabindex="-1"></a><span class="co">#We could first create labels for TestA and TestB</span></span>
+<span id="cb56-2"><a href="multiple-populations.html#cb56-2" tabindex="-1"></a>TestA <span class="ot">&lt;-</span> <span class="st">&quot;US&quot;</span></span>
+<span id="cb56-3"><a href="multiple-populations.html#cb56-3" tabindex="-1"></a>TestB <span class="ot">&lt;-</span> <span class="st">&quot;PAG&quot;</span></span>
+<span id="cb56-4"><a href="multiple-populations.html#cb56-4" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="multiple-populations.html#cb56-5" tabindex="-1"></a><span class="co">#Provide information for the prior distributions (all beta distributions) for the 6 unknown parameters </span></span>
+<span id="cb56-6"><a href="multiple-populations.html#cb56-6" tabindex="-1"></a>Prev1.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev in population 1    </span></span>
+<span id="cb56-7"><a href="multiple-populations.html#cb56-7" tabindex="-1"></a>Prev1.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev in population 1</span></span>
+<span id="cb56-8"><a href="multiple-populations.html#cb56-8" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="multiple-populations.html#cb56-9" tabindex="-1"></a>Prev2.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev in population 2    </span></span>
+<span id="cb56-10"><a href="multiple-populations.html#cb56-10" tabindex="-1"></a>Prev2.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev in population 2</span></span>
+<span id="cb56-11"><a href="multiple-populations.html#cb56-11" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="multiple-populations.html#cb56-12" tabindex="-1"></a>Se.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestA</span></span>
+<span id="cb56-13"><a href="multiple-populations.html#cb56-13" tabindex="-1"></a>Se.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestA</span></span>
+<span id="cb56-14"><a href="multiple-populations.html#cb56-14" tabindex="-1"></a>Sp.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestA</span></span>
+<span id="cb56-15"><a href="multiple-populations.html#cb56-15" tabindex="-1"></a>Sp.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestA</span></span>
+<span id="cb56-16"><a href="multiple-populations.html#cb56-16" tabindex="-1"></a></span>
+<span id="cb56-17"><a href="multiple-populations.html#cb56-17" tabindex="-1"></a>Se.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Se of TestB</span></span>
+<span id="cb56-18"><a href="multiple-populations.html#cb56-18" tabindex="-1"></a>Se.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Se of TestB</span></span>
+<span id="cb56-19"><a href="multiple-populations.html#cb56-19" tabindex="-1"></a>Sp.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#a shape parameter for Sp of TestB</span></span>
+<span id="cb56-20"><a href="multiple-populations.html#cb56-20" tabindex="-1"></a>Sp.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co">#b shape parameter for Sp of TestB</span></span>
+<span id="cb56-21"><a href="multiple-populations.html#cb56-21" tabindex="-1"></a></span>
+<span id="cb56-22"><a href="multiple-populations.html#cb56-22" tabindex="-1"></a><span class="co">#We will also need the total number of individuals tested in each population (nPop1 and nPop2)</span></span>
+<span id="cb56-23"><a href="multiple-populations.html#cb56-23" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sapply</span>(datalist, sum)</span>
+<span id="cb56-24"><a href="multiple-populations.html#cb56-24" tabindex="-1"></a>nPop1 <span class="ot">&lt;-</span> n[<span class="dv">1</span>]</span>
+<span id="cb56-25"><a href="multiple-populations.html#cb56-25" tabindex="-1"></a>nPop2 <span class="ot">&lt;-</span> n[<span class="dv">2</span>]</span></code></pre></div>
+<p>With that, we have everything that is needed to write the <code>JAGS</code> model.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="multiple-populations.html#cb57-1" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
+<span id="cb57-2"><a href="multiple-populations.html#cb57-2" tabindex="-1"></a>model_2tests_2pop_indep <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb57-3"><a href="multiple-populations.html#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="multiple-populations.html#cb57-4" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb57-5"><a href="multiple-populations.html#cb57-5" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="multiple-populations.html#cb57-6" tabindex="-1"></a><span class="st">  #=== POPULATION 1 ===#</span></span>
+<span id="cb57-7"><a href="multiple-populations.html#cb57-7" tabindex="-1"></a><span class="st">  Pop1[1:4] ~ dmulti(p1[1:4], &quot;</span>,nPop1,<span class="st">&quot;)</span></span>
+<span id="cb57-8"><a href="multiple-populations.html#cb57-8" tabindex="-1"></a><span class="st">  p1[1] &lt;- Prev1*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev1)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb57-9"><a href="multiple-populations.html#cb57-9" tabindex="-1"></a><span class="st">  p1[2] &lt;- Prev1*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev1)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
+<span id="cb57-10"><a href="multiple-populations.html#cb57-10" tabindex="-1"></a><span class="st">  p1[3] &lt;- Prev1*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev1)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb57-11"><a href="multiple-populations.html#cb57-11" tabindex="-1"></a><span class="st">  p1[4] &lt;- Prev1*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev1)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
+<span id="cb57-12"><a href="multiple-populations.html#cb57-12" tabindex="-1"></a></span>
+<span id="cb57-13"><a href="multiple-populations.html#cb57-13" tabindex="-1"></a><span class="st">  #=== POPULATION 2 ===#  </span></span>
+<span id="cb57-14"><a href="multiple-populations.html#cb57-14" tabindex="-1"></a><span class="st">  Pop2[1:4] ~ dmulti(p2[1:4], &quot;</span>,nPop2,<span class="st">&quot;)</span></span>
+<span id="cb57-15"><a href="multiple-populations.html#cb57-15" tabindex="-1"></a><span class="st">  p2[1] &lt;- Prev2*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev2)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb57-16"><a href="multiple-populations.html#cb57-16" tabindex="-1"></a><span class="st">  p2[2] &lt;- Prev2*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev2)*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
+<span id="cb57-17"><a href="multiple-populations.html#cb57-17" tabindex="-1"></a><span class="st">  p2[3] &lt;- Prev2*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-Prev2)*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb57-18"><a href="multiple-populations.html#cb57-18" tabindex="-1"></a><span class="st">  p2[4] &lt;- Prev2*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-Prev2)*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
+<span id="cb57-19"><a href="multiple-populations.html#cb57-19" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb57-20"><a href="multiple-populations.html#cb57-20" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb57-21"><a href="multiple-populations.html#cb57-21" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb57-22"><a href="multiple-populations.html#cb57-22" tabindex="-1"></a></span>
+<span id="cb57-23"><a href="multiple-populations.html#cb57-23" tabindex="-1"></a><span class="st">  Prev1 ~ dbeta(&quot;</span>,Prev1.shapea,<span class="st">&quot;, &quot;</span>,Prev1.shapeb,<span class="st">&quot;)     ## Prior for Prevalence in population 1</span></span>
+<span id="cb57-24"><a href="multiple-populations.html#cb57-24" tabindex="-1"></a><span class="st">  Prev2 ~ dbeta(&quot;</span>,Prev2.shapea,<span class="st">&quot;, &quot;</span>,Prev2.shapeb,<span class="st">&quot;)     ## Prior for Prevalence in population 2</span></span>
+<span id="cb57-25"><a href="multiple-populations.html#cb57-25" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestA.shapea,<span class="st">&quot;, &quot;</span>,Se.TestA.shapeb,<span class="st">&quot;)  ## Prior for Se of Test A</span></span>
+<span id="cb57-26"><a href="multiple-populations.html#cb57-26" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestA.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestA.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
+<span id="cb57-27"><a href="multiple-populations.html#cb57-27" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.shapeb,<span class="st">&quot;)  ## Prior for Se of Test B</span></span>
+<span id="cb57-28"><a href="multiple-populations.html#cb57-28" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test B</span></span>
+<span id="cb57-29"><a href="multiple-populations.html#cb57-29" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb57-30"><a href="multiple-populations.html#cb57-30" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb57-31"><a href="multiple-populations.html#cb57-31" tabindex="-1"></a></span>
+<span id="cb57-32"><a href="multiple-populations.html#cb57-32" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb57-33"><a href="multiple-populations.html#cb57-33" tabindex="-1"></a><span class="fu">write.table</span>(model_2tests_2pop_indep, </span>
+<span id="cb57-34"><a href="multiple-populations.html#cb57-34" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_2tests_2pop_indep.txt&quot;</span>, </span>
+<span id="cb57-35"><a href="multiple-populations.html#cb57-35" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb57-36"><a href="multiple-populations.html#cb57-36" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb57-37"><a href="multiple-populations.html#cb57-37" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb57-38"><a href="multiple-populations.html#cb57-38" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>With this code, you could, again, simply modify the labels for Test A and Test B, and the shape parameters for the prior distributions. The text file with the <code>JAGS</code> model will automatically be updated. Currently, it looks like this:</p>
+<div class="float">
+<img src="Figures/model_2tests_2pop_indep.png" alt="Text file with the model for 2 independent diagnostic tests applied to two populations." />
+<div class="figcaption"><strong>Text file with the model for 2 independent diagnostic tests applied to two populations.</strong></div>
+</div>
+<p><br/><br />
+Again, we will need to provide a list of initial values (one per Markov chain) for all unknown parameters. Careful again, we now have two prevalence (<em>Prev1</em> and <em>Prev2</em>).</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="multiple-populations.html#cb58-1" tabindex="-1"></a><span class="co">#Initializing values for the parameters Prev, and the Ses and Sps of the two tests for the 3 chains.</span></span>
+<span id="cb58-2"><a href="multiple-populations.html#cb58-2" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.50</span>,</span>
+<span id="cb58-3"><a href="multiple-populations.html#cb58-3" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.50</span>,</span>
+<span id="cb58-4"><a href="multiple-populations.html#cb58-4" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb58-5"><a href="multiple-populations.html#cb58-5" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb58-6"><a href="multiple-populations.html#cb58-6" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.90</span>,</span>
+<span id="cb58-7"><a href="multiple-populations.html#cb58-7" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.90</span>),</span>
+<span id="cb58-8"><a href="multiple-populations.html#cb58-8" tabindex="-1"></a>              </span>
+<span id="cb58-9"><a href="multiple-populations.html#cb58-9" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.60</span>,</span>
+<span id="cb58-10"><a href="multiple-populations.html#cb58-10" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.60</span>,</span>
+<span id="cb58-11"><a href="multiple-populations.html#cb58-11" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb58-12"><a href="multiple-populations.html#cb58-12" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb58-13"><a href="multiple-populations.html#cb58-13" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.80</span>,</span>
+<span id="cb58-14"><a href="multiple-populations.html#cb58-14" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.80</span>),</span>
+<span id="cb58-15"><a href="multiple-populations.html#cb58-15" tabindex="-1"></a>              </span>
+<span id="cb58-16"><a href="multiple-populations.html#cb58-16" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.40</span>,</span>
+<span id="cb58-17"><a href="multiple-populations.html#cb58-17" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.40</span>,</span>
+<span id="cb58-18"><a href="multiple-populations.html#cb58-18" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb58-19"><a href="multiple-populations.html#cb58-19" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb58-20"><a href="multiple-populations.html#cb58-20" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.70</span>,</span>
+<span id="cb58-21"><a href="multiple-populations.html#cb58-21" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.70</span>)</span>
+<span id="cb58-22"><a href="multiple-populations.html#cb58-22" tabindex="-1"></a>              )</span></code></pre></div>
 <p>We can run the model using <code>jags()</code> function as seen before.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="multiple-populations.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb5-2"><a href="multiple-populations.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
-<span id="cb5-3"><a href="multiple-populations.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="multiple-populations.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
-<span id="cb5-5"><a href="multiple-populations.html#cb5-5" aria-hidden="true" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
-<span id="cb5-6"><a href="multiple-populations.html#cb5-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_2tests_2pop_indep.txt&quot;</span>,     </span>
-<span id="cb5-7"><a href="multiple-populations.html#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev1&quot;</span>, <span class="st">&quot;Prev2&quot;</span>, <span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG&quot;</span>, <span class="st">&quot;Sp_PAG&quot;</span>),               </span>
-<span id="cb5-8"><a href="multiple-populations.html#cb5-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
-<span id="cb5-9"><a href="multiple-populations.html#cb5-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                </span>
-<span id="cb5-10"><a href="multiple-populations.html#cb5-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">11000</span>,                                </span>
-<span id="cb5-11"><a href="multiple-populations.html#cb5-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              </span>
-<span id="cb5-12"><a href="multiple-populations.html#cb5-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
-<span id="cb5-13"><a href="multiple-populations.html#cb5-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                   </span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="multiple-populations.html#cb59-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb59-2"><a href="multiple-populations.html#cb59-2" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb59-3"><a href="multiple-populations.html#cb59-3" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="multiple-populations.html#cb59-4" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb59-5"><a href="multiple-populations.html#cb59-5" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
+<span id="cb59-6"><a href="multiple-populations.html#cb59-6" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_2tests_2pop_indep.txt&quot;</span>,     </span>
+<span id="cb59-7"><a href="multiple-populations.html#cb59-7" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev1&quot;</span>, <span class="st">&quot;Prev2&quot;</span>, <span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG&quot;</span>, <span class="st">&quot;Sp_PAG&quot;</span>),               </span>
+<span id="cb59-8"><a href="multiple-populations.html#cb59-8" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
+<span id="cb59-9"><a href="multiple-populations.html#cb59-9" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                </span>
+<span id="cb59-10"><a href="multiple-populations.html#cb59-10" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">11000</span>,                                </span>
+<span id="cb59-11"><a href="multiple-populations.html#cb59-11" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              </span>
+<span id="cb59-12"><a href="multiple-populations.html#cb59-12" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
+<span id="cb59-13"><a href="multiple-populations.html#cb59-13" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                   </span></code></pre></div>
+<p>Then we could produce the diagnostic plots, compute the ESS, and print out our results as we did previously (results not shown).</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="multiple-populations.html#cb60-1" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb60-2"><a href="multiple-populations.html#cb60-2" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
+<span id="cb60-3"><a href="multiple-populations.html#cb60-3" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
+<span id="cb60-4"><a href="multiple-populations.html#cb60-4" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span>
+<span id="cb60-5"><a href="multiple-populations.html#cb60-5" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+</div>
+<div id="conditional-dependence" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Conditional dependence<a href="multiple-populations.html#conditional-dependence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As discussed before, an important assumption of the LCM described in the previous section is that diagnostic tests are conditionally independent. This assumption, however, can be relaxed using the method proposed by <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.0006-341X.2001.00158.x">Dendukuri and Joseph (2001)</a>. Note that, we are now increasing the number of unknown parameters and we will, therefore, have to provide additional informative distributions.</p>
+<p><strong>Table.</strong> Number of degrees of freedom and of unknown parameters when comparing two <strong>conditionally dependent</strong> diagnostic tests across various number of populations (adapted from <a href="https://doi.org/10.20506/rst.40.1.3224">Cheung et al. (2021)</a>).</p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="25%" />
+<col width="25%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Number of Populations</strong></th>
+<th align="center"><strong>Number of unknown parameters (np)</strong></th>
+<th align="center"><strong>Number of degrees of freedom (df)</strong></th>
+<th align="center"><strong>Minimum number of informative priors needed</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">8</td>
+<td align="center">6</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">9</td>
+<td align="center">9</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">10</td>
+<td align="center">12</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">p</td>
+<td align="center">4+2+p</td>
+<td align="center">3*p</td>
+<td align="center">if df &lt; np, then np-df</td>
+</tr>
+</tbody>
+</table>
+<p>For this example, in addition to specifying priors for <em>covp</em> and <em>covn</em>, we will add informative priors on US <em>Se</em> and <em>Sp</em>.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="multiple-populations.html#cb61-1" tabindex="-1"></a><span class="fu">library</span>(epiR)</span>
+<span id="cb61-2"><a href="multiple-populations.html#cb61-2" tabindex="-1"></a><span class="co"># US sensitivity ----------------------------------------------------------</span></span>
+<span id="cb61-3"><a href="multiple-populations.html#cb61-3" tabindex="-1"></a><span class="co"># Sensitivity of US:  Mode=0.90, and we are 97.5% sure &gt;0.85 </span></span>
+<span id="cb61-4"><a href="multiple-populations.html#cb61-4" tabindex="-1"></a>Se.US <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.90</span>, <span class="at">conf=</span><span class="fl">0.975</span>, <span class="at">imsure=</span><span class="st">&quot;greater than&quot;</span>, <span class="at">x=</span><span class="fl">0.85</span>)  </span>
+<span id="cb61-5"><a href="multiple-populations.html#cb61-5" tabindex="-1"></a></span>
+<span id="cb61-6"><a href="multiple-populations.html#cb61-6" tabindex="-1"></a><span class="co"># US specificity ----------------------------------------------------------</span></span>
+<span id="cb61-7"><a href="multiple-populations.html#cb61-7" tabindex="-1"></a><span class="co"># Specificity of US:  Mode=0.95, and we are 97.5% sure &gt;0.90 </span></span>
+<span id="cb61-8"><a href="multiple-populations.html#cb61-8" tabindex="-1"></a>Sp.US <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.95</span>, <span class="at">conf=</span><span class="fl">0.975</span>, <span class="at">imsure=</span><span class="st">&quot;greater than&quot;</span>, <span class="at">x=</span><span class="fl">0.90</span>)  </span>
+<span id="cb61-9"><a href="multiple-populations.html#cb61-9" tabindex="-1"></a></span>
+<span id="cb61-10"><a href="multiple-populations.html#cb61-10" tabindex="-1"></a>Se.TestA.shapea <span class="ot">&lt;-</span> Se.US<span class="sc">$</span>shape1     <span class="co">#a shape parameter for Se of TestA</span></span>
+<span id="cb61-11"><a href="multiple-populations.html#cb61-11" tabindex="-1"></a>Se.TestA.shapeb <span class="ot">&lt;-</span> Se.US<span class="sc">$</span>shape2     <span class="co">#b shape parameter for Se of TestA</span></span>
+<span id="cb61-12"><a href="multiple-populations.html#cb61-12" tabindex="-1"></a>Sp.TestA.shapea <span class="ot">&lt;-</span> Sp.US<span class="sc">$</span>shape1     <span class="co">#a shape parameter for Sp of TestA</span></span>
+<span id="cb61-13"><a href="multiple-populations.html#cb61-13" tabindex="-1"></a>Sp.TestA.shapeb <span class="ot">&lt;-</span> Sp.US<span class="sc">$</span>shape2     <span class="co">#b shape parameter for Sp of TestA</span></span></code></pre></div>
+<p>Now, we could add the <em>covp</em> and <em>covn</em> parameters in the likelihood function, and specified prior distributions for these as we did before:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="multiple-populations.html#cb62-1" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
+<span id="cb62-2"><a href="multiple-populations.html#cb62-2" tabindex="-1"></a>model_2tests_2pop_dep <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb62-3"><a href="multiple-populations.html#cb62-3" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="multiple-populations.html#cb62-4" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb62-5"><a href="multiple-populations.html#cb62-5" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="multiple-populations.html#cb62-6" tabindex="-1"></a><span class="st">  #=== POPULATION 1 ===#</span></span>
+<span id="cb62-7"><a href="multiple-populations.html#cb62-7" tabindex="-1"></a><span class="st">  Pop1[1:4] ~ dmulti(p1[1:4], &quot;</span>,nPop1,<span class="st">&quot;)</span></span>
+<span id="cb62-8"><a href="multiple-populations.html#cb62-8" tabindex="-1"></a><span class="st">  p1[1] &lt;- Prev1*(Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + covp) + (1-Prev1)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) + covn)</span></span>
+<span id="cb62-9"><a href="multiple-populations.html#cb62-9" tabindex="-1"></a><span class="st">  p1[2] &lt;- Prev1*(Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) - covp) + (1-Prev1)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot; - covn)</span></span>
+<span id="cb62-10"><a href="multiple-populations.html#cb62-10" tabindex="-1"></a><span class="st">  p1[3] &lt;- Prev1*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; - covp) + (1-Prev1)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) - covn)</span></span>
+<span id="cb62-11"><a href="multiple-populations.html#cb62-11" tabindex="-1"></a><span class="st">  p1[4] &lt;- Prev1*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + covp) + (1-Prev1)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot; + covn)</span></span>
+<span id="cb62-12"><a href="multiple-populations.html#cb62-12" tabindex="-1"></a></span>
+<span id="cb62-13"><a href="multiple-populations.html#cb62-13" tabindex="-1"></a><span class="st">  #=== POPULATION 2 ===#  </span></span>
+<span id="cb62-14"><a href="multiple-populations.html#cb62-14" tabindex="-1"></a><span class="st">  Pop2[1:4] ~ dmulti(p2[1:4], &quot;</span>,nPop2,<span class="st">&quot;)</span></span>
+<span id="cb62-15"><a href="multiple-populations.html#cb62-15" tabindex="-1"></a><span class="st">  p2[1] &lt;- Prev2*(Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + covp) + (1-Prev2)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) + covn)</span></span>
+<span id="cb62-16"><a href="multiple-populations.html#cb62-16" tabindex="-1"></a><span class="st">  p2[2] &lt;- Prev2*(Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) - covp) + (1-Prev2)*((1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot; - covn)</span></span>
+<span id="cb62-17"><a href="multiple-populations.html#cb62-17" tabindex="-1"></a><span class="st">  p2[3] &lt;- Prev2*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; - covp) + (1-Prev2)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;) - covn)</span></span>
+<span id="cb62-18"><a href="multiple-populations.html#cb62-18" tabindex="-1"></a><span class="st">  p2[4] &lt;- Prev2*((1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + covp) + (1-Prev2)*(Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot; + covn)</span></span>
+<span id="cb62-19"><a href="multiple-populations.html#cb62-19" tabindex="-1"></a></span>
+<span id="cb62-20"><a href="multiple-populations.html#cb62-20" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb62-21"><a href="multiple-populations.html#cb62-21" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb62-22"><a href="multiple-populations.html#cb62-22" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb62-23"><a href="multiple-populations.html#cb62-23" tabindex="-1"></a></span>
+<span id="cb62-24"><a href="multiple-populations.html#cb62-24" tabindex="-1"></a><span class="st">  Prev1 ~ dbeta(&quot;</span>,Prev1.shapea,<span class="st">&quot;, &quot;</span>,Prev1.shapeb,<span class="st">&quot;)     ## Prior for Prevalence in population 1</span></span>
+<span id="cb62-25"><a href="multiple-populations.html#cb62-25" tabindex="-1"></a><span class="st">  Prev2 ~ dbeta(&quot;</span>,Prev2.shapea,<span class="st">&quot;, &quot;</span>,Prev2.shapeb,<span class="st">&quot;)     ## Prior for Prevalence in population 2</span></span>
+<span id="cb62-26"><a href="multiple-populations.html#cb62-26" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestA.shapea,<span class="st">&quot;, &quot;</span>,Se.TestA.shapeb,<span class="st">&quot;)  ## Prior for Se of Test A</span></span>
+<span id="cb62-27"><a href="multiple-populations.html#cb62-27" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestA.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestA.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
+<span id="cb62-28"><a href="multiple-populations.html#cb62-28" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Se.TestB.shapea,<span class="st">&quot;, &quot;</span>,Se.TestB.shapeb,<span class="st">&quot;)  ## Prior for Se of Test B</span></span>
+<span id="cb62-29"><a href="multiple-populations.html#cb62-29" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>,Sp.TestB.shapea,<span class="st">&quot;, &quot;</span>,Sp.TestB.shapeb,<span class="st">&quot;)  ## Prior for Sp of Test B</span></span>
+<span id="cb62-30"><a href="multiple-populations.html#cb62-30" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb62-31"><a href="multiple-populations.html#cb62-31" tabindex="-1"></a><span class="st">  #=== CONDITIONAL DEPENDENCE STRUCTURE ===#</span></span>
+<span id="cb62-32"><a href="multiple-populations.html#cb62-32" tabindex="-1"></a></span>
+<span id="cb62-33"><a href="multiple-populations.html#cb62-33" tabindex="-1"></a><span class="st">  covp ~ dunif(minp,maxp)</span></span>
+<span id="cb62-34"><a href="multiple-populations.html#cb62-34" tabindex="-1"></a><span class="st">  covn ~ dunif(minn,maxn)</span></span>
+<span id="cb62-35"><a href="multiple-populations.html#cb62-35" tabindex="-1"></a><span class="st">  minp &lt;- (1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(Se_&quot;</span>, TestB, <span class="st">&quot;-1)</span></span>
+<span id="cb62-36"><a href="multiple-populations.html#cb62-36" tabindex="-1"></a><span class="st">  minn &lt;- (Sp_&quot;</span>, TestA, <span class="st">&quot;-1)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb62-37"><a href="multiple-populations.html#cb62-37" tabindex="-1"></a><span class="st">  maxp &lt;- min(Se_&quot;</span>, TestA, <span class="st">&quot;,Se_&quot;</span>, TestB, <span class="st">&quot;) - Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot;    </span></span>
+<span id="cb62-38"><a href="multiple-populations.html#cb62-38" tabindex="-1"></a><span class="st">  maxn &lt;- min(Sp_&quot;</span>, TestA, <span class="st">&quot;,Sp_&quot;</span>, TestB, <span class="st">&quot;) - Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;  </span></span>
+<span id="cb62-39"><a href="multiple-populations.html#cb62-39" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb62-40"><a href="multiple-populations.html#cb62-40" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb62-41"><a href="multiple-populations.html#cb62-41" tabindex="-1"></a></span>
+<span id="cb62-42"><a href="multiple-populations.html#cb62-42" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb62-43"><a href="multiple-populations.html#cb62-43" tabindex="-1"></a><span class="fu">write.table</span>(model_2tests_2pop_dep, </span>
+<span id="cb62-44"><a href="multiple-populations.html#cb62-44" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_2tests_2pop_dep.txt&quot;</span>, </span>
+<span id="cb62-45"><a href="multiple-populations.html#cb62-45" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb62-46"><a href="multiple-populations.html#cb62-46" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb62-47"><a href="multiple-populations.html#cb62-47" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb62-48"><a href="multiple-populations.html#cb62-48" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>This text file looks like this:</p>
+<div class="float">
+<img src="Figures/model_2tests_2pop_dep.png" alt="Text file with the model for 2 DEPENDENT diagnostic tests applied to two populations." />
+<div class="figcaption"><strong>Text file with the model for 2 DEPENDENT diagnostic tests applied to two populations.</strong></div>
+</div>
+<p><br/><br />
+Again, the list of initial values will have to be modified to include (<em>covp</em> and <em>covn</em>).</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="multiple-populations.html#cb63-1" tabindex="-1"></a><span class="co">#Initializing values for the parameters Prev, and the Ses and Sps of the two tests for the 3 chains.</span></span>
+<span id="cb63-2"><a href="multiple-populations.html#cb63-2" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.50</span>,</span>
+<span id="cb63-3"><a href="multiple-populations.html#cb63-3" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.50</span>,</span>
+<span id="cb63-4"><a href="multiple-populations.html#cb63-4" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb63-5"><a href="multiple-populations.html#cb63-5" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb63-6"><a href="multiple-populations.html#cb63-6" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.90</span>,</span>
+<span id="cb63-7"><a href="multiple-populations.html#cb63-7" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.90</span>,</span>
+<span id="cb63-8"><a href="multiple-populations.html#cb63-8" tabindex="-1"></a>              <span class="at">covp=</span><span class="fl">0.0</span>,</span>
+<span id="cb63-9"><a href="multiple-populations.html#cb63-9" tabindex="-1"></a>              <span class="at">covn=</span><span class="fl">0.0</span>),</span>
+<span id="cb63-10"><a href="multiple-populations.html#cb63-10" tabindex="-1"></a>              </span>
+<span id="cb63-11"><a href="multiple-populations.html#cb63-11" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.60</span>,</span>
+<span id="cb63-12"><a href="multiple-populations.html#cb63-12" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.60</span>,</span>
+<span id="cb63-13"><a href="multiple-populations.html#cb63-13" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb63-14"><a href="multiple-populations.html#cb63-14" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb63-15"><a href="multiple-populations.html#cb63-15" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.80</span>,</span>
+<span id="cb63-16"><a href="multiple-populations.html#cb63-16" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.80</span>,</span>
+<span id="cb63-17"><a href="multiple-populations.html#cb63-17" tabindex="-1"></a>              <span class="at">covp=</span><span class="fl">0.01</span>,</span>
+<span id="cb63-18"><a href="multiple-populations.html#cb63-18" tabindex="-1"></a>              <span class="at">covn=</span><span class="fl">0.01</span>),</span>
+<span id="cb63-19"><a href="multiple-populations.html#cb63-19" tabindex="-1"></a>              </span>
+<span id="cb63-20"><a href="multiple-populations.html#cb63-20" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">Prev1=</span><span class="fl">0.40</span>,</span>
+<span id="cb63-21"><a href="multiple-populations.html#cb63-21" tabindex="-1"></a>              <span class="at">Prev2=</span><span class="fl">0.40</span>,</span>
+<span id="cb63-22"><a href="multiple-populations.html#cb63-22" tabindex="-1"></a>              <span class="at">Se_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb63-23"><a href="multiple-populations.html#cb63-23" tabindex="-1"></a>              <span class="at">Sp_US=</span><span class="fl">0.70</span>,</span>
+<span id="cb63-24"><a href="multiple-populations.html#cb63-24" tabindex="-1"></a>              <span class="at">Se_PAG=</span><span class="fl">0.70</span>,</span>
+<span id="cb63-25"><a href="multiple-populations.html#cb63-25" tabindex="-1"></a>              <span class="at">Sp_PAG=</span><span class="fl">0.70</span>,</span>
+<span id="cb63-26"><a href="multiple-populations.html#cb63-26" tabindex="-1"></a>              <span class="at">covp=</span><span class="fl">0.05</span>,</span>
+<span id="cb63-27"><a href="multiple-populations.html#cb63-27" tabindex="-1"></a>              <span class="at">covn=</span><span class="fl">0.05</span>)</span>
+<span id="cb63-28"><a href="multiple-populations.html#cb63-28" tabindex="-1"></a>              )</span></code></pre></div>
+<p>And, when running the model using <code>jags()</code>, we would also ask to monitor <em>covp</em> and <em>covn</em>. Note that we have increased the number of iterations / burn-in period (remember the autocorrelation problem seen with LCM with a covariance between tests?).</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="multiple-populations.html#cb64-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb64-2"><a href="multiple-populations.html#cb64-2" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb64-3"><a href="multiple-populations.html#cb64-3" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="multiple-populations.html#cb64-4" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb64-5"><a href="multiple-populations.html#cb64-5" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
+<span id="cb64-6"><a href="multiple-populations.html#cb64-6" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_2tests_2pop_dep.txt&quot;</span>,     </span>
+<span id="cb64-7"><a href="multiple-populations.html#cb64-7" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev1&quot;</span>, <span class="st">&quot;Prev2&quot;</span>, <span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG&quot;</span>, <span class="st">&quot;Sp_PAG&quot;</span>, <span class="st">&quot;covp&quot;</span>, <span class="st">&quot;covn&quot;</span>),               </span>
+<span id="cb64-8"><a href="multiple-populations.html#cb64-8" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
+<span id="cb64-9"><a href="multiple-populations.html#cb64-9" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                </span>
+<span id="cb64-10"><a href="multiple-populations.html#cb64-10" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">210000</span>,                                </span>
+<span id="cb64-11"><a href="multiple-populations.html#cb64-11" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">10000</span>,                              </span>
+<span id="cb64-12"><a href="multiple-populations.html#cb64-12" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
+<span id="cb64-13"><a href="multiple-populations.html#cb64-13" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                   </span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
 ## Graph information:
 ##    Observed stochastic nodes: 2
-##    Unobserved stochastic nodes: 6
-##    Total graph size: 43
+##    Unobserved stochastic nodes: 8
+##    Total graph size: 72
 ## 
 ## Initializing model</code></pre>
 <p>Then we could produce the diagnostic plots, compute the ESS, and print out our results as we did previously (results not shown).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="multiple-populations.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
-<span id="cb7-2"><a href="multiple-populations.html#cb7-2" aria-hidden="true" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
-<span id="cb7-3"><a href="multiple-populations.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
-<span id="cb7-4"><a href="multiple-populations.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span>
-<span id="cb7-5"><a href="multiple-populations.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="multiple-populations.html#cb66-1" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb66-2"><a href="multiple-populations.html#cb66-2" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
+<span id="cb66-3"><a href="multiple-populations.html#cb66-3" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
+<span id="cb66-4"><a href="multiple-populations.html#cb66-4" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span>
+<span id="cb66-5"><a href="multiple-populations.html#cb66-5" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+</div>
+<div id="hierarchical-latent-class-models" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Hierarchical latent class models<a href="multiple-populations.html#hierarchical-latent-class-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-general-idea" class="section level3 hasAnchor" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> The general idea<a href="multiple-populations.html#the-general-idea" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a given study, you may have measured individuals from a substantial number of sub-populations. For instance, in the <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub">Dufour et al. (2017)</a> original study comparing the PAG-ELISA and ultrasound tests for diagnosing pregnancy in dairy cows, cows from 18 commercial dairy herds were studied. In such case, we could, for instance, split the data in 18 sub-populations and use the models described in the preceding sections, with 18 likelihood functions, and where we would estimate 18 prevalence (one for each herd). This approach is totally fine, but it may not be the most elegant, nor efficient model for that type of study. If we were to use this approach, and assuming conditional independence between tests, we would have:</p>
+<ul>
+<li>22 unknown parameters to estimate (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, and each sub-population’s prevalence, <em>P1</em> to <em>P18</em> in this case);<br />
+</li>
+<li>54 degrees of freedom (3 degrees of freedom for each 2x2 table, and 18 2x2 tables).</li>
+</ul>
+<p>Nevertheless, this would be an identifiable model and we would not necessarily require informative priors.</p>
+<p>On the other hand, <a href="https://link.springer.com/article/10.1198/1085711031526">Hanson et al. (2003)</a> have proposed a slightly different, and possibly more elegant and efficient, modelling approach named the hierarchical latent class model. Actually, in most cases, <strong>estimating the disease prevalence in each of the sub-populations (e.g., in each of the 18 herds in the PAG study) is not a primary objective as compared to estimating</strong> test accuracy and/or <strong>the distribution of within-herd prevalence in the population of herds from which these herds were sampled (i.e., the source population)</strong>. In such case, we could use the model described in the figure below.</p>
+<div class="float">
+<img src="Figures/Hierarchical%20model.png" alt="Diagrammatic representation of Hanson et al. (2005) hierarchical latent class model. Rectangles represent observed variables (results of the two tests), ovals represent latent variable (individual herd’s disease prevalence and population’s distribution of within-herd prevalence), and circles represent the unknown accuracy parameters (Se and Sp of the two tests)." />
+<div class="figcaption"><strong>Diagrammatic representation of Hanson et al. (2005) hierarchical latent class model. Rectangles represent observed variables (results of the two tests), ovals represent latent variable (individual herd’s disease prevalence and population’s distribution of within-herd prevalence), and circles represent the unknown accuracy parameters (Se and Sp of the two tests).</strong></div>
+</div>
+<p><br/><br />
+Briefly, in this model we would assume that each of the recruited herds originated from a large population of herds (the source population). We would then only need to describe the distribution of within-herd prevalence of the source population (rather than the prevalence of sick individuals of each herd, as we did so far). We could propose a <em>beta(a, b)</em> distribution as prior for this distribution of within-herd prevalence. Given the hierarchical nature of the priors (i.e., the priors are on the source population, not on the studied sub-populations), we will rather refer to them as <strong>hyperpriors</strong>. In the hierarchical model, instead of providing hyperpriors for <em>a</em> and <em>b</em>, we will instead provide hyperpriors for <em>mu</em> and <em>psi</em>. Remember from Chapter 2 that:</p>
+<ul>
+<li><em>mu</em> represents how the mean within-herd prevalence varies in the source population of herds;<br />
+</li>
+<li><em>psi</em> describes the spread of the distribution around the mean within-herd prevalence in the source population of herds.</li>
+</ul>
+<p>And also, in a <em>beta(a,b)</em> distribution:</p>
+<p><span class="math inline">\(a = mu*psi\)</span><br />
+<span class="math inline">\(b = psi*(1-mu)\)</span></p>
+<p>For <em>mu</em>, it would be quite natural to use a beta distribution as hyperprior, given that the mean within-herd prevalence need to be bounded by 0.0 and 1.0. For <em>psi</em>, which represent a variance, a gamma distribution would be a better option for this hyperprior.</p>
+<p>We have not discussed gamma distributions in Chapter 2, since they are not used in the other BLCM presented in this document. Briefly, the gamma distribution is also defined by two parameters <em>α</em> and <em>β</em>. The <em>α</em> parameter is also known as the <em>shape</em> parameter and the <em>β</em> parameter is known as the <em>rate</em> parameter. Gamma distributions can take different forms, but are bounded to values between 0 and ∞. Moreover, a <strong>Gamma(0.001, 0.001) would correspond to a vague gamma distribution.</strong></p>
+</div>
+<div id="the-likelihood-function-1" class="section level3 hasAnchor" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> The likelihood function<a href="multiple-populations.html#the-likelihood-function-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We could described the likelihood function for the hierarchical model as follow:</p>
+<p><span class="math inline">\(\text{for i in  }1:NumberOfHerds\)</span><br />
+<span class="math inline">\(n[i,1:4] \sim dmulti(p[i,1:4], NumAnimInHerd[i])\)</span></p>
+<p><span class="math inline">\(p[i,1] = prevInHerd[i]*SeA*SeB + (1-prevInHerd[i])*(1-SpA)*(1-SpB)\)</span><br />
+<span class="math inline">\(p[i,2] = prevInHerd[i]*SeA*(1-SeB) + (1-prevInHerd[i])*(1-SpA)*SpB\)</span><br />
+<span class="math inline">\(p[i,3] = prevInHerd[i]*(1-SeA)*SeB + (1-prevInHerd[i])*SpA*(1-SpB)\)</span><br />
+<span class="math inline">\(p[i,4] = prevInHerd[i]*(1-SeA)*(1-SeB) + (1-prevInHerd[i])*SpA*SpB\)</span></p>
+<p><span class="math inline">\(prevInHerd[i] \sim dbeta(alpha, beta)\)</span><br />
+<span class="math inline">\(alpha = mu*psi\)</span><br />
+<span class="math inline">\(beta = psi*(1-mu)\)</span></p>
+<p>Where <em>NumberOfHerds</em> is the number of sub-populations in the study, <em>n[i,1:4]</em> is the content, for each sub-population, of the 4 cells (<em>n1</em>, <em>n2</em>, <em>n3</em>, and <em>n4</em>) from the 2x2 tables with cross-classified tests results (i.e., the observed data), <em>NumAnimInHerd[i]</em> is the number of individuals tested in each sub-population, and <em>prevInHerd[i]</em> is the prevalence of disease in each sub-population. <em>dbeta(alpha, beta)</em> is the distribution of within-herd prevalence in the source population (assumed to follow a beta distribution) and is defined by two unknown parameters, <em>mu</em> and <em>psi</em>, for which we will have to propose hyperpriors. We could use a beta hyperprior for <em>mu</em> and a gamma hyperprior for <em>psi</em>. These hyperpriors could be vague (e.g., beta(1.0, 1.0) and gamma(0.001, 0.001)) or informative (we will see in a following section how to propose informative hyperpriors for <em>mu</em> and <em>psi</em>).</p>
+<p>If we examine the hierarchical model more carefully, we see one important difference between this model and the models we have used so far, the inclusion of a loop in the likelihood function. Briefly, we are asking to repeat this likelihood function for each sub-population (i.e., <em>for (i in 1:NumberOfHerds)</em>). Again, if we try to translate this likelihood function in words, and focusing on Herd #1 (to simplify) the number of individuals in cell <em>n1</em> (i.e., TestA+ and TestB+) is determined by the number of individuals tested in Herd #1 (<em>NumAnimInHerd[1]</em>) and the probability (<em>p[1]</em>) of falling in that cell. The latter itself depends on the true prevalence of disease in Herd #1 (<em>prevInHerd[1]</em>; which can be drawn from the source population distribution of within-herd prevalence, <em>dbeta(alpha, beta)</em>), and on each of the two tests sensitivity (<em>SeA</em> and <em>SeB</em>) and specificity (<em>SpA</em> and <em>SpB</em>). We can use similar reasoning for <em>n2</em>, <em>n3</em>, and <em>n4</em>. Finally, the multinomial distribution would further impose that the four probabilities (<em>p[1]</em>, <em>p[2]</em>, <em>p[3]</em>, and <em>p[4]</em>) have to sum up to 1.0 (i.e., 100%) within a given herd.</p>
+<p>Note that we now have:</p>
+<ul>
+<li>6 unknown parameters to estimate (<em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>, <em>mu</em>, and <em>psi</em>), as compared to 4 parameters plus one parameter for each sub-population for the approach described in the preceding sections;<br />
+</li>
+<li>3 degrees of freedom for each sub-population.</li>
+</ul>
+<p>For instance, with the 18 commercial herds available in the <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub">Dufour et al. (2017)</a> original study, we would have 6 unknown parameters and 54 degrees of freedom. If we were to use 30 herds, we would still have 6 unknown parameters, but now 90 degrees of freedom, etc. This is the reason why we described the <a href="https://link.springer.com/article/10.1198/1085711031526">Hanson et al. (2003)</a> hierarchical model as “more efficient”.</p>
+</div>
+<div id="the-data-1" class="section level3 hasAnchor" number="7.5.3">
+<h3><span class="header-section-number">7.5.3</span> The data<a href="multiple-populations.html#the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Data for the hierarchical model will have to be organized as follow. Briefly, we will first need a <strong>dataset where we report, for each sub-population, the number of individuals with a given combination of tests results</strong>. For instance, below we are importing an Excel sheet with the organized results. The example below is reproduced from <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub">Dufour et al. (2017; Table 1)</a>.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="multiple-populations.html#cb67-1" tabindex="-1"></a><span class="fu">library</span>(readxl)   <span class="co">#A library that can import .xlsx documents </span></span>
+<span id="cb67-2"><a href="multiple-populations.html#cb67-2" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Herd level results.xlsx&quot;</span>)</span>
+<span id="cb67-3"><a href="multiple-populations.html#cb67-3" tabindex="-1"></a><span class="co">#Check the data</span></span>
+<span id="cb67-4"><a href="multiple-populations.html#cb67-4" tabindex="-1"></a>obs</span></code></pre></div>
+<pre><code>## # A tibble: 18 × 4
+##    `TestA+TestB+` `TestA+TestB-` `TestA-TestB+` `TestA-TestB-`
+##             &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+##  1             20              0              2             14
+##  2              7              0              0              4
+##  3             10              0              0             10
+##  4             12              0              1             21
+##  5             17              0              2              9
+##  6              2              0              0              3
+##  7             46              1              3             37
+##  8              0              0              0              1
+##  9              7              0              1              5
+## 10              7              0              0              3
+## 11             12              1              2             12
+## 12              8              0              1              7
+## 13             11              0              0              9
+## 14              5              0              1             10
+## 15             71              0              8             69
+## 16             10              0              0              3
+## 17              5              0              0              1
+## 18              5              0              0              1</code></pre>
+<p>You can see that we have used this order:</p>
+<ul>
+<li><em>TestA</em> + and <em>TestB</em> +<br />
+</li>
+<li><em>TestA</em> + and <em>TestB</em> -<br />
+</li>
+<li><em>TestA</em> - and <em>TestB</em> +<br />
+</li>
+<li><em>TestA</em> - and <em>TestB</em> -</li>
+</ul>
+<p>This will be important, because we will use the same order for the 4 probabilities in the likelihood function.</p>
+<p>Then, we will need a <strong>second dataset where we report the total number of individual tested by sub-population</strong>. This can be computed from the above dataset as follow:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="multiple-populations.html#cb69-1" tabindex="-1"></a><span class="co">#Compute total number of animals by herd</span></span>
+<span id="cb69-2"><a href="multiple-populations.html#cb69-2" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(obs)</span>
+<span id="cb69-3"><a href="multiple-populations.html#cb69-3" tabindex="-1"></a><span class="co">#Check the total number of animals per herd</span></span>
+<span id="cb69-4"><a href="multiple-populations.html#cb69-4" tabindex="-1"></a>totals</span></code></pre></div>
+<pre><code>##  [1]  36  11  20  34  28   5  87   1  13  10  27  16  20  16 148  13   6   6</code></pre>
+<p>The previous two pieces of data will have to be reunited together. We can do this using:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="multiple-populations.html#cb71-1" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">obs=</span>obs, <span class="at">totals=</span>totals)</span>
+<span id="cb71-2"><a href="multiple-populations.html#cb71-2" tabindex="-1"></a><span class="co">#Check the datalist</span></span>
+<span id="cb71-3"><a href="multiple-populations.html#cb71-3" tabindex="-1"></a>datalist</span></code></pre></div>
+<pre><code>## $obs
+## # A tibble: 18 × 4
+##    `TestA+TestB+` `TestA+TestB-` `TestA-TestB+` `TestA-TestB-`
+##             &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+##  1             20              0              2             14
+##  2              7              0              0              4
+##  3             10              0              0             10
+##  4             12              0              1             21
+##  5             17              0              2              9
+##  6              2              0              0              3
+##  7             46              1              3             37
+##  8              0              0              0              1
+##  9              7              0              1              5
+## 10              7              0              0              3
+## 11             12              1              2             12
+## 12              8              0              1              7
+## 13             11              0              0              9
+## 14              5              0              1             10
+## 15             71              0              8             69
+## 16             10              0              0              3
+## 17              5              0              0              1
+## 18              5              0              0              1
+## 
+## $totals
+##  [1]  36  11  20  34  28   5  87   1  13  10  27  16  20  16 148  13   6   6</code></pre>
+<p>Finally, we will need to know the <strong>number of sub-populations studied</strong>. Again, this can be computed as follow:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="multiple-populations.html#cb73-1" tabindex="-1"></a><span class="co">#Compute number of herds</span></span>
+<span id="cb73-2"><a href="multiple-populations.html#cb73-2" tabindex="-1"></a>numherd <span class="ot">&lt;-</span> <span class="fu">dim</span>(obs)[<span class="dv">1</span>]</span>
+<span id="cb73-3"><a href="multiple-populations.html#cb73-3" tabindex="-1"></a><span class="co">#Check number of herd</span></span>
+<span id="cb73-4"><a href="multiple-populations.html#cb73-4" tabindex="-1"></a>numherd</span></code></pre></div>
+<pre><code>## [1] 18</code></pre>
+<p>We could also assign labels to the tests for future usage, as we did before:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="multiple-populations.html#cb75-1" tabindex="-1"></a>TestA <span class="ot">&lt;-</span> <span class="st">&quot;US&quot;</span></span>
+<span id="cb75-2"><a href="multiple-populations.html#cb75-2" tabindex="-1"></a>TestB <span class="ot">&lt;-</span> <span class="st">&quot;PAG&quot;</span></span></code></pre></div>
+</div>
+<div id="the-priors" class="section level3 hasAnchor" number="7.5.4">
+<h3><span class="header-section-number">7.5.4</span> The priors<a href="multiple-populations.html#the-priors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will need to assign priors (or hyperpriors) for <em>mu</em>, <em>psi</em>, <em>SeA</em> and <em>SpA</em>, <em>SeB</em> and <em>SpB</em>. Below, we have used vague priors (or hyperpriors) for all these unknown parameters. If we were to use informative priors for <em>SeA</em>, <em>SpA</em>, <em>SeB</em>, or <em>SpB</em>, we could implement this as in the previous chapters. Informative priors for <em>mu</em> and <em>psi</em> are bit more tedious to generate; we will describe in a following section how to achieve this.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="multiple-populations.html#cb76-1" tabindex="-1"></a>mu.shapea <span class="ot">&lt;-</span> <span class="fl">1.0</span>           <span class="co"># a shape parameter for mu</span></span>
+<span id="cb76-2"><a href="multiple-populations.html#cb76-2" tabindex="-1"></a>mu.shapeb <span class="ot">&lt;-</span> <span class="fl">1.0</span>           <span class="co"># b shape parameter for mu</span></span>
+<span id="cb76-3"><a href="multiple-populations.html#cb76-3" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="multiple-populations.html#cb76-4" tabindex="-1"></a>psi.shapea <span class="ot">&lt;-</span> <span class="fl">0.001</span>        <span class="co"># α (shape) parameter for gamma</span></span>
+<span id="cb76-5"><a href="multiple-populations.html#cb76-5" tabindex="-1"></a>psi.shapeb <span class="ot">&lt;-</span> <span class="fl">0.001</span>        <span class="co"># β (rate) parameter for gamma</span></span>
+<span id="cb76-6"><a href="multiple-populations.html#cb76-6" tabindex="-1"></a></span>
+<span id="cb76-7"><a href="multiple-populations.html#cb76-7" tabindex="-1"></a>Se.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#a shape parameter for Se of TestA</span></span>
+<span id="cb76-8"><a href="multiple-populations.html#cb76-8" tabindex="-1"></a>Se.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#b shape parameter for Se of TestA</span></span>
+<span id="cb76-9"><a href="multiple-populations.html#cb76-9" tabindex="-1"></a>Sp.TestA.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#a shape parameter for Sp of TestA</span></span>
+<span id="cb76-10"><a href="multiple-populations.html#cb76-10" tabindex="-1"></a>Sp.TestA.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#b shape parameter for Sp of TestA</span></span>
+<span id="cb76-11"><a href="multiple-populations.html#cb76-11" tabindex="-1"></a></span>
+<span id="cb76-12"><a href="multiple-populations.html#cb76-12" tabindex="-1"></a>Se.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#a shape parameter for Se of TestB</span></span>
+<span id="cb76-13"><a href="multiple-populations.html#cb76-13" tabindex="-1"></a>Se.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#b shape parameter for Se of TestB</span></span>
+<span id="cb76-14"><a href="multiple-populations.html#cb76-14" tabindex="-1"></a>Sp.TestB.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#a shape parameter for Sp of TestB</span></span>
+<span id="cb76-15"><a href="multiple-populations.html#cb76-15" tabindex="-1"></a>Sp.TestB.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>       <span class="co">#b shape parameter for Sp of TestB</span></span></code></pre></div>
+</div>
+<div id="write-the-jags-model" class="section level3 hasAnchor" number="7.5.5">
+<h3><span class="header-section-number">7.5.5</span> Write the JAGS model<a href="multiple-populations.html#write-the-jags-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The text file we would like to generate would look as the screen capture below.</p>
+<div class="float">
+<img src="Figures/Hierarchical%20model%20text%20file.png" alt="Text file for the hierarchical model." />
+<div class="figcaption"><strong>Text file for the hierarchical model.</strong></div>
+</div>
+<p><br/><br />
+The script below can be used to generate this text file.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="multiple-populations.html#cb77-1" tabindex="-1"></a><span class="co">#Create the JAGS text file</span></span>
+<span id="cb77-2"><a href="multiple-populations.html#cb77-2" tabindex="-1"></a>model_2tests_hierarchical <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb77-3"><a href="multiple-populations.html#cb77-3" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="multiple-populations.html#cb77-4" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb77-5"><a href="multiple-populations.html#cb77-5" tabindex="-1"></a><span class="st">  for (i in 1:&quot;</span>, numherd,<span class="st">&quot;){</span></span>
+<span id="cb77-6"><a href="multiple-populations.html#cb77-6" tabindex="-1"></a><span class="st">    obs[i, 1:4] ~ dmulti(p[i, 1:4], totals[i])</span></span>
+<span id="cb77-7"><a href="multiple-populations.html#cb77-7" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb77-8"><a href="multiple-populations.html#cb77-8" tabindex="-1"></a><span class="st">    p[i, 1] &lt;- prev[i]*Se_&quot;</span>, TestA, <span class="st">&quot;*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-prev[i])*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb77-9"><a href="multiple-populations.html#cb77-9" tabindex="-1"></a><span class="st">    p[i, 2] &lt;- prev[i]*Se_&quot;</span>, TestA, <span class="st">&quot;*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-prev[i])*(1-Sp_&quot;</span>, TestA, <span class="st">&quot;)*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
+<span id="cb77-10"><a href="multiple-populations.html#cb77-10" tabindex="-1"></a><span class="st">    p[i, 3] &lt;- prev[i]*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*Se_&quot;</span>, TestB, <span class="st">&quot; + (1-prev[i])*Sp_&quot;</span>, TestA, <span class="st">&quot;*(1-Sp_&quot;</span>, TestB, <span class="st">&quot;)</span></span>
+<span id="cb77-11"><a href="multiple-populations.html#cb77-11" tabindex="-1"></a><span class="st">    p[i, 4] &lt;- prev[i]*(1-Se_&quot;</span>, TestA, <span class="st">&quot;)*(1-Se_&quot;</span>, TestB, <span class="st">&quot;) + (1-prev[i])*Sp_&quot;</span>, TestA, <span class="st">&quot;*Sp_&quot;</span>, TestB, <span class="st">&quot;</span></span>
+<span id="cb77-12"><a href="multiple-populations.html#cb77-12" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb77-13"><a href="multiple-populations.html#cb77-13" tabindex="-1"></a><span class="st">    prev[i] ~ dbeta(alpha, beta)</span></span>
+<span id="cb77-14"><a href="multiple-populations.html#cb77-14" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb77-15"><a href="multiple-populations.html#cb77-15" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb77-16"><a href="multiple-populations.html#cb77-16" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb77-17"><a href="multiple-populations.html#cb77-17" tabindex="-1"></a><span class="st">  alpha &lt;- mu*psi      ## a parameter for the hierarchical beta distribution</span></span>
+<span id="cb77-18"><a href="multiple-populations.html#cb77-18" tabindex="-1"></a><span class="st">  beta &lt;- psi*(1-mu)   ## b parameter for the hierarchical beta distribution</span></span>
+<span id="cb77-19"><a href="multiple-populations.html#cb77-19" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb77-20"><a href="multiple-populations.html#cb77-20" tabindex="-1"></a><span class="st">  mu ~ dbeta(&quot;</span>, mu.shapea, <span class="st">&quot;, &quot;</span>, mu.shapeb, <span class="st">&quot;)       ## Mean within-herd prevalence distribution in the source population</span></span>
+<span id="cb77-21"><a href="multiple-populations.html#cb77-21" tabindex="-1"></a><span class="st">  psi ~ dgamma(&quot;</span>, psi.shapea, <span class="st">&quot;, &quot;</span>, psi.shapeb, <span class="st">&quot;)   ## Spread of the within-herd prevalence distribution in the source population  </span></span>
+<span id="cb77-22"><a href="multiple-populations.html#cb77-22" tabindex="-1"></a></span>
+<span id="cb77-23"><a href="multiple-populations.html#cb77-23" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>, Se.TestA.shapea, <span class="st">&quot;, &quot;</span>, Se.TestA.shapeb, <span class="st">&quot;)  ## Prior for Se of Test A</span></span>
+<span id="cb77-24"><a href="multiple-populations.html#cb77-24" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestA, <span class="st">&quot; ~ dbeta(&quot;</span>, Sp.TestA.shapea, <span class="st">&quot;, &quot;</span>, Sp.TestA.shapeb, <span class="st">&quot;)  ## Prior for Sp of Test A</span></span>
+<span id="cb77-25"><a href="multiple-populations.html#cb77-25" tabindex="-1"></a><span class="st">  Se_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>, Se.TestB.shapea, <span class="st">&quot;, &quot;</span>, Se.TestB.shapeb, <span class="st">&quot;)  ## Prior for Se of Test B</span></span>
+<span id="cb77-26"><a href="multiple-populations.html#cb77-26" tabindex="-1"></a><span class="st">  Sp_&quot;</span>, TestB, <span class="st">&quot; ~ dbeta(&quot;</span>, Sp.TestB.shapea, <span class="st">&quot;, &quot;</span>, Sp.TestB.shapeb, <span class="st">&quot;)  ## Prior for Sp of Test B</span></span>
+<span id="cb77-27"><a href="multiple-populations.html#cb77-27" tabindex="-1"></a><span class="st"> </span></span>
+<span id="cb77-28"><a href="multiple-populations.html#cb77-28" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb77-29"><a href="multiple-populations.html#cb77-29" tabindex="-1"></a></span>
+<span id="cb77-30"><a href="multiple-populations.html#cb77-30" tabindex="-1"></a></span>
+<span id="cb77-31"><a href="multiple-populations.html#cb77-31" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb77-32"><a href="multiple-populations.html#cb77-32" tabindex="-1"></a><span class="fu">write.table</span>(model_2tests_hierarchical, </span>
+<span id="cb77-33"><a href="multiple-populations.html#cb77-33" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_2tests_hierarchical.txt&quot;</span>, </span>
+<span id="cb77-34"><a href="multiple-populations.html#cb77-34" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb77-35"><a href="multiple-populations.html#cb77-35" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb77-36"><a href="multiple-populations.html#cb77-36" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb77-37"><a href="multiple-populations.html#cb77-37" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="generating-initial-values-1" class="section level3 hasAnchor" number="7.5.6">
+<h3><span class="header-section-number">7.5.6</span> Generating initial values<a href="multiple-populations.html#generating-initial-values-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Remember, the initial value is the first value where each Markov chain will start.<br />
+- You have to specify one initial value for each unknown parameter in the model (here <em>mu</em>, <em>psi</em>, and the tests’ accuracy parameters);<br />
+- If you decide to run three Markov chains, you will need three different sets of initial values;<br />
+- You can also let the software choose a random value to start each chain.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="multiple-populations.html#cb78-1" tabindex="-1"></a><span class="co">#Initializing values for the unknown parameters for the 3 chains.</span></span>
+<span id="cb78-2"><a href="multiple-populations.html#cb78-2" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">mu=</span><span class="fl">0.50</span>,</span>
+<span id="cb78-3"><a href="multiple-populations.html#cb78-3" tabindex="-1"></a>                   <span class="at">psi=</span><span class="dv">1</span>,</span>
+<span id="cb78-4"><a href="multiple-populations.html#cb78-4" tabindex="-1"></a>                   <span class="at">Se_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb78-5"><a href="multiple-populations.html#cb78-5" tabindex="-1"></a>                   <span class="at">Sp_US=</span><span class="fl">0.90</span>,</span>
+<span id="cb78-6"><a href="multiple-populations.html#cb78-6" tabindex="-1"></a>                   <span class="at">Se_PAG=</span><span class="fl">0.90</span>,</span>
+<span id="cb78-7"><a href="multiple-populations.html#cb78-7" tabindex="-1"></a>                   <span class="at">Sp_PAG=</span><span class="fl">0.90</span>),</span>
+<span id="cb78-8"><a href="multiple-populations.html#cb78-8" tabindex="-1"></a>              </span>
+<span id="cb78-9"><a href="multiple-populations.html#cb78-9" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">mu=</span><span class="fl">0.40</span>,</span>
+<span id="cb78-10"><a href="multiple-populations.html#cb78-10" tabindex="-1"></a>                   <span class="at">psi=</span><span class="dv">2</span>,</span>
+<span id="cb78-11"><a href="multiple-populations.html#cb78-11" tabindex="-1"></a>                   <span class="at">Se_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb78-12"><a href="multiple-populations.html#cb78-12" tabindex="-1"></a>                   <span class="at">Sp_US=</span><span class="fl">0.80</span>,</span>
+<span id="cb78-13"><a href="multiple-populations.html#cb78-13" tabindex="-1"></a>                   <span class="at">Se_PAG=</span><span class="fl">0.80</span>,</span>
+<span id="cb78-14"><a href="multiple-populations.html#cb78-14" tabindex="-1"></a>                   <span class="at">Sp_PAG=</span><span class="fl">0.80</span>),</span>
+<span id="cb78-15"><a href="multiple-populations.html#cb78-15" tabindex="-1"></a>              </span>
+<span id="cb78-16"><a href="multiple-populations.html#cb78-16" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">mu=</span><span class="fl">0.60</span>,</span>
+<span id="cb78-17"><a href="multiple-populations.html#cb78-17" tabindex="-1"></a>                   <span class="at">psi=</span><span class="fl">0.5</span>,</span>
+<span id="cb78-18"><a href="multiple-populations.html#cb78-18" tabindex="-1"></a>                   <span class="at">Se_US=</span><span class="fl">0.95</span>,</span>
+<span id="cb78-19"><a href="multiple-populations.html#cb78-19" tabindex="-1"></a>                   <span class="at">Sp_US=</span><span class="fl">0.95</span>,</span>
+<span id="cb78-20"><a href="multiple-populations.html#cb78-20" tabindex="-1"></a>                   <span class="at">Se_PAG=</span><span class="fl">0.95</span>,</span>
+<span id="cb78-21"><a href="multiple-populations.html#cb78-21" tabindex="-1"></a>                   <span class="at">Sp_PAG=</span><span class="fl">0.95</span>)</span>
+<span id="cb78-22"><a href="multiple-populations.html#cb78-22" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="running-the-model" class="section level3 hasAnchor" number="7.5.7">
+<h3><span class="header-section-number">7.5.7</span> Running the model<a href="multiple-populations.html#running-the-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As we did before, we could use the following script to run the model. Note that the tests accuracy parameters, along with <em>mu</em> and <em>psi</em> are the main parameters that you could monitor for that model.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="multiple-populations.html#cb79-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb79-2"><a href="multiple-populations.html#cb79-2" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb79-3"><a href="multiple-populations.html#cb79-3" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="multiple-populations.html#cb79-4" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb79-5"><a href="multiple-populations.html#cb79-5" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             </span>
+<span id="cb79-6"><a href="multiple-populations.html#cb79-6" tabindex="-1"></a>                <span class="at">model.file=</span><span class="st">&quot;model_2tests_hierarchical.txt&quot;</span>,     </span>
+<span id="cb79-7"><a href="multiple-populations.html#cb79-7" tabindex="-1"></a>                <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Se_US&quot;</span>, <span class="st">&quot;Sp_US&quot;</span>, <span class="st">&quot;Se_PAG&quot;</span>, <span class="st">&quot;Sp_PAG&quot;</span>,</span>
+<span id="cb79-8"><a href="multiple-populations.html#cb79-8" tabindex="-1"></a>                                     <span class="st">&quot;mu&quot;</span>, <span class="st">&quot;psi&quot;</span>),               </span>
+<span id="cb79-9"><a href="multiple-populations.html#cb79-9" tabindex="-1"></a>                <span class="at">n.chains=</span><span class="dv">3</span>,                                 </span>
+<span id="cb79-10"><a href="multiple-populations.html#cb79-10" tabindex="-1"></a>                <span class="at">inits=</span>inits,                                </span>
+<span id="cb79-11"><a href="multiple-populations.html#cb79-11" tabindex="-1"></a>                <span class="at">n.iter=</span><span class="dv">25000</span>,                                </span>
+<span id="cb79-12"><a href="multiple-populations.html#cb79-12" tabindex="-1"></a>                <span class="at">n.burnin=</span><span class="dv">5000</span>,                              </span>
+<span id="cb79-13"><a href="multiple-populations.html#cb79-13" tabindex="-1"></a>                <span class="at">n.thin=</span><span class="dv">1</span>,                                   </span>
+<span id="cb79-14"><a href="multiple-populations.html#cb79-14" tabindex="-1"></a>                <span class="at">DIC=</span><span class="cn">FALSE</span>)  </span></code></pre></div>
+<pre><code>## Compiling model graph
+##    Resolving undeclared variables
+##    Allocating nodes
+## Graph information:
+##    Observed stochastic nodes: 18
+##    Unobserved stochastic nodes: 24
+##    Total graph size: 321
+## 
+## Initializing model</code></pre>
+</div>
+<div id="model-diagnostics" class="section level3 hasAnchor" number="7.5.8">
+<h3><span class="header-section-number">7.5.8</span> Model diagnostics<a href="multiple-populations.html#model-diagnostics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Model’s diagnostics can be generated as we did before (results not shown).</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="multiple-populations.html#cb81-1" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb81-2"><a href="multiple-populations.html#cb81-2" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          </span>
+<span id="cb81-3"><a href="multiple-populations.html#cb81-3" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>) </span>
+<span id="cb81-4"><a href="multiple-populations.html#cb81-4" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)</span></code></pre></div>
+</div>
+<div id="getting-our-estimates-1" class="section level3 hasAnchor" number="7.5.9">
+<h3><span class="header-section-number">7.5.9</span> Getting our estimates<a href="multiple-populations.html#getting-our-estimates-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Our estimates can be obtained as we did before.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="multiple-populations.html#cb82-1" tabindex="-1"></a><span class="fu">print</span>(bug.out, <span class="at">digits.summary=</span><span class="dv">3</span>) </span></code></pre></div>
+<pre><code>## Inference for Bugs model at &quot;model_2tests_hierarchical.txt&quot;, fit using jags,
+##  3 chains, each with 25000 iterations (first 5000 discarded)
+##  n.sims = 60000 iterations saved. Running time = 14.24 secs
+##        mu.vect sd.vect   2.5%    25%     50%     75%    97.5%  Rhat n.eff
+## Se_PAG   0.992   0.006  0.976  0.989   0.994   0.997    1.000 1.001 26000
+## Se_US    0.958   0.026  0.907  0.939   0.960   0.980    0.998 1.002  1800
+## Sp_PAG   0.950   0.030  0.891  0.928   0.951   0.974    0.997 1.002  1800
+## Sp_US    0.991   0.007  0.973  0.987   0.993   0.997    1.000 1.001 33000
+## mu       0.542   0.031  0.482  0.521   0.541   0.562    0.603 1.002  2000
+## psi    339.660 429.221 17.028 68.461 176.371 421.923 1711.638 1.012   470
+## 
+## For each parameter, n.eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor (at convergence, Rhat=1).</code></pre>
+<p>Finally, you may be interested in describing the distribution of within-herd prevalence of the source population. In the following script we used <em>mu</em> and <em>psi</em> median estimates to generate this plot.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="multiple-populations.html#cb84-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.540</span>      <span class="co">#Here used the median estimate for mu</span></span>
+<span id="cb84-2"><a href="multiple-populations.html#cb84-2" tabindex="-1"></a>psi <span class="ot">&lt;-</span> <span class="fl">161.242</span>   <span class="co">#Here used the median estimate for psi</span></span>
+<span id="cb84-3"><a href="multiple-populations.html#cb84-3" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="multiple-populations.html#cb84-4" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> mu<span class="sc">*</span>psi</span>
+<span id="cb84-5"><a href="multiple-populations.html#cb84-5" tabindex="-1"></a>beta <span class="ot">&lt;-</span> psi<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>mu)</span>
+<span id="cb84-6"><a href="multiple-populations.html#cb84-6" tabindex="-1"></a></span>
+<span id="cb84-7"><a href="multiple-populations.html#cb84-7" tabindex="-1"></a><span class="co">#plot the posterior distribution</span></span>
+<span id="cb84-8"><a href="multiple-populations.html#cb84-8" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, </span>
+<span id="cb84-9"><a href="multiple-populations.html#cb84-9" tabindex="-1"></a>            <span class="at">shape1=</span>alpha, </span>
+<span id="cb84-10"><a href="multiple-populations.html#cb84-10" tabindex="-1"></a>            <span class="at">shape2=</span>beta), </span>
+<span id="cb84-11"><a href="multiple-populations.html#cb84-11" tabindex="-1"></a>      <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>, </span>
+<span id="cb84-12"><a href="multiple-populations.html#cb84-12" tabindex="-1"></a>      <span class="at">main=</span><span class="st">&quot;Distribution of prevalence in the source population&quot;</span>, </span>
+<span id="cb84-13"><a href="multiple-populations.html#cb84-13" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;Proportion&quot;</span>, </span>
+<span id="cb84-14"><a href="multiple-populations.html#cb84-14" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-66-1.png" alt="" width="672" /></p>
+</div>
+<div id="generating-informative-hyperpriors-for-mu-and-psi" class="section level3 hasAnchor" number="7.5.10">
+<h3><span class="header-section-number">7.5.10</span> Generating informative hyperpriors for mu and psi<a href="multiple-populations.html#generating-informative-hyperpriors-for-mu-and-psi" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><a href="https://link.springer.com/article/10.1198/1085711031526">Hanson et al. (2003)</a> proposed to use a <strong>beta distribution as a hyperprior for <em>mu</em> and a gamma distribution for <em>psi</em></strong>. They also provided a method to elicit values for these hyperpriors. This method is, however, slightly more technical than what we have done so far.</p>
+<div id="mu" class="section level4 hasAnchor" number="7.5.10.1">
+<h4><span class="header-section-number">7.5.10.1</span> mu<a href="multiple-populations.html#mu" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>For <em>mu</em>, (the mean within-herd prevalence) we could use a method similar to the one we used before. For instance, we could have some literature, external data, or experts opinion, indicating a most likely (mode) mean within-herd prevalence in the source population, and we could provide the 97.5th (or another) percentile for this mean within-herd prevalence. As an example, in the PAG <em>vs.</em> ultrasound study, <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub">Dufour et al. (2017)</a> used reproductive data from 30 other herds from the same region as the 18 recruited herds. They computed the within-herd pregnancy prevalence at testing for these 30 herds and found a 50th and 95th percentiles of 42% and 74%, respectively. Using the <code>epiR</code> <code>epi.betabuster</code> function we could find the corresponding beta distribution as follow:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="multiple-populations.html#cb85-1" tabindex="-1"></a><span class="fu">library</span>(epiR) </span>
+<span id="cb85-2"><a href="multiple-populations.html#cb85-2" tabindex="-1"></a><span class="co"># Prevalence as Mode=0.42, and we are 95% sure &lt;0.74 </span></span>
+<span id="cb85-3"><a href="multiple-populations.html#cb85-3" tabindex="-1"></a>rval <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.42</span>, </span>
+<span id="cb85-4"><a href="multiple-populations.html#cb85-4" tabindex="-1"></a>                       <span class="at">conf=</span><span class="fl">0.95</span>, </span>
+<span id="cb85-5"><a href="multiple-populations.html#cb85-5" tabindex="-1"></a>                       <span class="at">imsure=</span><span class="st">&quot;less than&quot;</span>, </span>
+<span id="cb85-6"><a href="multiple-populations.html#cb85-6" tabindex="-1"></a>                       <span class="at">x=</span><span class="fl">0.74</span>)  </span>
+<span id="cb85-7"><a href="multiple-populations.html#cb85-7" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="multiple-populations.html#cb85-8" tabindex="-1"></a>rval<span class="sc">$</span>shape1                <span class="co">#View the a shape parameter in rval</span></span></code></pre></div>
+<pre><code>## [1] 3.132</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="multiple-populations.html#cb87-1" tabindex="-1"></a>rval<span class="sc">$</span>shape2                <span class="co">#View the b shape parameter in rval</span></span></code></pre></div>
+<pre><code>## [1] 3.94419</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="multiple-populations.html#cb89-1" tabindex="-1"></a><span class="co">#Assign the generated values for later usage. </span></span>
+<span id="cb89-2"><a href="multiple-populations.html#cb89-2" tabindex="-1"></a>mu.shapea <span class="ot">&lt;-</span> rval<span class="sc">$</span>shape1</span>
+<span id="cb89-3"><a href="multiple-populations.html#cb89-3" tabindex="-1"></a>mu.shapeb <span class="ot">&lt;-</span> rval<span class="sc">$</span>shape2  </span>
+<span id="cb89-4"><a href="multiple-populations.html#cb89-4" tabindex="-1"></a></span>
+<span id="cb89-5"><a href="multiple-populations.html#cb89-5" tabindex="-1"></a><span class="co">#plot the prior distribution</span></span>
+<span id="cb89-6"><a href="multiple-populations.html#cb89-6" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, </span>
+<span id="cb89-7"><a href="multiple-populations.html#cb89-7" tabindex="-1"></a>            <span class="at">shape1=</span>mu.shapea, </span>
+<span id="cb89-8"><a href="multiple-populations.html#cb89-8" tabindex="-1"></a>            <span class="at">shape2=</span>mu.shapeb), </span>
+<span id="cb89-9"><a href="multiple-populations.html#cb89-9" tabindex="-1"></a>      <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>, </span>
+<span id="cb89-10"><a href="multiple-populations.html#cb89-10" tabindex="-1"></a>      <span class="at">main=</span><span class="st">&quot;Hyperprior for mu (the mean within-herd prevalence)&quot;</span>, </span>
+<span id="cb89-11"><a href="multiple-populations.html#cb89-11" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;Proportion&quot;</span>, </span>
+<span id="cb89-12"><a href="multiple-populations.html#cb89-12" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" alt="" width="672" /></p>
+</div>
+<div id="psi" class="section level4 hasAnchor" number="7.5.10.2">
+<h4><span class="header-section-number">7.5.10.2</span> psi<a href="multiple-populations.html#psi" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>For <em>psi</em>, which describe the spread of the distribution around the mean within-herd prevalence, <a href="https://link.springer.com/article/10.1198/1085711031526">Hanson et al. (2003)</a> proposed to describe the uncertainty around the 90th percentile of the distribution of the mean within-herd prevalence. More specifically, they proposed to use the most likely value (mode) for that 90th percentile and a less likely and large value (for instance the 90th percentile) of this 90th percentile.</p>
+<p>For instance, in <a href="https://www.sciencedirect.com/science/article/pii/S016758771630527X?via%3Dihub">Dufour et al. (2017)</a>, using the 30 herds from the same region, they found a 90th percentile of 65% of pregnancy (i.e., the top 10% of herds would achieve 65% pregnancy rate at pregnancy testing). Through experts opinion, they identified that this 90th percentile could hardly be higher than 75%, thus a 90th percentile of the 90th percentile of 75%. In other words, they proposed that the top 10% of herds would most probably have a pregnancy rate at testing of 65%, but this could possibly (90% sure) be up to 75%.</p>
+<p>Then, as described by <a href="https://link.springer.com/article/10.1198/1085711031526">Hanson et al. (2003)</a>, the 50th percentile of the gamma distribution for <em>psi</em> can be computed by adding the <em>a</em> and <em>b</em> terms of the <em>beta(a, b)</em> distribution with mean of 42% (based on <em>mu</em>’s mode) and 90th percentile of 65% (based on the above assumption on the median value for the 90th percentile).</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="multiple-populations.html#cb90-1" tabindex="-1"></a>fifty.psi <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.42</span>, </span>
+<span id="cb90-2"><a href="multiple-populations.html#cb90-2" tabindex="-1"></a>                            <span class="at">conf =</span> <span class="fl">0.90</span>, </span>
+<span id="cb90-3"><a href="multiple-populations.html#cb90-3" tabindex="-1"></a>                            <span class="at">imsure=</span><span class="st">&quot;less than&quot;</span>, </span>
+<span id="cb90-4"><a href="multiple-populations.html#cb90-4" tabindex="-1"></a>                            <span class="at">x=</span><span class="fl">0.65</span>)  </span>
+<span id="cb90-5"><a href="multiple-populations.html#cb90-5" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="multiple-populations.html#cb90-6" tabindex="-1"></a><span class="co"># Computing the value for the 50th percentile for the gamma distribution for psi </span></span>
+<span id="cb90-7"><a href="multiple-populations.html#cb90-7" tabindex="-1"></a>fifty <span class="ot">&lt;-</span> fifty.psi<span class="sc">$</span>shape1 <span class="sc">+</span> fifty.psi<span class="sc">$</span>shape2 </span>
+<span id="cb90-8"><a href="multiple-populations.html#cb90-8" tabindex="-1"></a>fifty</span></code></pre></div>
+<pre><code>## [1] 8.904762</code></pre>
+<p>The 90th percentile of the gamma distribution is computed in the same manner, but using the <em>a</em> and <em>b</em> terms of the <em>beta(a, b)</em> distribution with mean of, again, 42%, but 90th percentile of 75%.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="multiple-populations.html#cb92-1" tabindex="-1"></a>ninety.psi <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.42</span>, </span>
+<span id="cb92-2"><a href="multiple-populations.html#cb92-2" tabindex="-1"></a>                            <span class="at">conf =</span> <span class="fl">0.90</span>, </span>
+<span id="cb92-3"><a href="multiple-populations.html#cb92-3" tabindex="-1"></a>                            <span class="at">imsure=</span><span class="st">&quot;less than&quot;</span>, </span>
+<span id="cb92-4"><a href="multiple-populations.html#cb92-4" tabindex="-1"></a>                            <span class="at">x=</span><span class="fl">0.75</span>)  </span>
+<span id="cb92-5"><a href="multiple-populations.html#cb92-5" tabindex="-1"></a></span>
+<span id="cb92-6"><a href="multiple-populations.html#cb92-6" tabindex="-1"></a><span class="co"># Computing the value for the 50th percentile for the gamma distribution for psi </span></span>
+<span id="cb92-7"><a href="multiple-populations.html#cb92-7" tabindex="-1"></a>ninety <span class="ot">&lt;-</span> ninety.psi<span class="sc">$</span>shape1 <span class="sc">+</span> fifty.psi<span class="sc">$</span>shape2 </span>
+<span id="cb92-8"><a href="multiple-populations.html#cb92-8" tabindex="-1"></a>ninety</span></code></pre></div>
+<pre><code>## [1] 7.037762</code></pre>
+<p>Using this methodology, we obtained the 50th and 90th percentiles for the gamma distribution for <em>psi</em> of 8.9047619 and 7.0377619, respectively. Finally, these percentiles can be translated to obtain the shape and rate parameters of the corresponding gamma distribution.</p>
+<p>To achieve this in R, we can use the <code>GammaParmsFromQuantile.R</code> function that was developed by <a href="https://www.medicine.mcgill.ca/epidemiology/Joseph/PBelisle/GammaParmsFromQuantiles.html#download">Patrick Brisle from McGill U</a>. This function is not currently part of <code>R</code> package. It has to be downloaded from <a href="https://www.medicine.mcgill.ca/epidemiology/Joseph/PBelisle/GammaParmsFromQuantiles.html#download">Patrick Brisle website</a>. You can save the function on your computer, we did save it in a folder named “Functions”. In the chunk below, the function is called and then used to identify the two parameters (shape and rate) for <em>psi</em>’s gamma distribution.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="multiple-populations.html#cb94-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&#39;Functions/GammaParmsFromQuantiles.R&#39;</span>)</span>
+<span id="cb94-2"><a href="multiple-populations.html#cb94-2" tabindex="-1"></a>psi.gamma <span class="ot">&lt;-</span> <span class="fu">gamma.parms.from.quantiles</span>(<span class="at">q=</span><span class="fu">c</span>(fifty, ninety), <span class="at">p=</span><span class="fu">c</span>(<span class="fl">0.50</span>, <span class="fl">0.90</span>), <span class="at">plot=</span>T)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" alt="" width="672" /></p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="multiple-populations.html#cb95-1" tabindex="-1"></a>psi.shapea <span class="ot">&lt;-</span> psi.gamma<span class="sc">$</span>shape   <span class="co"># a shape parameter for gamma</span></span>
+<span id="cb95-2"><a href="multiple-populations.html#cb95-2" tabindex="-1"></a>psi.shapea</span></code></pre></div>
+<pre><code>## [1] 27.66594</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="multiple-populations.html#cb97-1" tabindex="-1"></a>psi.shapeb <span class="ot">&lt;-</span> psi.gamma<span class="sc">$</span>rate    <span class="co"># b shape parameter for gamma</span></span>
+<span id="cb97-2"><a href="multiple-populations.html#cb97-2" tabindex="-1"></a>psi.shapeb</span></code></pre></div>
+<pre><code>## [1] 3.88381</code></pre>
+<p>A gamma (27.7, 3.9) distribution can, therefore, be used to represent hyperprior information on <em>psi</em>.</p>
+</div>
+</div>
+<div id="extensions" class="section level3 hasAnchor" number="7.5.11">
+<h3><span class="header-section-number">7.5.11</span> Extensions<a href="multiple-populations.html#extensions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of course, the hierarchical model presented could be extended as we have seen before to add, for instance, covariance terms between tests (thus, allowing for conditional dependence between tests). We could also extend the likelihood function to compare 3 (or 4, or 5, etc) tests as we will see in Chapter 9.</p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="exercise-2---two-tests-one-population.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="exercise-2---two-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercise-3---multiple-populations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -557,42 +1194,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-Two_t_two_p.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf", "_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -603,7 +1240,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

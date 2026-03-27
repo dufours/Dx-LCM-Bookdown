@@ -10,7 +10,6 @@ bibliography:
 biblio-style: apalike
 link-citations: yes
 description: Chapitre 15
-output: html_document
 ---
 
 ```{r include=FALSE}
@@ -150,7 +149,7 @@ library(dplyr)
 library(ggplot2)
 library(ggbreak)
 
-dt2 <- filter(dt, Param=="pi2")
+dt2 <- filter(dt, (Param=="pi2" & pi2 != 0.2))
 
 a <- dt2[, c(3, 9)] 
 a <- a %>% rename(n = n1) 
@@ -171,10 +170,12 @@ ggplot(data=c,
   theme(legend.position="bottom") +
   labs(y="Number of individuals to test",
        x="Prevalence in population 2") +
-  scale_x_continuous(breaks=c(0.2, 0.3, 0.4, 0.5, 0.6, 0.7)) +
-  scale_y_break(c(600, 800), space=.1) +
-  scale_y_break(c(1400, 2200), space=.1) +
-  scale_y_break(c(3000, 13500), space=.1)
+  scale_x_continuous(breaks=c(0.3, 0.4, 0.5, 0.6, 0.7)) #+
+  #scale_y_break(c(600, 800,
+    #1400, 2200,
+    #3000, 13500),
+  #space = 0.1
+  #)
 
 ```
   

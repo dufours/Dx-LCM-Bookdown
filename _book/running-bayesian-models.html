@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Running Bayesian models | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
-  <meta name="description" content="Chapitre 5" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="description" content="Chapitre 16" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Running Bayesian models | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Chapitre 5" />
+  <meta property="og:description" content="Chapitre 16" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 3 Running Bayesian models | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   
-  <meta name="twitter:description" content="Chapitre 5" />
+  <meta name="twitter:description" content="Chapitre 16" />
   
 
 <meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
 
 
-<meta name="date" content="2022-05-04" />
+<meta name="date" content="2026-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -57,6 +57,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -94,7 +95,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +108,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +122,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -140,7 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#software-and-libraries-used"><i class="fa fa-check"></i><b>1.1</b> Software and libraries used</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#r-download"><i class="fa fa-check"></i><b>1.1.1</b> R download</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#rstudio-download"><i class="fa fa-check"></i><b>1.1.2</b> RStudio download</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#r-libraries"><i class="fa fa-check"></i><b>1.1.3</b> R libraries</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#jags"><i class="fa fa-check"></i><b>1.1.4</b> JAGS</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.2</b> Some notation</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
 <ul>
@@ -181,9 +193,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
 <li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="comparing-2-imperfect-tests.html"><a href="comparing-2-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Comparing 2 imperfect tests</a>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="comparing-2-imperfect-tests.html"><a href="comparing-2-imperfect-tests.html#lcm---conditional-independence"><i class="fa fa-check"></i><b>5.1</b> LCM - Conditional independence</a></li>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-populations.html"><a href="multiple-populations.html#hierarchical-latent-class-models"><i class="fa fa-check"></i><b>7.5</b> Hierarchical latent class models</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="multiple-populations.html"><a href="multiple-populations.html#the-general-idea"><i class="fa fa-check"></i><b>7.5.1</b> The general idea</a></li>
+<li class="chapter" data-level="7.5.2" data-path="multiple-populations.html"><a href="multiple-populations.html#the-likelihood-function-1"><i class="fa fa-check"></i><b>7.5.2</b> The likelihood function</a></li>
+<li class="chapter" data-level="7.5.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-data-1"><i class="fa fa-check"></i><b>7.5.3</b> The data</a></li>
+<li class="chapter" data-level="7.5.4" data-path="multiple-populations.html"><a href="multiple-populations.html#the-priors"><i class="fa fa-check"></i><b>7.5.4</b> The priors</a></li>
+<li class="chapter" data-level="7.5.5" data-path="multiple-populations.html"><a href="multiple-populations.html#write-the-jags-model"><i class="fa fa-check"></i><b>7.5.5</b> Write the JAGS model</a></li>
+<li class="chapter" data-level="7.5.6" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-initial-values-1"><i class="fa fa-check"></i><b>7.5.6</b> Generating initial values</a></li>
+<li class="chapter" data-level="7.5.7" data-path="multiple-populations.html"><a href="multiple-populations.html#running-the-model"><i class="fa fa-check"></i><b>7.5.7</b> Running the model</a></li>
+<li class="chapter" data-level="7.5.8" data-path="multiple-populations.html"><a href="multiple-populations.html#model-diagnostics"><i class="fa fa-check"></i><b>7.5.8</b> Model diagnostics</a></li>
+<li class="chapter" data-level="7.5.9" data-path="multiple-populations.html"><a href="multiple-populations.html#getting-our-estimates-1"><i class="fa fa-check"></i><b>7.5.9</b> Getting our estimates</a></li>
+<li class="chapter" data-level="7.5.10" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-informative-hyperpriors-for-mu-and-psi"><i class="fa fa-check"></i><b>7.5.10</b> Generating informative hyperpriors for mu and psi</a></li>
+<li class="chapter" data-level="7.5.11" data-path="multiple-populations.html"><a href="multiple-populations.html#extensions"><i class="fa fa-check"></i><b>7.5.11</b> Extensions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>11</b> Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.1</b> Likelihood function when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
+<li class="chapter" data-level="12.2" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="extensions-1.html"><a href="extensions-1.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
+<li class="chapter" data-level="14" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analyses</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#models-assumptions"><i class="fa fa-check"></i><b>14.1</b> Model’s assumptions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#conditional-independence-between-tests"><i class="fa fa-check"></i><b>14.1.1</b> Conditional independence between tests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#constant-test-accuracy-across-populations"><i class="fa fa-check"></i><b>14.1.2</b> Constant test accuracy across populations</a></li>
+<li class="chapter" data-level="14.1.3" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#prevalence-varies-from-one-population-to-another"><i class="fa fa-check"></i><b>14.1.3</b> Prevalence varies from one population to another</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#choice-of-priors"><i class="fa fa-check"></i><b>14.2</b> Choice of priors</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="sample-size.html"><a href="sample-size.html"><i class="fa fa-check"></i><b>15</b> Sample size</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="sample-size.html"><a href="sample-size.html#method-when-comparing-to-a-gold-standard"><i class="fa fa-check"></i><b>15.1</b> Method when comparing to a gold standard</a></li>
+<li class="chapter" data-level="15.2" data-path="sample-size.html"><a href="sample-size.html#method-for-the-hui-walter-blcm"><i class="fa fa-check"></i><b>15.2</b> Method for the Hui-Walter BLCM</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Exercise 6 - Sample size estimation and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#questions-5"><i class="fa fa-check"></i><b>16.1</b> Questions</a></li>
+<li class="chapter" data-level="16.2" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#answers-5"><i class="fa fa-check"></i><b>16.2</b> Answers</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -207,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="running-bayesian-models" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Running Bayesian models<a href="running-bayesian-models.html#running-bayesian-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Different software and <code>R</code> packages can be used to run Bayesian models. Whether it is a LCM or a more conventional regression model is not very important at this stage. In this document we will mainly use a software called JAGS and the <code>R2jags</code> package. So, if not already done, you will have to download JAGS <a href="https://sourceforge.net/projects/mcmc-jags/files/">here</a> and install it on your computer. Once installed, we will be able to use <code>R2jags</code> to operate JAGS through <code>R</code>.</p>
+<p>Different software and <code>R</code> packages can be used to run Bayesian models. Whether it is a LCM or a more conventional regression model is not very important at this stage. In this document we will use a software called <code>JAGS</code> and the <code>R2jags</code> package. <strong>So, if not already done, you will have to download JAGS <a href="https://sourceforge.net/projects/mcmc-jags/files/">here</a> and install it on your computer.</strong></p>
 <p>Basically, to run any Bayesian model, we will always need the same three things:</p>
 <ul>
 <li>Data</li>
@@ -216,18 +304,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>A likelihood function linking observed data to unknown parameters</li>
 <li>A prior distribution for each unknown parameter</li>
 </ul></li>
-<li>An initial value for each unknown parameters to start the Markov chains
+<li>An initial value for each unknown parameter to start the Markov chains
 <ul>
 <li>These values can also be generated randomly by the software, but specifying them will improve reproducibility</li>
 </ul></li>
 </ul>
 <div id="the-data" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> The data<a href="running-bayesian-models.html#the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This is the easy part. If we were to run, for instance, a “conventional” regression analysis, we would have to import in <code>R</code> a complete dataset (e.g., a CSV file) with a row for each observation and a column for each variable. However, when using LCM to estimate a disease prevalence or diagnostic accuracy, the dataset is simply made up of the number of individuals in each category. For instance, for estimating a simple prevalence (<em>Prev</em>), we could have 30 individuals that tested positive (variable <em>T</em>) out of a total of 100 individuals (variable <em>n</em>). In such case, the dataset could be created as follow:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="running-bayesian-models.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a dataset</span></span>
-<span id="cb14-2"><a href="running-bayesian-models.html#cb14-2" aria-hidden="true" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">T=</span><span class="dv">30</span>, <span class="at">n=</span><span class="dv">100</span>)</span></code></pre></div>
-<p>If you want to check that it works, you could ask to see this new <code>R</code> object.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="running-bayesian-models.html#cb15-1" aria-hidden="true" tabindex="-1"></a>datalist</span></code></pre></div>
+<p>This is the easy part. If we were to run, for instance, a “conventional” regression analysis, we would have to import in <code>R</code> a complete dataset (e.g., a CSV file) with a row for each observation and a column for each variable. However, when using LCM to estimate disease prevalence or diagnostic accuracy, the dataset is simply the number of individuals in each category. For instance, to estimate a simple prevalence (<em>Prev</em>), we could have 30 individuals that tested positive (variable <em>T</em>) out of a total of 100 individuals (variable <em>n</em>). In such case, the dataset could be created as follow:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="running-bayesian-models.html#cb14-1" tabindex="-1"></a><span class="co">#Creating a dataset</span></span>
+<span id="cb14-2"><a href="running-bayesian-models.html#cb14-2" tabindex="-1"></a>datalist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">T=</span><span class="dv">30</span>, <span class="at">n=</span><span class="dv">100</span>)</span></code></pre></div>
+<p>If we want to check that it works, we could ask to see this new <code>R</code> object.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="running-bayesian-models.html#cb15-1" tabindex="-1"></a>datalist</span></code></pre></div>
 <pre><code>## $T
 ## [1] 30
 ## 
@@ -238,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.2</span> The model<a href="running-bayesian-models.html#the-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="the-likelihood-function" class="section level3 hasAnchor" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> The likelihood function<a href="running-bayesian-models.html#the-likelihood-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Lets start with a simple example, estimating a single proportion. For estimating a proportion we could describe the likelihood function linking unknown parameters to observed data as follow:</p>
+<p>Let’s start with a simple example, estimating a single proportion. For estimating a proportion we could describe the likelihood function linking unknown parameters to observed data as follows:</p>
 <p><span class="math inline">\(T \sim dbin(Prev, n)\)</span></p>
 <p>In other words: the disease prevalence (<em>Prev</em>), an unknown parameter, can be linked to the observed number of positive individuals (<em>T</em>) and the total number of tested individual (<em>n</em>) through the binomial function.</p>
 <p>In this case, the values of <em>T</em> and <em>n</em> are the observed data and <em>Prev</em> is the only unknown parameter.</p>
@@ -246,222 +334,251 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="priors-for-unkown-parameters" class="section level3 hasAnchor" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Priors for unkown parameters<a href="running-bayesian-models.html#priors-for-unkown-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will have to specify a prior distribution for each unknown parameter (using the <span class="math inline">\(\sim\)</span> sign).</p>
-<p>In the preceding example, we only have one unkown parameter, <em>Prev</em>, which is a proportion. Theoretically such parameter could take values from 0 to 1, so a beta distribution would be one way to describe its prior distribution. We could use the <code>epi.betabuster()</code> function from the <code>epiR</code> library to define a given beta distribution based on previous knowledge, as described in the preceding sections. Moreover, if we want to use a flat prior, we could simply choose the value 1.0 for the a and b shape parameters.</p>
+<p>In the preceding example, we only have one unkown parameter, <em>Prev</em>, which is a proportion. Theoretically such parameter could take values from 0 to 1, so a beta distribution would be one way to describe its prior distribution. We could use the <code>epi.betabuster()</code> function from the <code>epiR</code> library to define a given beta distribution based on previous knowledge, as described in the previous sections. Moreover, if we want to use a flat prior, we could simply choose the value 1.0 for the a and b shape parameters.</p>
 <p>In the following code, I am creating <code>R</code> objects for a and b for <em>Prev</em> beta prior distributions.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="running-bayesian-models.html#cb17-1" aria-hidden="true" tabindex="-1"></a>Prev.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev    </span></span>
-<span id="cb17-2"><a href="running-bayesian-models.html#cb17-2" aria-hidden="true" tabindex="-1"></a>Prev.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev </span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="running-bayesian-models.html#cb17-1" tabindex="-1"></a>Prev.shapea <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#a shape parameter for Prev    </span></span>
+<span id="cb17-2"><a href="running-bayesian-models.html#cb17-2" tabindex="-1"></a>Prev.shapeb <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co">#b shape parameter for Prev </span></span></code></pre></div>
 <p>With informative priors, for instance, if we know from the literature that the prevalence is expected to be 0.25 with 95CI of (0.20, 0.30), we could instead use the following code and assign these values to <em>Prev.shapea</em> and <em>Prev.shapeb</em>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="running-bayesian-models.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR) </span>
-<span id="cb18-2"><a href="running-bayesian-models.html#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="running-bayesian-models.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prevalence as Mode=0.25, and we are 97.5% sure &gt;0.20 </span></span>
-<span id="cb18-4"><a href="running-bayesian-models.html#cb18-4" aria-hidden="true" tabindex="-1"></a>rval <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.25</span>, <span class="at">conf=</span><span class="fl">0.975</span>, <span class="at">greaterthan=</span>T, <span class="at">x=</span><span class="fl">0.20</span>)  <span class="co"># I create a new object named rval</span></span>
-<span id="cb18-5"><a href="running-bayesian-models.html#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="running-bayesian-models.html#cb18-6" aria-hidden="true" tabindex="-1"></a>rval<span class="sc">$</span>shape1                <span class="co">#View the a shape parameter in rval</span></span></code></pre></div>
-<pre><code>## [1] 62.356</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="running-bayesian-models.html#cb20-1" aria-hidden="true" tabindex="-1"></a>rval<span class="sc">$</span>shape2                <span class="co">#View the b shape parameter in rval</span></span></code></pre></div>
-<pre><code>## [1] 185.068</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="running-bayesian-models.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#I left them as comments, but the two lines below would be used to assign the generated values for later usage</span></span>
-<span id="cb22-2"><a href="running-bayesian-models.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Prev.shapea &lt;- rval$shape1</span></span>
-<span id="cb22-3"><a href="running-bayesian-models.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Prev.shapeb &lt;- rval$shape2</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="running-bayesian-models.html#cb18-1" tabindex="-1"></a><span class="fu">library</span>(epiR) </span>
+<span id="cb18-2"><a href="running-bayesian-models.html#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="running-bayesian-models.html#cb18-3" tabindex="-1"></a><span class="co"># Prevalence as Mode=0.25, and we are 97.5% sure &lt;0.30 </span></span>
+<span id="cb18-4"><a href="running-bayesian-models.html#cb18-4" tabindex="-1"></a>rval <span class="ot">&lt;-</span> <span class="fu">epi.betabuster</span>(<span class="at">mode=</span><span class="fl">0.25</span>, </span>
+<span id="cb18-5"><a href="running-bayesian-models.html#cb18-5" tabindex="-1"></a>                       <span class="at">conf=</span><span class="fl">0.975</span>, </span>
+<span id="cb18-6"><a href="running-bayesian-models.html#cb18-6" tabindex="-1"></a>                       <span class="at">imsure=</span><span class="st">&quot;less than&quot;</span>, </span>
+<span id="cb18-7"><a href="running-bayesian-models.html#cb18-7" tabindex="-1"></a>                       <span class="at">x=</span><span class="fl">0.30</span>)  </span>
+<span id="cb18-8"><a href="running-bayesian-models.html#cb18-8" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="running-bayesian-models.html#cb18-9" tabindex="-1"></a>rval<span class="sc">$</span>shape1                <span class="co">#View the a shape parameter in rval</span></span></code></pre></div>
+<pre><code>## [1] 81.872</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="running-bayesian-models.html#cb20-1" tabindex="-1"></a>rval<span class="sc">$</span>shape2                <span class="co">#View the b shape parameter in rval</span></span></code></pre></div>
+<pre><code>## [1] 243.616</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="running-bayesian-models.html#cb22-1" tabindex="-1"></a><span class="co">#The two lines below would be used to assign the generated values for later usage. Below we decided to rename this parameters Prev.shapea and Prev.shapeb since they will represent the a and b shape parameters for the Beta distribution describing the disease prevalence</span></span>
+<span id="cb22-2"><a href="running-bayesian-models.html#cb22-2" tabindex="-1"></a>Prev.shapea <span class="ot">&lt;-</span> rval<span class="sc">$</span>shape1</span>
+<span id="cb22-3"><a href="running-bayesian-models.html#cb22-3" tabindex="-1"></a>Prev.shapeb <span class="ot">&lt;-</span> rval<span class="sc">$</span>shape2</span></code></pre></div>
 </div>
 <div id="creating-the-jags-model" class="section level3 hasAnchor" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Creating the JAGS model<a href="running-bayesian-models.html#creating-the-jags-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Our Bayesian model has to be presented to JAGS as a text file (i.e., a .txt document). To create this text file, we will use the <code>paste0()</code> function to write down the model and then the <code>write.table()</code> function to save it as a .txt file.</p>
-<p><strong>An interesting feature of the <code>paste0()</code> function is the possibility to include <code>R</code> objects in the text.</strong> For instance, you may want to have a general model that will not be modified, but to change the values used to describe the priors. Within your <code>paste0()</code> function you could call these “external” values. Thus, you just have to change the value of the <code>R</code> object that your model is using, rather than rewriting a new model. For instance, we just created these two <code>R</code> objects called <em>Prev.shapea</em> and <em>Prev.shapeb</em> (which were the a and b shape parameters for the prior distribution of our proportion <em>Prev</em>). To describe our prior distribution, we can ignore this previous work that we have done and directly create a short text as follow:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="running-bayesian-models.html#cb23-1" aria-hidden="true" tabindex="-1"></a>text1 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Prev ~ dbeta(1, 1)&quot;</span>)       <span class="co">#Creating a short text named &quot;text1&quot;</span></span>
-<span id="cb23-2"><a href="running-bayesian-models.html#cb23-2" aria-hidden="true" tabindex="-1"></a>text1                                       <span class="co">#Asking to see the text1 object</span></span></code></pre></div>
+<p><strong>An interesting feature of the <code>paste0()</code> function is the possibility to include <code>R</code> objects in the text.</strong> For instance, we may want to have a generic model that will not be modified, but within which we would like to change the values used to describe the priors. We could include these “external” values within our <code>paste0()</code> function. Thus, we just have to change the value of the <code>R</code> object that our model is using, rather than rewriting a new model. In the previous section, we created two <code>R</code> objects called <em>Prev.shapea</em> and <em>Prev.shapeb</em> (which were the a and b shape parameters for the prior distribution of our proportion <em>Prev</em>). To describe our prior distribution, we can ignore this previous work that we have done and directly create a short text as follows:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="running-bayesian-models.html#cb23-1" tabindex="-1"></a>text1 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Prev ~ dbeta(1, 1)&quot;</span>)       <span class="co">#Creating a short text named &quot;text1&quot;</span></span>
+<span id="cb23-2"><a href="running-bayesian-models.html#cb23-2" tabindex="-1"></a>text1                                       <span class="co">#Asking to see the text1 object</span></span></code></pre></div>
 <pre><code>## [1] &quot;Prev ~ dbeta(1, 1)&quot;</code></pre>
-<p>However, if the same model is to be applied later with a different prior distribution, it may be more convenient to leave the a and b shape parameters as <code>R</code> objects. Thus, if we change the prior distribution and run the script again, you would run the entire analyses with the new distribution.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="running-bayesian-models.html#cb25-1" aria-hidden="true" tabindex="-1"></a>text2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Prev ~ dbeta(&quot;</span>,Prev.shapea,<span class="st">&quot;, &quot;</span>,Prev.shapeb,<span class="st">&quot;)&quot;</span>)            <span class="co">#Creating a short text named &quot;text2&quot; and containing other already created R objects</span></span>
-<span id="cb25-2"><a href="running-bayesian-models.html#cb25-2" aria-hidden="true" tabindex="-1"></a>text2                                                                        <span class="co">#Asking to see the text2 object</span></span></code></pre></div>
-<pre><code>## [1] &quot;Prev ~ dbeta(1, 1)&quot;</code></pre>
-<p>When using <code>paste0()</code>, any text appearing between sets of quotations marks and within commas (i.e.,” “,bla-bla,” “) will be considered as a <code>R</code> object that need to be included between the pieces of text included in each quotation. Thus, later, I could just change the values for <em>Prev.shapea</em> and <em>Prev.shapeb</em> and my model will be automatically modified.</p>
+<p>However, if the same model is to be applied later with a different prior distribution, it may be more convenient to leave the <em>a</em> and <em>b</em> shape parameters as <code>R</code> objects. Thus, if we change the prior distribution and run the script again, we would run the entire analyses with the newly created distribution. For instance, the code below would use the a and b shape parameters that we created above.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="running-bayesian-models.html#cb25-1" tabindex="-1"></a>text2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Prev ~ dbeta(&quot;</span>,Prev.shapea,<span class="st">&quot;, &quot;</span>,Prev.shapeb,<span class="st">&quot;)&quot;</span>)            <span class="co">#Creating a short text named &quot;text2&quot; and containing other already created R objects</span></span>
+<span id="cb25-2"><a href="running-bayesian-models.html#cb25-2" tabindex="-1"></a>text2                                                                        <span class="co">#Asking to see the text2 object</span></span></code></pre></div>
+<pre><code>## [1] &quot;Prev ~ dbeta(81.872, 243.616)&quot;</code></pre>
+<p>When using <code>paste0()</code>, any text appearing outside of sets of quotation marks (e.g., <em>Prev.shapea</em> and <em>Prev.shapeb</em> in the preceding script) will be considered as <code>R</code> objects that need to be included in the text. Thus, later, we could just change the values for <em>Prev.shapea</em> and <em>Prev.shapeb</em> and our model will be automatically modified.</p>
 <p><strong>Some important notes about the text file containing the model before we start with <code>R2jags</code>:</strong></p>
 <ul>
-<li><p>JAGS is expecting to see the word “model” followed by curly brackets { }. The curly brackets will contain the likelihood function AND the priors.</p></li>
+<li><p>JAGS is expecting to see the word “model” followed by curly brackets { }. The curly brackets will contain the likelihood function <strong>AND</strong> the priors.</p></li>
 <li><p>Similarly to <code>R</code>, any line starting with a # will be ignored (these are comments).</p></li>
 <li><p>Similarly to <code>R</code>, &lt;- means equal.</p></li>
-<li><p>The ~ symbol means “follow a distribution”.</p></li>
-<li><p>Similarly to <code>R</code>, JAGS is case sensitive (i.e., <em>P</em> does not equal <em>p</em>).</p></li>
+<li><p>The ~ symbol means “follows a distribution”.</p></li>
+<li><p>Similarly to <code>R</code>, <code>JAGS</code> is case sensitive (i.e., <em>P</em> does not equal <em>p</em>).</p></li>
 <li><p>Loops can be used with keyword “for” followed by curly brackets.</p></li>
 <li><p>Array can be indicated using squared brackets [ ].</p></li>
 </ul>
-<p>In the example below, I create a <code>R</code> object called <em>model_single_prop</em> using the <code>paste0()</code> function and then save it as a text file using the <code>write.table()</code> function. We will check this text file below and then explain the code for the model.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="running-bayesian-models.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify the model</span></span>
-<span id="cb27-2"><a href="running-bayesian-models.html#cb27-2" aria-hidden="true" tabindex="-1"></a>model_single_prop <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
-<span id="cb27-3"><a href="running-bayesian-models.html#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="running-bayesian-models.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
-<span id="cb27-5"><a href="running-bayesian-models.html#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="running-bayesian-models.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">  T ~ dbin(Prev, n)</span></span>
-<span id="cb27-7"><a href="running-bayesian-models.html#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="running-bayesian-models.html#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="running-bayesian-models.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
-<span id="cb27-10"><a href="running-bayesian-models.html#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="running-bayesian-models.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="st">  Prev ~ dbeta(&quot;</span>,Prev.shapea,<span class="st">&quot;, &quot;</span>,Prev.shapeb,<span class="st">&quot;)    ## Prior for Prev</span></span>
-<span id="cb27-12"><a href="running-bayesian-models.html#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="running-bayesian-models.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
-<span id="cb27-14"><a href="running-bayesian-models.html#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="running-bayesian-models.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
-<span id="cb27-16"><a href="running-bayesian-models.html#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(model_single_prop, </span>
-<span id="cb27-17"><a href="running-bayesian-models.html#cb27-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_single_prop.txt&quot;</span>, </span>
-<span id="cb27-18"><a href="running-bayesian-models.html#cb27-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
-<span id="cb27-19"><a href="running-bayesian-models.html#cb27-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
-<span id="cb27-20"><a href="running-bayesian-models.html#cb27-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
-<span id="cb27-21"><a href="running-bayesian-models.html#cb27-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>In the example below, we create an <code>R</code> object called <em>model_single_prop</em> using the <code>paste0()</code> function and then save it as a text file using the <code>write.table()</code> function. We will check this text file below and then explain the code for the model.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="running-bayesian-models.html#cb27-1" tabindex="-1"></a><span class="co"># Specify the model</span></span>
+<span id="cb27-2"><a href="running-bayesian-models.html#cb27-2" tabindex="-1"></a>model_single_prop <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;model{</span></span>
+<span id="cb27-3"><a href="running-bayesian-models.html#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="running-bayesian-models.html#cb27-4" tabindex="-1"></a><span class="st">#=== LIKELIHOOD ===#</span></span>
+<span id="cb27-5"><a href="running-bayesian-models.html#cb27-5" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="running-bayesian-models.html#cb27-6" tabindex="-1"></a><span class="st">  T ~ dbin(Prev, n)</span></span>
+<span id="cb27-7"><a href="running-bayesian-models.html#cb27-7" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="running-bayesian-models.html#cb27-8" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="running-bayesian-models.html#cb27-9" tabindex="-1"></a><span class="st">#=== PRIOR  ===#</span></span>
+<span id="cb27-10"><a href="running-bayesian-models.html#cb27-10" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="running-bayesian-models.html#cb27-11" tabindex="-1"></a><span class="st">  Prev ~ dbeta(&quot;</span>,Prev.shapea,<span class="st">&quot;, &quot;</span>,Prev.shapeb,<span class="st">&quot;)    ## Prior for Prev</span></span>
+<span id="cb27-12"><a href="running-bayesian-models.html#cb27-12" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="running-bayesian-models.html#cb27-13" tabindex="-1"></a><span class="st">}&quot;</span>)</span>
+<span id="cb27-14"><a href="running-bayesian-models.html#cb27-14" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="running-bayesian-models.html#cb27-15" tabindex="-1"></a><span class="co">#write as a text (.txt) file</span></span>
+<span id="cb27-16"><a href="running-bayesian-models.html#cb27-16" tabindex="-1"></a><span class="fu">write.table</span>(model_single_prop, </span>
+<span id="cb27-17"><a href="running-bayesian-models.html#cb27-17" tabindex="-1"></a>            <span class="at">file=</span><span class="st">&quot;model_single_prop.txt&quot;</span>, </span>
+<span id="cb27-18"><a href="running-bayesian-models.html#cb27-18" tabindex="-1"></a>            <span class="at">quote=</span><span class="cn">FALSE</span>, </span>
+<span id="cb27-19"><a href="running-bayesian-models.html#cb27-19" tabindex="-1"></a>            <span class="at">sep=</span><span class="st">&quot;&quot;</span>, </span>
+<span id="cb27-20"><a href="running-bayesian-models.html#cb27-20" tabindex="-1"></a>            <span class="at">row.names=</span><span class="cn">FALSE</span>,</span>
+<span id="cb27-21"><a href="running-bayesian-models.html#cb27-21" tabindex="-1"></a>            <span class="at">col.names=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Here is a snapshot of the final result (i.e., the text file):</p>
-<div class="figure">
-<img src="Figures/Model_single_prop.png" alt="" />
-<p class="caption">Text file with the model for estimating a single proportion.</p>
+<div class="float">
+<img src="Figures/Model_single_prop.png" alt="Text file with the model for estimating a single proportion." />
+<div class="figcaption"><strong>Text file with the model for estimating a single proportion.</strong></div>
 </div>
+<p><br/><br />
+In the preceding script, the <code>paste0()</code> function was used to create the text, as an <code>R</code> object, that will be needed for the .txt file. This text is mainly “static”, except for the <em>a</em> and <em>b</em> parameters of the beta distribution used to describe our prior knowledge on disease prevalence. We can see that, if we were to modify and then run the preceding script where we assigned values to these parameters, and then run again the <code>paste0()</code> function, our text file would be updated with new values for our prior distribution. This is a feature that we will use a lot, especially with more complex LCM, to minimize the amount of work and the risk of typographic errors..</p>
+<p>The <code>write.table()</code> function was simply used to save, as a .txt file, the <code>R</code> object containing the text we just created.</p>
+<p>Both the <code>paste0()</code> and <code>write.table()</code> functions are part of basic <code>R</code>, no need to install or call a given library.</p>
 </div>
 </div>
 <div id="generating-initial-values" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Generating initial values<a href="running-bayesian-models.html#generating-initial-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The initial value is the first value where each Markov chain will start.<br />
-- You have to specify one initial value for each unknown parameter in the model.<br />
-- If you decide to ran three Markov chains, you will need three different sets of initial values.</p>
-<p>For instance, in our preceding example we have one unknown parameter (<em>Prev</em>). If we were to run three Markov chains, we could generate three sets of initial values for this parameter as follow. Of course, the chosen values could be changed. In the case of a proportion, you can specify any value between 0 and 1.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="running-bayesian-models.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Initializing values for the parameter &quot;Prev&quot; for the 3 chains</span></span>
-<span id="cb28-2"><a href="running-bayesian-models.html#cb28-2" aria-hidden="true" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb28-3"><a href="running-bayesian-models.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.10</span>),</span>
-<span id="cb28-4"><a href="running-bayesian-models.html#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.50</span>),</span>
-<span id="cb28-5"><a href="running-bayesian-models.html#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.90</span>)</span>
-<span id="cb28-6"><a href="running-bayesian-models.html#cb28-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p>We know have a <code>R</code> object that I have called <em>inits</em> and it contains the values where each of the three Markov chains will start.</p>
+- We have to specify one initial value for each unknown parameter in the model.<br />
+- If we decide to run three Markov chains, we will need three different sets of initial values.<br />
+- We can also let the software choose a random value to start each chain, but it will then be impossible to <strong>exactly</strong> reproduce a given result. For instance, if we have obtained a very awkward Markov chain, we may not be able to reproduce this result to investigate what went wrong. Note, though, that it would be quite uncommon for a Markov chain to be extremely “sensitive” to the chosen starting value. But we will see during the workshop that it will sometimes happen.</p>
+<p>In our preceding example we have one unknown parameter (<em>Prev</em>). If we were to run three Markov chains, we could generate three sets of initial values for this parameter as follows. Of course, the chosen values could be changed. In the case of a proportion, we can specify any value between 0 and 1.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="running-bayesian-models.html#cb28-1" tabindex="-1"></a><span class="co">#Initializing values for the parameter &quot;Prev&quot; for the 3 chains</span></span>
+<span id="cb28-2"><a href="running-bayesian-models.html#cb28-2" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb28-3"><a href="running-bayesian-models.html#cb28-3" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.10</span>),</span>
+<span id="cb28-4"><a href="running-bayesian-models.html#cb28-4" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.50</span>),</span>
+<span id="cb28-5"><a href="running-bayesian-models.html#cb28-5" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">Prev=</span><span class="fl">0.90</span>)</span>
+<span id="cb28-6"><a href="running-bayesian-models.html#cb28-6" tabindex="-1"></a>  )</span></code></pre></div>
+<p>We now have an <code>R</code> object called <em>inits</em> that contains the three values where each Markov chains will start.</p>
 </div>
 <div id="running-a-model-in-jags" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> Running a model in JAGS<a href="running-bayesian-models.html#running-a-model-in-jags" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We now have the three elements that we needed: data, a model, and a set of initial values. We can now use the <code>R2jags</code> library to run our Bayesian analysis. The <code>R2jags</code> package provides an interface from <code>R</code> to the JAGS software for Bayesian data analysis. JAGS uses Markov Chain Monte Carlo (MCMC) to generate a sample from the posterior distribution of the parameters.</p>
-<p>The <code>R2jags</code> function that we will use for that is the <code>jags()</code> function. Here are the arguments that we need to specify:</p>
+<p>We now have the three elements that we needed: the data, the model, and a set of initial values. We can now use the <code>R2jags</code> library to run our Bayesian analysis. The <code>R2jags</code> package provides an interface from <code>R</code> to the <code>JAGS</code> software for Bayesian data analysis. <code>JAGS</code> uses Markov Chain Monte Carlo (<strong>MCMC</strong>) simulation to generate a sample from the posterior distribution of the parameters.</p>
+<p>The <code>R2jags</code> function that we will use for that purpose is the <code>jags()</code> function. Here are the arguments that we need to specify:</p>
 <ul>
 <li>The dataset using <code>data=</code><br />
 </li>
-<li>The text file containing the model written in JAGS code using <code>model.file=</code>.<br />
+<li>The text file containing the model written in <code>JAGS</code> code using <code>model.file=</code><br />
 </li>
-<li>The names of the parameters which should be monitored using <code>parameters.to.save=</code>.<br />
+<li>The names of the parameters which should be monitored using <code>parameters.to.save=</code><br />
 </li>
-<li>The number of Markov chains using <code>n.chains=</code>. The default is 3.<br />
+<li>The number of Markov chains using <code>n.chains=</code>. The default is 3<br />
 </li>
-<li>The sets of initial values using <code>inits=</code>. If inits is NULL, JAGS will randomly generate values.<br />
+<li>The sets of initial values using <code>inits=</code>. If inits is NULL, <code>JAGS</code> will randomly generate values<br />
 </li>
-<li>The number of total iterations per chain (including burn-in; default: 2000) using <code>n.iter=</code>.</li>
-<li>The length of burn-in (i.e., number of iterations to discard at the beginning) using <code>n.burnin=</code>.</li>
-<li>The thinning rate, which represent how many of the values sampled by the MCMC will be retained. The default is 5 (1 out of 5). Since there is no <em>a priori</em> need for thinning, you can specify n.thin=1, in most situations.</li>
-<li>The last argument <code>DIC=TRUE</code> or <code>DIC=FALSE</code> will determine whether to compute the deviance, pD, and deviance information criteria (DIC). These could sometimes be useful for model selection/comparison. We could leave that to <code>DIC=FALSE</code> since we will not be using these values in the workshop.</li>
+<li>The number of total iterations per chain (including burn-in; default: 2000) using <code>n.iter=</code></li>
+<li>The length of burn-in (i.e., number of iterations to discard at the beginning) using <code>n.burnin=</code></li>
+<li>The thinning rate, which represent how many of the values sampled by the MCMC will be retained. The default is 5 (1 out of 5). Since there is no <em>a priori</em> need for thinning, we can specify <code>n.thin</code>=1 in most situations</li>
+<li>The last argument <code>DIC=TRUE</code> or <code>DIC=FALSE</code> will determine whether to compute the deviance, pD, and deviance information criteria (<strong>DIC</strong>). These could sometimes be useful for model selection/comparison. We could leave that to <code>DIC=FALSE</code> since we will not be using these values during the workshop</li>
 </ul>
-<p>With the following code, we will create a <code>R</code> object called <em>bug.out</em>. This object will contains the results of running our model, with the specified priors, using the available data, and the sets of initial values that we have created. For this analysis, we have asked to run 3 Markov chains, each for 6000 iterations and we discarded the first 1000 iterations for each chain. Finally, we will monitor our only unknown parameter, <em>Prev</em> and nothing else.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="running-bayesian-models.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb29-2"><a href="running-bayesian-models.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
-<span id="cb29-3"><a href="running-bayesian-models.html#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="running-bayesian-models.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
-<span id="cb29-5"><a href="running-bayesian-models.html#cb29-5" aria-hidden="true" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             <span class="co">#Specifying the R object containing the data</span></span>
-<span id="cb29-6"><a href="running-bayesian-models.html#cb29-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_single_prop.txt&quot;</span>,         <span class="co">#Specifying the .txt file containing the model</span></span>
-<span id="cb29-7"><a href="running-bayesian-models.html#cb29-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev&quot;</span>),               <span class="co">#Specifying the parameters to monitor. When &gt;1 parameter, it will be a list, ex: c(&quot;Prev&quot;, &quot;Se&quot;, &quot;Sp&quot;)</span></span>
-<span id="cb29-8"><a href="running-bayesian-models.html#cb29-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 <span class="co">#Number of chains</span></span>
-<span id="cb29-9"><a href="running-bayesian-models.html#cb29-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                <span class="co">#Specifying the R object containing the initial values  </span></span>
-<span id="cb29-10"><a href="running-bayesian-models.html#cb29-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">6000</span>,                                <span class="co">#Specifying the number of iterations</span></span>
-<span id="cb29-11"><a href="running-bayesian-models.html#cb29-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              <span class="co">#Specifying the number of iterations to remove at the begining</span></span>
-<span id="cb29-12"><a href="running-bayesian-models.html#cb29-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   <span class="co">#Specifying the thinning rate</span></span>
-<span id="cb29-13"><a href="running-bayesian-models.html#cb29-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                  <span class="co">#Indicating that we do not request the deviance, pD, nor DIC </span></span></code></pre></div>
+<p>With the following code, we will create an <code>R</code> object named <em>bug.out</em>. This object will contain the results of running our model with the specified priors using the available data, and the sets of initial values that we have created. For this analysis, we have asked to run 3 Markov chains for 6000 iterations each and we discarded the first 1000 iterations of each chain. Finally, we will monitor our only unknown parameter: <em>Prev</em>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="running-bayesian-models.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb29-2"><a href="running-bayesian-models.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb29-3"><a href="running-bayesian-models.html#cb29-3" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="running-bayesian-models.html#cb29-4" tabindex="-1"></a><span class="co">#Run the Bayesian model</span></span>
+<span id="cb29-5"><a href="running-bayesian-models.html#cb29-5" tabindex="-1"></a>bug.out <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>datalist,                             <span class="co">#Specifying the R object containing the data</span></span>
+<span id="cb29-6"><a href="running-bayesian-models.html#cb29-6" tabindex="-1"></a>               <span class="at">model.file=</span><span class="st">&quot;model_single_prop.txt&quot;</span>,         <span class="co">#Specifying the .txt file containing the model</span></span>
+<span id="cb29-7"><a href="running-bayesian-models.html#cb29-7" tabindex="-1"></a>               <span class="at">parameters.to.save=</span><span class="fu">c</span>(<span class="st">&quot;Prev&quot;</span>),               <span class="co">#Specifying the parameters to monitor. When &gt;1 parameter, it will be a list, ex: c(&quot;Prev&quot;, &quot;Se&quot;, &quot;Sp&quot;)</span></span>
+<span id="cb29-8"><a href="running-bayesian-models.html#cb29-8" tabindex="-1"></a>               <span class="at">n.chains=</span><span class="dv">3</span>,                                 <span class="co">#Number of chains</span></span>
+<span id="cb29-9"><a href="running-bayesian-models.html#cb29-9" tabindex="-1"></a>               <span class="at">inits=</span>inits,                                <span class="co">#Specifying the R object containing the initial values  </span></span>
+<span id="cb29-10"><a href="running-bayesian-models.html#cb29-10" tabindex="-1"></a>               <span class="at">n.iter=</span><span class="dv">6000</span>,                                <span class="co">#Specifying the number of iterations</span></span>
+<span id="cb29-11"><a href="running-bayesian-models.html#cb29-11" tabindex="-1"></a>               <span class="at">n.burnin=</span><span class="dv">1000</span>,                              <span class="co">#Specifying the number of iterations to remove at the beginning</span></span>
+<span id="cb29-12"><a href="running-bayesian-models.html#cb29-12" tabindex="-1"></a>               <span class="at">n.thin=</span><span class="dv">1</span>,                                   <span class="co">#Specifying the thinning rate</span></span>
+<span id="cb29-13"><a href="running-bayesian-models.html#cb29-13" tabindex="-1"></a>               <span class="at">DIC=</span><span class="cn">FALSE</span>)                                  <span class="co">#Indicating that we do not request the deviance, pD, nor DIC </span></span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
 ## Graph information:
 ##    Observed stochastic nodes: 1
 ##    Unobserved stochastic nodes: 1
-##    Total graph size: 4
+##    Total graph size: 5
 ## 
 ## Initializing model</code></pre>
-<p>As you can see, we received a few messages. It looks good, don’t you think?</p>
+<p>As we can see, we received a few messages. It looks good, don’t you think?</p>
 </div>
 <div id="model-diagnostic" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Model diagnostic<a href="running-bayesian-models.html#model-diagnostic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Before jumping to the results, you should first check:<br />
-- Whether the chains have converged,<br />
-- whether the burn-in period was long enough,<br />
-- Whether you have a large enough sample of values to describe the posterior distribution with sufficient precision,<br />
-- Whether the Markov chains behaved well (mainly their auto-correlation).</p>
+<p>Before jumping to the results, we should first verify that:<br />
+- The chains have converged,<br />
+- The burn-in period was long enough,<br />
+- We have a sample of values large enough to describe the posterior distribution with sufficient precision,<br />
+- The Markov chains behaved well (mainly their auto-correlation).</p>
 <p>There are many diagnostic methods available for Bayesian analyses, but, for this workshop, we will mainly use basic methods relying on plots.</p>
-<p>Diagnostics are available when you convert your model output into a MCMC object using the <code>as.mcmc()</code> function of the <code>mcmcplot</code> library.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="running-bayesian-models.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
-<span id="cb31-2"><a href="running-bayesian-models.html#cb31-2" aria-hidden="true" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          <span class="co">#Converting the model output into a MCMC object (for diagnostic plots)</span></span></code></pre></div>
-<p>You can then use the <code>mcmcplot()</code> function on this newly created MCMC object.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="running-bayesian-models.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>)        <span class="co">#Asking for the diagnostic plots</span></span></code></pre></div>
-<p>When you do that, a HTML document will be created an your web browser will automatically open it. Here is a snapshot of the HTML file in my browser:</p>
-<div class="figure">
-<img src="Figures/Nice%20chains%20RM.png" alt="" />
-<p class="caption"><strong>Figure.</strong> Diagnostic plots.</p>
+<p>Diagnostics are available when we convert our model output into a MCMC object using the <code>as.mcmc()</code> function of the <code>mcmcplots</code> library.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="running-bayesian-models.html#cb31-1" tabindex="-1"></a><span class="fu">library</span>(mcmcplots)</span>
+<span id="cb31-2"><a href="running-bayesian-models.html#cb31-2" tabindex="-1"></a>bug.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(bug.out)          <span class="co">#Converting the model output into a MCMC object (for diagnostic plots)</span></span></code></pre></div>
+<p>Then, we can apply the <code>mcmcplot()</code> function on this newly created MCMC object.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="running-bayesian-models.html#cb32-1" tabindex="-1"></a><span class="fu">mcmcplot</span>(bug.mcmc, <span class="at">title=</span><span class="st">&quot;Diagnostic plots&quot;</span>)        <span class="co">#Asking for the diagnostic plots</span></span></code></pre></div>
+<p>When we do that, a HTML document will be created and our web browser will automatically open it. Here is a snapshot of the HTML file in our browser:</p>
+<div class="float">
+<img src="Figures/Nice%20chains%20RM.png" alt="Diagnostic plots." />
+<div class="figcaption"><strong>Diagnostic plots.</strong></div>
 </div>
+<p><br/></p>
 <div id="convergence-and-burn-in" class="section level3 hasAnchor" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Convergence and burn-in<a href="running-bayesian-models.html#convergence-and-burn-in" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To check whether convergence of the Markov chains was obtained you can inspect the “running mean” (right middle figure) and “trace plot” (the bottom figure) presenting the values that were picked by each chain on each iteration. The different chains that you used (three in the preceding example) will be overlaid on the trace plot. You should inspect the trace plot to <strong>evaluate whether the different chains all converged in the same area</strong>. If so, after a number of iterations they should be moving in a relatively restricted area and this area should be the same for all chains.</p>
-<p>The plots above would be a good example of the trace plot of three “nice” Markov chains (lucky us!). In this preceding example, we can see on the running mean plot that the chains started from different initial values, but they very quickly converged (after less than a 1000 iterations) toward the same area. On the trace plot, we can see the values that were stored after the burn-in period. The chains were then moving freely within this limited area (thus sampling from the posterior distribution).</p>
+<p>To check whether convergence of the Markov chains was achieved we can inspect the “trace plot” (the bottom figure) presenting the values that were picked by each chain on each iteration. The different chains that we used (three in the preceding example) will be overlaid on the trace plot. We should inspect the trace plot to <strong>evaluate whether the different chains all converged in the same area</strong>. If so, after a number of iterations they should be moving in a relatively restricted area and this area should be the same for all chains.</p>
+<p>The plots above would be a good example of the trace plot of three “nice” Markov chains (lucky us!). In this preceding example, we can see on the trace plot that the chains had already converged (probably way before the end of the first 1000 iterations that were excluded) toward the same area. On the trace plot, we can only see the values that were stored after the burn-in period. The chains were then moving freely within this limited area (thus sampling from the posterior distribution).</p>
 <p>We could conclude based on the trace plot that:<br />
-- The Markov chains did converged<br />
-- A short burn-in period of less than a 1000 iterations would have been sufficient. Note that we will often use a longer burn-in (e.g., 5,000 or even more) just to be sure and because it only costs a few more seconds on your computer…</p>
-<p>Here is another example where two chains (the red and green) converged in the same area, but a third one (the blue) also converged, but in a different area. <strong>We should be worry in such case</strong>. We will see later the reason for such behavior.
-<img src="Figures/2%20nice%201%20bad%20chain.png" alt="Figure. Trace plot - chains converging in different areas." /></p>
-<p>Finally, here is a last example with just one Markov chain and it clearly did not converged, even after 25,000 iterations. <strong>You should be terrified by that!!! ;-)</strong>.<br />
-<img src="Figures/non-conv%20chain.png" alt="Figure. Trace plot - chains converging in different areas." /></p>
+- The Markov chains did converge<br />
+- A short burn-in period of less than a 1000 iterations would have been sufficient. Note that we will often use a longer burn-in (e.g., 5,000 or even more) just to be sure and because it only costs a few more seconds on our computer…</p>
+<p>Here is another example where two chains (the red and green) converged in the same area, but a third one (the blue) also converged, but in a different area. <strong>We should be worried in such case</strong>. We will see later the reason for such behavior.</p>
+<div class="float">
+<img src="Figures/2%20nice%201%20bad%20chain.png" alt="Trace plot - chains converging in different areas." />
+<div class="figcaption"><strong>Trace plot - chains converging in different areas.</strong></div>
+</div>
+<p><br/><br />
+Finally, here is a last example with just one Markov chain which clearly did not converge, even after 25,000 iterations. <strong>We should be terrified by that!!! ;-)</strong>.</p>
+<div class="float">
+<img src="Figures/non-conv%20chain.png" alt="Trace plot - a non-converging chain." />
+<div class="figcaption"><strong>Trace plot - a non-converging chain.</strong></div>
+</div>
+<p><br/></p>
 </div>
 <div id="number-of-iterations" class="section level3 hasAnchor" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Number of iterations<a href="running-bayesian-models.html#number-of-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Next, you can inspect the posterior distributions to determine if you have a large enough sample of independent values to describe with enough precision the median estimate and the 2.5th and 97.5th percentiles. The effective sample size (EES) takes into account the number of values generated by the Markov chains <strong>AND</strong> whether these values were auto-correlated, to compute the number of “effective” independent values that are used to described the posterior distribution. Chains that are auto-correlated will generate a smaller number of “effective values” than chains that are not auto-correlated.</p>
-<p>The <code>effectiveSize()</code> function of the <code>coda</code> library provide a way to appraise whether you add enough iterations. In the current example, we already created a <code>mcmc</code> object named <code>bug.mcmc</code>. We can ask for the effective sample size as follow:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="running-bayesian-models.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)         <span class="co">#Asking for the ESS</span></span></code></pre></div>
+<p>Next, we can inspect the posterior distributions to determine if we have a large enough sample of independent values to describe with precision the median estimate and the 2.5th and 97.5th percentiles. The effective sample size (<strong>EES</strong>) takes into account the number of values generated by the Markov chains <strong>AND</strong> whether these values were auto-correlated, to compute the number of “effective” independent values that are used to describe the posterior distribution. Chains that are auto-correlated will generate a smaller number of “effective values” than chains that are not auto-correlated.</p>
+<p>The <code>effectiveSize()</code> function of the <code>coda</code> library provide a way to appraise whether we had enough iterations. In the current example, we already created a <code>mcmc</code> object named <code>bug.mcmc</code>. We can ask for the effective sample size as follows:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="running-bayesian-models.html#cb33-1" tabindex="-1"></a><span class="fu">effectiveSize</span>(bug.mcmc)         <span class="co">#Asking for the ESS</span></span></code></pre></div>
 <pre><code>##     Prev 
-## 9038.367</code></pre>
-<p>So we see here that, despite having stored 3 times 5,000 values (15,000 values), we have the equivalent of a bit more than 9,000 independent values. What to do with this information? Well, you could, for instance, decide on an arbitrary rule for ESS (say 10,000 values) and then adapt the length of the chains to achieve such an ESS (for each of the selected parameters, because the effective sample sizes will not be the same for all parameters).</p>
+## 9787.188</code></pre>
+<p>So we see here that, despite having stored 3 times 5,000 values (15,000 values), we have the equivalent of roughly 10,000 independent values. What to do with this information? Well, we could, for instance, decide on an arbitrary rule for ESS (say 10,000 values) and then adapt the length of the chains to achieve such an ESS <strong>for each of the selected parameters</strong>, because the effective sample sizes will not be the same for all parameters.</p>
 </div>
 <div id="auto-correlation" class="section level3 hasAnchor" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> Auto-correlation<a href="running-bayesian-models.html#auto-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Remember, a feature of Markov chains is to have some auto-correlation between two immediately subsequent iterations and then a correlation that quickly goes down to zero (i.e., they have a short memory). The auto-correlation plot can be used to assess if this feature is respected.</p>
-<p>From our previous example (check the upper right figure in the plot below), it seems that it is the case.<br />
-<img src="Figures/Nice%20chains%20RM.png" alt="Figure. Autocorrelation plot with Markov chains exhibiting a short memory." /></p>
-<p>Here is another example that should be worrying.<br />
-<img src="Figures/Autocor%20bad.png" alt="Figure. Autocorrelation plot with Markov chains exhibiting a long memory." /></p>
-<p>When such a behavior is observed, running the chains for more iterations will help achieve the desire ESS. In some situations, specifying different priors (i.e., increasing the amount of information in priors) may also help.</p>
+<p>Remember that a feature of Markov chains is to have some auto-correlation between two immediately subsequent iterations, and then a correlation that quickly goes down to zero (i.e., they have a short memory). The auto-correlation plot can be used to assess if this feature is respected.</p>
+<p>From our previous example (check the upper right figure in the plot below), it seems that it is the case.</p>
+<div class="float">
+<img src="Figures/Nice%20chains%20RM.png" alt="Autocorrelation plot with Markov chains exhibiting a short memory." />
+<div class="figcaption"><strong>Autocorrelation plot with Markov chains exhibiting a short memory.</strong></div>
+</div>
+<p><br/><br />
+Here is another example where we do have an auto-correlation that is persisting.</p>
+<div class="float">
+<img src="Figures/Autocor%20bad.png" alt="Autocorrelation plot with Markov chains exhibiting a long memory." />
+<div class="figcaption"><strong>Autocorrelation plot with Markov chains exhibiting a long memory.</strong></div>
+</div>
+<p><br/><br />
+When such a behavior is observed, running the chains for more iterations will help achieve the desire ESS. In some situations, specifying different priors (i.e., increasing the amount of information in priors) may also help. In the past, thinning of the Markov chains (i.e., discarding all but every k<sup>th</sup> sampled value) was often used when autocorrelation was detected, but this method is not recommended anymore, except for rare instances where computer memory limitations would be a problem <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2011.00131.x">Link et Eaton, 2012</a>.</p>
 </div>
 </div>
 <div id="getting-our-estimates" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Getting our estimates<a href="running-bayesian-models.html#getting-our-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Now, if you are happy with the behavior of your Markov chains, the number of iterations, and burn-in period, you can summarize your results (i.e., report the median, 2.5th and 97.5th percentiles) very easily with the <code>print()</code> function. Below, I have also indicated <code>digits.summary=3</code> to adjust the precision of the estimates that are reported (the default is 1).</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="running-bayesian-models.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bug.out,                  <span class="co">#Asking to see the mean, median, etc of the unknown parameters that were monitored</span></span>
-<span id="cb35-2"><a href="running-bayesian-models.html#cb35-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits.summary=</span><span class="dv">3</span>)         <span class="co">#Requiring a precision of 3 digits</span></span></code></pre></div>
+<p>Now, if we are happy with the behavior of our Markov chains, the number of iterations, and burn-in period, we can summarize our results (i.e., report the median, 2.5th and 97.5th percentiles) very easily with the <code>print()</code> function. Below, we also indicated <code>digits.summary=3</code> to adjust the precision of the estimates that are reported (the default is 1).</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="running-bayesian-models.html#cb35-1" tabindex="-1"></a><span class="fu">print</span>(bug.out,                  <span class="co">#Asking to see the mean, median, etc of the unknown parameters that were monitored</span></span>
+<span id="cb35-2"><a href="running-bayesian-models.html#cb35-2" tabindex="-1"></a>      <span class="at">digits.summary=</span><span class="dv">3</span>)         <span class="co">#Requiring a precision of 3 digits</span></span></code></pre></div>
 <pre><code>## Inference for Bugs model at &quot;model_single_prop.txt&quot;, fit using jags,
 ##  3 chains, each with 6000 iterations (first 1000 discarded)
-##  n.sims = 15000 iterations saved
+##  n.sims = 15000 iterations saved. Running time = 0.81 secs
 ##      mu.vect sd.vect  2.5%   25%   50%   75% 97.5%  Rhat n.eff
-## Prev   0.303   0.044 0.219 0.273 0.303 0.334 0.392 1.001 15000
+## Prev   0.263   0.021 0.222 0.249 0.263 0.277 0.305 1.001 15000
 ## 
 ## For each parameter, n.eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor (at convergence, Rhat=1).</code></pre>
-<p>Here you see that the median <em>Prev</em> estimate (95CI) was (after rounding off) 0.30 (0.22, 0.40).</p>
-<p>You can also ask for plotting the <em>bug.mcmc</em> object that you have created using the <code>plot()</code> function. It would produce the trace plot and a density plot presenting the posterior distributions of each unknown parameter.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="running-bayesian-models.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bug.mcmc)              <span class="co">#Asking for trace plot and plots of prior and posterior distributions</span></span></code></pre></div>
+<p>Here we see that the median <em>Prev</em> estimate (95BCI) was 26% (22, 31).</p>
+<p>We can also plot the <em>bug.mcmc</em> object that we have created using the <code>plot()</code> function to produce the trace plot and a density plot presenting the posterior distributions of each unknown parameter.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="running-bayesian-models.html#cb37-1" tabindex="-1"></a><span class="fu">plot</span>(bug.mcmc)              <span class="co">#Asking for trace plot and plots of prior and posterior distributions</span></span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-25"></span>
 <img src="_main_files/figure-html/unnamed-chunk-25-1.png" alt="Trace plot and density plot produced using the plot() function." width="672" />
 <p class="caption">
 Figure 3.1: Trace plot and density plot produced using the plot() function.
 </p>
 </div>
-<p>If you prefer to work on your own plots, note that all the values sampled from your posterior distributions were stored in the <em>bug.out</em> object that you have created. If you inspect the <em>bug.out</em> object, you will notice an element named <em>BUGSoutput</em>, inside this element, there is another object named <em>sims.list</em>, within this <em>sims.list</em>, there is an element named <em>Prev</em>. As you can see below, this element is made of a list of 15000 values. This correspond to the 5000 values sampled (1/iteration) by each Markov chain (3 chains) for the unknown parameter <em>Prev</em>. <strong>So this element is simply all the sampled values assembled together</strong>.</p>
-<div class="figure">
-<img src="Figures/sims%20list.png" alt="" />
-<p class="caption">sims.list object located in the <em>bug.out</em> output.</p>
+<p>If we prefer to work on our own plots, note that all the values sampled from our posterior distributions were stored in the <em>bug.out</em> object that we have created. If we inspect the <em>bug.out</em> object, we will notice an element named <em>BUGSoutput</em>, inside this element, there is another object named <em>sims.list</em>, within this <em>sims.list</em>, there is an element named <em>Prev</em>. As we can see below, this element is made of a list of 15,000 values. This correspond to the 5,000 values sampled (1/iteration) by each Markov chain (3 chains) for the unknown parameter <em>Prev</em>. <strong>So this element is simply all the sampled values assembled together</strong>.</p>
+<div class="float">
+<img src="Figures/sims%20list.png" alt="sims.list object located in the bug.out output." />
+<div class="figcaption"><strong>sims.list object located in the <em>bug.out</em> output.</strong></div>
 </div>
-<p>You could use this element, for instance, to plot together the prior and posterior distributions on a same figure. On the figure below, the prior distribution is not obvious, it is the flat dashed red line just above the x axis (remember, we used a flat prior for <em>Prev</em>).</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="running-bayesian-models.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot the posterior distribution</span></span>
-<span id="cb38-2"><a href="running-bayesian-models.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="at">x=</span>bug.out<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>Prev),      <span class="co">#Indicating variable to plot</span></span>
-<span id="cb38-3"><a href="running-bayesian-models.html#cb38-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Disease prevalence&quot;</span>,                         <span class="co">#Title for the plot</span></span>
-<span id="cb38-4"><a href="running-bayesian-models.html#cb38-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Prevalence&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Density&quot;</span>,                 <span class="co">#x and y axis titles</span></span>
-<span id="cb38-5"><a href="running-bayesian-models.html#cb38-5" aria-hidden="true" tabindex="-1"></a>     )</span>
-<span id="cb38-6"><a href="running-bayesian-models.html#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="running-bayesian-models.html#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the prior distribution</span></span>
-<span id="cb38-8"><a href="running-bayesian-models.html#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, <span class="at">shape1=</span>Prev.shapea, <span class="at">shape2=</span>Prev.shapeb), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>,          <span class="co">#Plotting the corresponding prior distribution</span></span>
-<span id="cb38-9"><a href="running-bayesian-models.html#cb38-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty=</span><span class="dv">2</span>,                                                                   <span class="co">#Asking for a dashed line pattern</span></span>
-<span id="cb38-10"><a href="running-bayesian-models.html#cb38-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;red&quot;</span>,                                                               <span class="co">#Asking for a red line  </span></span>
-<span id="cb38-11"><a href="running-bayesian-models.html#cb38-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">add=</span><span class="cn">TRUE</span>)                                                                <span class="co">#Asking to add this plot to the preceding one</span></span></code></pre></div>
+<p><br/><br />
+We could use this element, for instance, to plot together the prior and posterior distributions on a same figure. On the figure below, the prior distribution is not obvious, it is the flat dashed red line just above the x axis (remember, we used a flat prior for <em>Prev</em>).</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="running-bayesian-models.html#cb38-1" tabindex="-1"></a><span class="co">#Plot the posterior distribution</span></span>
+<span id="cb38-2"><a href="running-bayesian-models.html#cb38-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="at">x=</span>bug.out<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>Prev),      <span class="co">#Indicating variable to plot</span></span>
+<span id="cb38-3"><a href="running-bayesian-models.html#cb38-3" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Disease prevalence&quot;</span>,                         <span class="co">#Title for the plot</span></span>
+<span id="cb38-4"><a href="running-bayesian-models.html#cb38-4" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Prevalence&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Density&quot;</span>,                 <span class="co">#x and y axis titles</span></span>
+<span id="cb38-5"><a href="running-bayesian-models.html#cb38-5" tabindex="-1"></a>     )</span>
+<span id="cb38-6"><a href="running-bayesian-models.html#cb38-6" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="running-bayesian-models.html#cb38-7" tabindex="-1"></a><span class="co">#plot the prior distribution</span></span>
+<span id="cb38-8"><a href="running-bayesian-models.html#cb38-8" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, </span>
+<span id="cb38-9"><a href="running-bayesian-models.html#cb38-9" tabindex="-1"></a>            <span class="at">shape1=</span>Prev.shapea, </span>
+<span id="cb38-10"><a href="running-bayesian-models.html#cb38-10" tabindex="-1"></a>            <span class="at">shape2=</span>Prev.shapeb), </span>
+<span id="cb38-11"><a href="running-bayesian-models.html#cb38-11" tabindex="-1"></a>      <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>,          </span>
+<span id="cb38-12"><a href="running-bayesian-models.html#cb38-12" tabindex="-1"></a>      <span class="at">lty=</span><span class="dv">2</span>,                    <span class="co">#Asking for a dashed line pattern</span></span>
+<span id="cb38-13"><a href="running-bayesian-models.html#cb38-13" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;red&quot;</span>,                <span class="co">#Asking for a red line  </span></span>
+<span id="cb38-14"><a href="running-bayesian-models.html#cb38-14" tabindex="-1"></a>      <span class="at">add=</span><span class="cn">TRUE</span>)                <span class="co">#Asking to add this plot to the preceding one</span></span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-26"></span>
 <img src="_main_files/figure-html/unnamed-chunk-26-1.png" alt="Prior (dashed red line) and posterior (full black line) distribution of the prevalence of disease." width="672" />
 <p class="caption">
@@ -491,42 +608,42 @@ Figure 3.2: Prior (dashed red line) and posterior (full black line) distribution
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-JAGS.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf", "_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -537,7 +654,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

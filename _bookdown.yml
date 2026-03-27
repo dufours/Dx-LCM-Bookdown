@@ -1,5 +1,12 @@
 delete_merged_file: true
+
 language:
   ui:
     chapter_name: "Chapter "
+
 output_dir: "_book"
+
+output:
+  bookdown::gitbook: default
+  bookdown::pdf_book: default
+  bookdown::epub_book: default

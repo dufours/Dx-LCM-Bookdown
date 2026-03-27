@@ -5,33 +5,33 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 Sensitivity analyses | Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
-  <meta name="description" content="Chapitre 14" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="description" content="Chapitre 16" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 Sensitivity analyses | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Chapitre 14" />
+  <meta property="og:description" content="Chapitre 16" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 14 Sensitivity analyses | Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   
-  <meta name="twitter:description" content="Chapitre 14" />
+  <meta name="twitter:description" content="Chapitre 16" />
   
 
 <meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
 
 
-<meta name="date" content="2022-06-07" />
+<meta name="date" content="2026-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="extensions.html"/>
-
+<link rel="prev" href="extensions-1.html"/>
+<link rel="next" href="sample-size.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,9 +52,80 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -74,7 +145,14 @@
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#software-and-libraries-used"><i class="fa fa-check"></i><b>1.1</b> Software and libraries used</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#r-download"><i class="fa fa-check"></i><b>1.1.1</b> R download</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#rstudio-download"><i class="fa fa-check"></i><b>1.1.2</b> RStudio download</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#r-libraries"><i class="fa fa-check"></i><b>1.1.3</b> R libraries</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#jags"><i class="fa fa-check"></i><b>1.1.4</b> JAGS</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.2</b> Some notation</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
 <ul>
@@ -131,6 +209,20 @@
 <li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
 <li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
 <li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-populations.html"><a href="multiple-populations.html#hierarchical-latent-class-models"><i class="fa fa-check"></i><b>7.5</b> Hierarchical latent class models</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="multiple-populations.html"><a href="multiple-populations.html#the-general-idea"><i class="fa fa-check"></i><b>7.5.1</b> The general idea</a></li>
+<li class="chapter" data-level="7.5.2" data-path="multiple-populations.html"><a href="multiple-populations.html#the-likelihood-function-1"><i class="fa fa-check"></i><b>7.5.2</b> The likelihood function</a></li>
+<li class="chapter" data-level="7.5.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-data-1"><i class="fa fa-check"></i><b>7.5.3</b> The data</a></li>
+<li class="chapter" data-level="7.5.4" data-path="multiple-populations.html"><a href="multiple-populations.html#the-priors"><i class="fa fa-check"></i><b>7.5.4</b> The priors</a></li>
+<li class="chapter" data-level="7.5.5" data-path="multiple-populations.html"><a href="multiple-populations.html#write-the-jags-model"><i class="fa fa-check"></i><b>7.5.5</b> Write the JAGS model</a></li>
+<li class="chapter" data-level="7.5.6" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-initial-values-1"><i class="fa fa-check"></i><b>7.5.6</b> Generating initial values</a></li>
+<li class="chapter" data-level="7.5.7" data-path="multiple-populations.html"><a href="multiple-populations.html#running-the-model"><i class="fa fa-check"></i><b>7.5.7</b> Running the model</a></li>
+<li class="chapter" data-level="7.5.8" data-path="multiple-populations.html"><a href="multiple-populations.html#model-diagnostics"><i class="fa fa-check"></i><b>7.5.8</b> Model diagnostics</a></li>
+<li class="chapter" data-level="7.5.9" data-path="multiple-populations.html"><a href="multiple-populations.html#getting-our-estimates-1"><i class="fa fa-check"></i><b>7.5.9</b> Getting our estimates</a></li>
+<li class="chapter" data-level="7.5.10" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-informative-hyperpriors-for-mu-and-psi"><i class="fa fa-check"></i><b>7.5.10</b> Generating informative hyperpriors for mu and psi</a></li>
+<li class="chapter" data-level="7.5.11" data-path="multiple-populations.html"><a href="multiple-populations.html#extensions"><i class="fa fa-check"></i><b>7.5.11</b> Extensions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
 <ul>
@@ -155,15 +247,31 @@
 <li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
 <li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="exercise-5---multiple-tests.html"><a href="exercise-5---multiple-tests.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Multiple tests</a>
+<li class="chapter" data-level="12" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Accuracy varying with covariate</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="exercise-5---multiple-tests.html"><a href="exercise-5---multiple-tests.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
-<li class="chapter" data-level="12.2" data-path="exercise-5---multiple-tests.html"><a href="exercise-5---multiple-tests.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
+<li class="chapter" data-level="12.1" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
+<li class="chapter" data-level="12.2" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="extensions.html"><a href="extensions.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
+<li class="chapter" data-level="13" data-path="extensions-1.html"><a href="extensions-1.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
 <li class="chapter" data-level="14" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analyses</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#perturbing-informative-priors"><i class="fa fa-check"></i><b>14.1</b> Perturbing informative priors</a></li>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#models-assumptions"><i class="fa fa-check"></i><b>14.1</b> Model’s assumptions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#conditional-independence-between-tests"><i class="fa fa-check"></i><b>14.1.1</b> Conditional independence between tests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#constant-test-accuracy-across-populations"><i class="fa fa-check"></i><b>14.1.2</b> Constant test accuracy across populations</a></li>
+<li class="chapter" data-level="14.1.3" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#prevalence-varies-from-one-population-to-another"><i class="fa fa-check"></i><b>14.1.3</b> Prevalence varies from one population to another</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#choice-of-priors"><i class="fa fa-check"></i><b>14.2</b> Choice of priors</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="sample-size.html"><a href="sample-size.html"><i class="fa fa-check"></i><b>15</b> Sample size</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="sample-size.html"><a href="sample-size.html#method-when-comparing-to-a-gold-standard"><i class="fa fa-check"></i><b>15.1</b> Method when comparing to a gold standard</a></li>
+<li class="chapter" data-level="15.2" data-path="sample-size.html"><a href="sample-size.html#method-for-the-hui-walter-blcm"><i class="fa fa-check"></i><b>15.2</b> Method for the Hui-Walter BLCM</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Exercise 6 - Sample size estimation and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#questions-5"><i class="fa fa-check"></i><b>16.1</b> Questions</a></li>
+<li class="chapter" data-level="16.2" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#answers-5"><i class="fa fa-check"></i><b>16.2</b> Answers</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -187,22 +295,51 @@
             <section class="normal" id="section-">
 <div id="sensitivity-analyses" class="section level1 hasAnchor" number="14">
 <h1><span class="header-section-number">Chapter 14</span> Sensitivity analyses<a href="sensitivity-analyses.html#sensitivity-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>An important step of any Bayesian analysis is to evaluate whether the results are strongly affected by the choice of priors and/or to the assumptions made. For the latter, this could be assessed by comparing the results from the LCM where a given assumption was made <em>vs.</em> the ones from a LCM where the assumption was relaxed. Of course, to fully “isolate” the effect of a given assumption, the same priors would have to be used in both LCM. This is, however, not always possible since the “relaxed” LCM will often need a larger number of informative priors to make it identifiable.</p>
-<div id="perturbing-informative-priors" class="section level2 hasAnchor" number="14.1">
-<h2><span class="header-section-number">14.1</span> Perturbing informative priors<a href="sensitivity-analyses.html#perturbing-informative-priors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Whenever informative priors are used in a LCM, the sensitivity of the LCM to the choice of priors should be assessed. This can be done by running the same LCM, but with “perturbed” and usually “more diffuse” priors. <a href="https://doi.org/10.1016/j.prevetmed.2019.01.010">Johnson et al. (2019)</a> recommended, for instance, to move the mode of the prior distribution of a given parameter by a few percentage-points and to increase the width of its prior distribution. Then, the results from the LCM using the scientific literature-derived priors can be compared to those of the LCM using perturbed priors to assess how sensitive to the choice of priors the results are. The amount and direction by which the mode will be moved and the level of increase of the width of the distribution will depend on the problem at hand.</p>
+<p>An important step of any Bayesian analysis is to evaluate whether the results are strongly affected by the model’s assumptions and/or the choice of priors.</p>
+<div id="models-assumptions" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Model’s assumptions<a href="sensitivity-analyses.html#models-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Regarding the sensitivity of our results to the assumptions made, this could be assessed by comparing the results from the LCM where a given assumption was made <em>vs.</em> the ones from a LCM where the assumption was relaxed. Of course, <strong>to fully “isolate” the effect of a given assumption, the same priors would have to be used in both LCM</strong>. This is, however, not always possible since, sometimes, the “relaxed” LCM may require a larger number of informative priors to make it identifiable.</p>
+<p>In the end, providing the results from an “alternative” LCM could help the readers understand what was the influence of the model chosen on the presented results. As author, you would probably want to use the LCM that is the most “biologically relevant” as your main model, but present the results of these alternative models to illustrate how the choice of model may have impacted the results.</p>
+<p>Below are some of the main assumptions that you may want to evaluate.</p>
+<div id="conditional-independence-between-tests" class="section level3 hasAnchor" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Conditional independence between tests<a href="sensitivity-analyses.html#conditional-independence-between-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Even if two tests rely on very different biological processes, it would be a good practice to evaluate whether allowing for conditional dependence between tests would produce different results. You could do this using the model described in Chapter 5.</p>
+</div>
+<div id="constant-test-accuracy-across-populations" class="section level3 hasAnchor" number="14.1.2">
+<h3><span class="header-section-number">14.1.2</span> Constant test accuracy across populations<a href="sensitivity-analyses.html#constant-test-accuracy-across-populations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To evaluate whether test’s accuracy is constant across populations, the following options could be used:</p>
+<ul>
+<li>Check if the accuracy vary as function of a characteristic of the tested individuals (e.g., age, breed, etc);<br />
+</li>
+<li>If a substantial number of populations were studied:
+<ul>
+<li>We could run the model after removing one of the population and repeat this process for each population. If the results (e.g., the test’s accuracy parameters) differ substantially for one of the model, this could indicate that the test accuracy is different in this population;<br />
+</li>
+<li>We could allow for different accuracy in one or many of the populations. For instance, we may define <em>TestA</em> accuracy as <em>SeA-2</em> and <em>SpA-2</em> in one (or some) of the populations studied and as <em>SeA</em> and <em>SpA</em> for all other populations. If the <em>SeA</em> and <em>SeA-2</em> (or <em>SpA</em> and <em>SpA-2</em>) parameters differ substantially, this may, again, indicate that the test accuracy is different in this population.</li>
+</ul></li>
+</ul>
+</div>
+<div id="prevalence-varies-from-one-population-to-another" class="section level3 hasAnchor" number="14.1.3">
+<h3><span class="header-section-number">14.1.3</span> Prevalence varies from one population to another<a href="sensitivity-analyses.html#prevalence-varies-from-one-population-to-another" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This latter assumption is important for the <a href="https://www.jstor.org/stable/2530508?seq=1">Hui and Walter (1980)</a> model and other similar models. One thing that can be done is to “eyeball” the initial tests’ results and/or the estimated prevalence to confirm some differences between populations in, respectively, the apparent and/or true prevalence.</p>
+<p>Besides, <a href="https://projecteuclid.org/journals/statistical-science/volume-20/issue-2/On-Model-Expansion-Model-Contraction-Identifiability-and-Prior-Information/10.1214/088342305000000098.full">Gustafson et al. (2005)</a> have reviewed the impacts of having two populations with very similar prevalence and the only impact was a lack of identifiability of the model. This latter issue would results in non-converging Markov chains for one or a few of the unknown parameters. If the Markov chains converged, then the assumption of varying prevalence between population is probably not a problem.</p>
+</div>
+</div>
+<div id="choice-of-priors" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> Choice of priors<a href="sensitivity-analyses.html#choice-of-priors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Whenever informative priors are used in a LCM, the sensitivity of the LCM to the choice of priors should be assessed. This can be done by running the same LCM, but with “perturbed” and usually “more diffuse” priors. <a href="https://doi.org/10.1016/j.prevetmed.2019.01.010">Johnson et al. (2019)</a> recommended, for instance, to move the mode of the prior distribution of a given parameter by a few percentage-points (e.g., -15 percentage-points) and to increase the width of its prior distribution. Then, the results from the LCM using the scientific literature-derived priors can be compared to those of the LCM using perturbed priors to assess how sensitive to the choice of priors the results are. The amount and direction by which the mode will be moved and the level of increase of the width of the distribution will depend on the problem at hand.</p>
 <p>For instance, in the preceding sections we used the <a href="https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub">Romano et al. (2006)</a> results, to inform the priors for the Se and Sp of a US exam conducted between 28-45 days post-insemination:<br />
 -Se = 0.90 (95CI: 0.85, 0.95)<br />
 -Sp = 0.95 (95CI: 0.90, 0.97)</p>
 <p>We thus came up with these prior distributions for US’ Se and sp.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se:0.80 and mode for Sp:0.85) and to increase the with of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" alt="" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-95-1.png" alt="" width="672" /></p>
+<p>Thus, a possibility could be to move down the Se and Sp modes by 10 percentage points (i.e., mode for Se: 0.80 and mode for Sp: 0.85) and to increase the width of the distribution by moving the 2.5th percentiles by 30 percentage-points (Se 2.5th percentile: 0.55; Sp 2.5th percentile: 0.60). Thus:</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-96-1.png" alt="" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-97-1.png" alt="" width="672" /></p>
 <p>Then, the results from the LCM with the informative and perturbed priors could be compared.</p>
-<p>For instance, in exercise 3 we compared two conditionally independent diagnostic tests (PAG and US) in three populations (herd #1, herd #2, and herd #3). For that model, though the model is identifiable, we could use the <a href="https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub">Romano et al. (2006)</a> informative priors on Us’ Se and Sp. Then, we could run the same LCM, but with the perturbed US’ Se and Sp priors suggested above. If we do that, we would obtain the following results:</p>
-<p><strong>Table.</strong> Table summarizing the results from a 2 tests, 3 populations LCM using different priors (literature-based <em>vs.</em> perturbed informative priors on US’ Se and Sp).</p>
+<p>For instance, in exercise 3 we compared two conditionally independent diagnostic tests (PAG and US) in three populations (herd #1, herd #2, and herd #3). For that model, though the model is identifiable, we could use the <a href="https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub">Romano et al. (2006)</a> informative priors on US’ Se and Sp. Then, we could run the same LCM, but with the perturbed US’ Se and Sp priors suggested above. If we do that, we would obtain the following results:</p>
+<p><strong>Table.</strong> Results from a 2 tests, 3 populations LCM using different priors (literature-based <em>vs.</em> perturbed informative priors on US’ Se and Sp). The priors differing between LCM are indicated in bold.</p>
 <table>
 <colgroup>
 <col width="13%" />
@@ -260,7 +397,7 @@
 <td align="center"><strong>Beta (100, 12)</strong></td>
 <td align="center">0.925 (0.893, 0.954)</td>
 <td align="center"></td>
-<td align="center"><strong>Beta (1.0, 1.0)</strong></td>
+<td align="center"><strong>Beta (13.6, 4.1)</strong></td>
 <td align="center">0.931 (0.890, 0.970)</td>
 </tr>
 <tr class="even">
@@ -268,7 +405,7 @@
 <td align="center"><strong>Beta (100, 6.2)</strong></td>
 <td align="center">0.977 (0.956, 0.990)</td>
 <td align="center"></td>
-<td align="center"><strong>Beta (1.0, 1.0)</strong></td>
+<td align="center"><strong>Beta (14.0, 3.3)</strong></td>
 <td align="center">0.981 (0.957, 0.994)</td>
 </tr>
 <tr class="odd">
@@ -289,6 +426,7 @@
 </tr>
 </tbody>
 </table>
+<p>In this specific example, we can see that the results are virtually unchanged. Thus, we could say that our initial analysis was quite robust to the choice of prior distributions. Personally, we would present the LCM with the <a href="https://www.sciencedirect.com/science/article/pii/S0093691X06001543?via%3Dihub">Romano et al. (2006)</a> priors as our “main” model. If we do have valid information from the literature about one or many of the unknown parameters, then why not using them?</p>
 
 </div>
 </div>
@@ -297,8 +435,8 @@
           </div>
         </div>
       </div>
-<a href="extensions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="extensions-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sample-size.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -312,46 +450,60 @@
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/13-Sensitivity.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf", "_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

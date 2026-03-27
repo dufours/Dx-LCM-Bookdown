@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Bayesian latent class models for prevalence estimation and diagnostic test evaluation</title>
-  <meta name="description" content="Chapitre 5" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="description" content="Chapitre 16" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="Chapitre 5" />
+  <meta property="og:description" content="Chapitre 16" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Bayesian latent class models for prevalence estimation and diagnostic test evaluation" />
   
-  <meta name="twitter:description" content="Chapitre 5" />
+  <meta name="twitter:description" content="Chapitre 16" />
   
 
 <meta name="author" content="Simon Dufour and Juan Carlos Arango Sabogal" />
 
 
-<meta name="date" content="2022-05-04" />
+<meta name="date" content="2026-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -57,6 +57,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -94,7 +95,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +108,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +122,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -140,7 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this document</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.1</b> Some notation</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#software-and-libraries-used"><i class="fa fa-check"></i><b>1.1</b> Software and libraries used</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#r-download"><i class="fa fa-check"></i><b>1.1.1</b> R download</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#rstudio-download"><i class="fa fa-check"></i><b>1.1.2</b> RStudio download</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#r-libraries"><i class="fa fa-check"></i><b>1.1.3</b> R libraries</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#jags"><i class="fa fa-check"></i><b>1.1.4</b> JAGS</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#some-notation"><i class="fa fa-check"></i><b>1.2</b> Some notation</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a>
 <ul>
@@ -181,9 +193,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#questions"><i class="fa fa-check"></i><b>4.2</b> Questions</a></li>
 <li class="chapter" data-level="4.3" data-path="exercise-1---proportions.html"><a href="exercise-1---proportions.html#answers"><i class="fa fa-check"></i><b>4.3</b> Answers</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="comparing-2-imperfect-tests.html"><a href="comparing-2-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Comparing 2 imperfect tests</a>
+<li class="chapter" data-level="5" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html"><i class="fa fa-check"></i><b>5</b> Two imperfect tests</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="comparing-2-imperfect-tests.html"><a href="comparing-2-imperfect-tests.html#lcm---conditional-independence"><i class="fa fa-check"></i><b>5.1</b> LCM - Conditional independence</a></li>
+<li class="chapter" data-level="5.1" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#assuming-conditional-independence"><i class="fa fa-check"></i><b>5.1</b> Assuming conditional independence</a></li>
+<li class="chapter" data-level="5.2" data-path="two-imperfect-tests.html"><a href="two-imperfect-tests.html#allowing-for-conditional-dependence"><i class="fa fa-check"></i><b>5.2</b> Allowing for conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html"><i class="fa fa-check"></i><b>6</b> Exercise 2 - Two tests</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#questions-1"><i class="fa fa-check"></i><b>6.1</b> Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="exercise-2---two-tests.html"><a href="exercise-2---two-tests.html#answers-1"><i class="fa fa-check"></i><b>6.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-populations.html"><a href="multiple-populations.html"><i class="fa fa-check"></i><b>7</b> Multiple populations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-populations.html"><a href="multiple-populations.html#likelihood-function-with-2-populations"><i class="fa fa-check"></i><b>7.1</b> Likelihood function with 2 populations</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-populations.html"><a href="multiple-populations.html#organizing-the-data-with-2-populations"><i class="fa fa-check"></i><b>7.2</b> Organizing the data with 2 populations</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-jags-model-with-2-populations"><i class="fa fa-check"></i><b>7.3</b> The JAGS model with 2 populations</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-populations.html"><a href="multiple-populations.html#conditional-dependence"><i class="fa fa-check"></i><b>7.4</b> Conditional dependence</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-populations.html"><a href="multiple-populations.html#hierarchical-latent-class-models"><i class="fa fa-check"></i><b>7.5</b> Hierarchical latent class models</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="multiple-populations.html"><a href="multiple-populations.html#the-general-idea"><i class="fa fa-check"></i><b>7.5.1</b> The general idea</a></li>
+<li class="chapter" data-level="7.5.2" data-path="multiple-populations.html"><a href="multiple-populations.html#the-likelihood-function-1"><i class="fa fa-check"></i><b>7.5.2</b> The likelihood function</a></li>
+<li class="chapter" data-level="7.5.3" data-path="multiple-populations.html"><a href="multiple-populations.html#the-data-1"><i class="fa fa-check"></i><b>7.5.3</b> The data</a></li>
+<li class="chapter" data-level="7.5.4" data-path="multiple-populations.html"><a href="multiple-populations.html#the-priors"><i class="fa fa-check"></i><b>7.5.4</b> The priors</a></li>
+<li class="chapter" data-level="7.5.5" data-path="multiple-populations.html"><a href="multiple-populations.html#write-the-jags-model"><i class="fa fa-check"></i><b>7.5.5</b> Write the JAGS model</a></li>
+<li class="chapter" data-level="7.5.6" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-initial-values-1"><i class="fa fa-check"></i><b>7.5.6</b> Generating initial values</a></li>
+<li class="chapter" data-level="7.5.7" data-path="multiple-populations.html"><a href="multiple-populations.html#running-the-model"><i class="fa fa-check"></i><b>7.5.7</b> Running the model</a></li>
+<li class="chapter" data-level="7.5.8" data-path="multiple-populations.html"><a href="multiple-populations.html#model-diagnostics"><i class="fa fa-check"></i><b>7.5.8</b> Model diagnostics</a></li>
+<li class="chapter" data-level="7.5.9" data-path="multiple-populations.html"><a href="multiple-populations.html#getting-our-estimates-1"><i class="fa fa-check"></i><b>7.5.9</b> Getting our estimates</a></li>
+<li class="chapter" data-level="7.5.10" data-path="multiple-populations.html"><a href="multiple-populations.html#generating-informative-hyperpriors-for-mu-and-psi"><i class="fa fa-check"></i><b>7.5.10</b> Generating informative hyperpriors for mu and psi</a></li>
+<li class="chapter" data-level="7.5.11" data-path="multiple-populations.html"><a href="multiple-populations.html#extensions"><i class="fa fa-check"></i><b>7.5.11</b> Extensions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html"><i class="fa fa-check"></i><b>8</b> Exercise 3 - Multiple populations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#questions-2"><i class="fa fa-check"></i><b>8.1</b> Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="exercise-3---multiple-populations.html"><a href="exercise-3---multiple-populations.html#answers-2"><i class="fa fa-check"></i><b>8.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html"><i class="fa fa-check"></i><b>9</b> Multiple diagnostic tests</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#likelihood-function-with-3-tests"><i class="fa fa-check"></i><b>9.1</b> Likelihood function with 3 tests</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#organizing-the-data-with-3-tests"><i class="fa fa-check"></i><b>9.2</b> Organizing the data with 3 tests</a></li>
+<li class="chapter" data-level="9.3" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#the-jags-model-with-3-tests"><i class="fa fa-check"></i><b>9.3</b> The JAGS model with 3 tests</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-diagnostic-tests.html"><a href="multiple-diagnostic-tests.html#conditional-dependence-1"><i class="fa fa-check"></i><b>9.4</b> Conditional dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html"><i class="fa fa-check"></i><b>10</b> Exercise 4 - Multiple tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#questions-3"><i class="fa fa-check"></i><b>10.1</b> Questions</a></li>
+<li class="chapter" data-level="10.2" data-path="exercise-4---multiple-tests.html"><a href="exercise-4---multiple-tests.html#answers-3"><i class="fa fa-check"></i><b>10.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>11</b> Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#likelihood-function-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.1</b> Likelihood function when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.2" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#organizing-the-data-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.2</b> Organizing the data when accuracy varies as function of covariate</a></li>
+<li class="chapter" data-level="11.3" data-path="accuracy-varying-with-covariate.html"><a href="accuracy-varying-with-covariate.html#the-jags-model-when-accuracy-varies-as-function-of-covariate"><i class="fa fa-check"></i><b>11.3</b> The JAGS model when accuracy varies as function of covariate</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html"><i class="fa fa-check"></i><b>12</b> Exercise 5 - Accuracy varying with covariate</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#questions-4"><i class="fa fa-check"></i><b>12.1</b> Questions</a></li>
+<li class="chapter" data-level="12.2" data-path="exercise-5---accuracy-varying-with-covariate.html"><a href="exercise-5---accuracy-varying-with-covariate.html#answers-4"><i class="fa fa-check"></i><b>12.2</b> Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="extensions-1.html"><a href="extensions-1.html"><i class="fa fa-check"></i><b>13</b> Extensions</a></li>
+<li class="chapter" data-level="14" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analyses</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#models-assumptions"><i class="fa fa-check"></i><b>14.1</b> Model’s assumptions</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#conditional-independence-between-tests"><i class="fa fa-check"></i><b>14.1.1</b> Conditional independence between tests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#constant-test-accuracy-across-populations"><i class="fa fa-check"></i><b>14.1.2</b> Constant test accuracy across populations</a></li>
+<li class="chapter" data-level="14.1.3" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#prevalence-varies-from-one-population-to-another"><i class="fa fa-check"></i><b>14.1.3</b> Prevalence varies from one population to another</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analyses.html"><a href="sensitivity-analyses.html#choice-of-priors"><i class="fa fa-check"></i><b>14.2</b> Choice of priors</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="sample-size.html"><a href="sample-size.html"><i class="fa fa-check"></i><b>15</b> Sample size</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="sample-size.html"><a href="sample-size.html#method-when-comparing-to-a-gold-standard"><i class="fa fa-check"></i><b>15.1</b> Method when comparing to a gold standard</a></li>
+<li class="chapter" data-level="15.2" data-path="sample-size.html"><a href="sample-size.html#method-for-the-hui-walter-blcm"><i class="fa fa-check"></i><b>15.2</b> Method for the Hui-Walter BLCM</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Exercise 6 - Sample size estimation and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#questions-5"><i class="fa fa-check"></i><b>16.1</b> Questions</a></li>
+<li class="chapter" data-level="16.2" data-path="exercise-6---sample-size-estimation-and-study-design.html"><a href="exercise-6---sample-size-estimation-and-study-design.html#answers-5"><i class="fa fa-check"></i><b>16.2</b> Answers</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -208,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Bayesian latent class models for prevalence estimation and diagnostic test evaluation</h1>
 <p class="author"><em>Simon Dufour and Juan Carlos Arango Sabogal</em></p>
-<p class="date"><em>2022-05-04</em></p>
+<p class="date"><em>2026-03-26</em></p>
 </div>
 <div id="about-this-document" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> About this document<a href="index.html#about-this-document" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -218,39 +306,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>If you are familiar with <code>R</code> and want to do some further reading, <a href="https://r4ds.had.co.nz/">Hadley Wickham’s “R for Data Science”</a> is a great resource.</p></li>
 </ul>
 <p>Remember, there are often many different ways to conduct a given piece of work in <code>R</code>. Throughout this document, we tried to stick with the simpler approaches (e.g., the shortest code, the minimal number of <code>R</code> libraries).</p>
-<div id="some-notation" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Some notation<a href="index.html#some-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Throughout the document, you will find examples of <code>R</code> code along with comments. <strong>The <code>R</code> code used always appear in grey boxes</strong> (see the following example). This is the code that you will be able to use for your own analyses. <strong>Lines that are preceded by a # sign are comments</strong>, they are skipped when <code>R</code> reads them. Following each grey box with <code>R</code> code, a <strong>white box with results from the analysis is presented</strong>.</p>
+<div id="software-and-libraries-used" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Software and libraries used<a href="index.html#software-and-libraries-used" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To conduct the exercises from this book, we will need to install three software (<code>R</code>, <code>RStudio</code>, and <code>JAGS</code>) and a few <code>R</code> packages. The installation steps are described below. These instructions are reproduced in parts from <a href="https://www.r-project.org/">R-project.org</a>, <a href="https://posit.co/downloads/">Rstudio.com</a>, and various R packages’ manuals.</p>
+<div id="r-download" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> R download<a href="index.html#r-download" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>R</code> is a language and environment for statistical computing and graphics. <code>R</code> provides a wide variety of statistical (linear and nonlinear modelling, classical statistical tests, time-series analysis, classification, clustering, …) and graphical techniques, and is highly extensible.</p>
+<p><code>R</code> can be downloaded <a href="https://cran.r-project.org/mirrors.html">here</a>. You can choose in the list a CRAN mirror close to your institution; for instance, in Canada we use the mirror from <a href="https://mirror.rcg.sfu.ca/mirror/CRAN/">Simon Fraser University, Burnaby</a>.</p>
+<p><strong>We used the 4.4.1 version of R to develop this book.</strong></p>
+</div>
+<div id="rstudio-download" class="section level3 hasAnchor" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> RStudio download<a href="index.html#rstudio-download" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>RStudio</code> is an integrated development environment (IDE) for <code>R</code>. It includes a console, syntax-highlighting editor that supports direct code execution, as well as tools for plotting, history, debugging and workspace management.</p>
+<p><code>RStudio</code> is available in open source and commercial editions and runs on the desktop (Windows, Mac, and Linux) or in a browser connected to <code>RStudio Server</code> or <code>RStudio Workbench</code>.</p>
+<p>A free <code>RStudio Desktop Open Source License</code> can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>.</p>
+<p><strong>We used the 2024.04.2+764 version of <code>RStudio</code> to develop this book.</strong></p>
+</div>
+<div id="r-libraries" class="section level3 hasAnchor" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> R libraries<a href="index.html#r-libraries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To install a given <code>R</code> library, open <code>RStudio</code>, click <code>Packages</code>, choose <code>load package</code>, choose the package you need (e.g., <code>epiR</code>).</p>
+<p>For the workshop, the following <code>R</code> packages will be used:</p>
+<div id="r2jags" class="section level4 hasAnchor" number="1.1.3.1">
+<h4><span class="header-section-number">1.1.3.1</span> R2jags<a href="index.html#r2jags" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Version 0.8-5</strong> <a href="/https://cran.r-project.org/web/packages/R2jags/R2jags.pdf">R2jags manual</a>
+The <code>R2JAGS</code> package provides convenient functions to call <code>rjags</code> (see next) and <code>JAGS</code> (a software specialized in Bayesian analyses; see below) from <code>R</code>. It automatically writes the data and scripts in a format readable by <code>JAGS</code>. After the <code>JAGS</code> process has finished, it is possible to read the resulting data into <code>R</code> using the facilities of the <code>coda</code> and <code>mcmcplots</code> packages for further analyses of the output.</p>
+</div>
+<div id="rjags" class="section level4 hasAnchor" number="1.1.3.2">
+<h4><span class="header-section-number">1.1.3.2</span> rjags<a href="index.html#rjags" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Version 4-15</strong> <a href="https:/cran.r-project.org/web/packages/rjags/rjags.pdf">rjags manual</a>
+The <code>rjags</code> package provides an interface from <code>R</code> to the <code>JAGS</code> library for Bayesian data analysis. <code>JAGS</code> uses Markov Chain Monte Carlo (<strong>MCMC</strong>) to generate a sequence of dependent samples from the posterior distribution of the parameters.</p>
+</div>
+<div id="coda" class="section level4 hasAnchor" number="1.1.3.3">
+<h4><span class="header-section-number">1.1.3.3</span> coda<a href="index.html#coda" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Version 0.19-4.1</strong> <a href="https://cran.r-project.org/web/packages/coda/coda.pdf">coda manual</a><br />
+The <code>coda</code> package provides functions for summarizing and plotting the output from MCMC simulations, as well as diagnostic tests of convergence to the equilibrium distribution of the Markov chain.</p>
+</div>
+<div id="mcmcplots" class="section level4 hasAnchor" number="1.1.3.4">
+<h4><span class="header-section-number">1.1.3.4</span> mcmcplots<a href="index.html#mcmcplots" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Version 0.4.3</strong> <a href="https://cran.r-project.org/web/packages/mcmcplots/mcmcplots.pdf">mcmcplots manual</a><br />
+The <code>mcmcplots</code> package provides a function (<code>mcmcplot</code>) that produces common MCMC diagnostic plots in an html file that can be viewed from a web browser. When viewed in a web browser, hundreds of MCMC plots can be viewed efficiently by scrolling through the output as if it were any typical web page.</p>
+</div>
+<div id="epir" class="section level4 hasAnchor" number="1.1.3.5">
+<h4><span class="header-section-number">1.1.3.5</span> epiR<a href="index.html#epir" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Version 2.0.75</strong> <a href="https://cran.r-project.org/web/packages/epiR/epiR.pdf">epiR manual</a><br />
+The <code>epiR</code> package contains tools for the analysis of epidemiological and surveillance data. For the workshop we will mainly use <code>epiR</code> functions that can return shape parameters for different distributions, based on expert elicitation, to produce and visualize prior distributions.</p>
+</div>
+</div>
+<div id="jags" class="section level3 hasAnchor" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> JAGS<a href="index.html#jags" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>JAGS</code> is a free software package for performing Bayesian inference Using Gibbs Sampling. <code>JAGS</code> stands for “Just Another Gibbs Sampler”. It is a program for analysis of Bayesian models using MCMC simulation.</p>
+<p>You will have to install <code>JAGS</code> on your computer for the <code>R2JAGS</code> library to work. <code>JAGS</code> can be downloaded <a href="https://sourceforge.net/projects/mcmc-jags/files/">here</a>.</p>
+<ul>
+<li>Click on the “Download latest version JAGS-4.3.1.html” green button;<br />
+</li>
+<li>Wait a few seconds;<br />
+</li>
+<li>Open up the JAGS-4.3.1.html file that was downloaded;<br />
+</li>
+<li>Pick the appropriate installation depending on the version of <code>R</code> that is installed on your computer;
+<ul>
+<li>If you have installed <code>R</code> version 4.2.0 or later, then JAGS-4.3.1 can be installed.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="some-notation" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Some notation<a href="index.html#some-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Throughout the document, you will find examples of <code>R</code> code along with comments. <strong>The <code>R</code> code used always appear in grey boxes</strong> (see the following example). This is the code that you will be able to use for your own analyses. <strong>Lines that are preceded by a # sign are comments</strong>, they are skipped when <code>R</code> reads them. Following each grey box with <code>R</code> code, another <strong>grey box with results from the analysis is presented</strong>.</p>
 <p>For instance, this is a <code>R</code> code where I am simply asking to show main descriptive statistics for the <em>speed</em> variable of the <em>cars</em> dataset (note that this dataset is already part of <code>R</code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#This is a comment. R will ignore this line</span></span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The summary() function can be use to ask for a summary of various R objects. For a variable (here the variable speed), it shows descriptive statistics.</span></span>
-<span id="cb1-4"><a href="index.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" tabindex="-1"></a><span class="co">#This is a comment. R will ignore this line</span></span>
+<span id="cb1-2"><a href="index.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="index.html#cb1-3" tabindex="-1"></a><span class="co">#The summary() function can be use to ask for a summary of various R objects. For a variable (here the variable speed), it shows descriptive statistics.</span></span>
+<span id="cb1-4"><a href="index.html#cb1-4" tabindex="-1"></a><span class="fu">summary</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     4.0    12.0    15.0    15.4    19.0    25.0</code></pre>
-<p>Throughout the document, in the text I will use:<br />
+<p>Throughout this document we will use:<br />
 - Italics for datasets or variables. For instance, the <em>speed</em> variable of the dataset <em>cars</em>.<br />
 - Shaded boxes for <code>R</code> libraries (e.g., <code>episensr</code>) and functions (e.g., <code>summary()</code>).</p>
-<p>In <code>R</code> we can first call a given library and then use the functions related to each library or we can name the library followed by <code>::</code> and then the function. For instance the two following pieces of code are equivalent:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>cars, <span class="at">mapping=</span>(<span class="fu">aes</span>(<span class="at">x=</span>speed)))<span class="sc">+</span></span>
-<span id="cb3-3"><a href="index.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
-<span id="cb3-4"><a href="index.html#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="index.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##OR##</span></span>
-<span id="cb3-6"><a href="index.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="index.html#cb3-7" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="at">data=</span>cars, <span class="at">mapping=</span>(<span class="fu">aes</span>(<span class="at">x=</span>speed)))<span class="sc">+</span></span>
-<span id="cb3-8"><a href="index.html#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<p>The latter may improve reproducibility, but to the expense of longer codes. Throughout the document, we will always first call the library and then run the functions to keep codes shorter.</p>
+<p>In <code>R</code> we can first call a given library and then use the functions related to this library or we can type the name of the library followed by <code>::</code> and then the function. For instance the two following pieces of code are equivalent:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="index.html#cb3-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>cars, <span class="at">mapping=</span>(<span class="fu">aes</span>(<span class="at">x=</span>speed)))<span class="sc">+</span></span>
+<span id="cb3-3"><a href="index.html#cb3-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb3-4"><a href="index.html#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="index.html#cb3-5" tabindex="-1"></a><span class="do">##OR##</span></span>
+<span id="cb3-6"><a href="index.html#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="index.html#cb3-7" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="at">data=</span>cars, <span class="at">mapping=</span>(<span class="fu">aes</span>(<span class="at">x=</span>speed)))<span class="sc">+</span></span>
+<span id="cb3-8"><a href="index.html#cb3-8" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p>The latter may improve reproducibility, but at the expense of longer codes. Throughout the document, we will always first call the library and then run the functions to keep codes short.</p>
 <p>One last thing, when using a given function, it is not mandatory to name all the arguments, as long as they are presented in the sequence expected by this function. For instance, the <code>ggplot()</code> function that we used in the previous chunk of code is expecting to see first a dataset (<code>data=</code>) and then a mapping attribute (<code>mapping=</code>) and, within that mapping attribute a x variable (<code>x=</code>). We could shorten the code by omitting all of these. The two following pieces of code are, therefore, equivalent:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb4-2"><a href="index.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>cars, <span class="at">mapping=</span>(<span class="fu">aes</span>(<span class="at">x=</span>speed)))<span class="sc">+</span></span>
-<span id="cb4-3"><a href="index.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
-<span id="cb4-4"><a href="index.html#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="index.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##OR##  </span></span>
-<span id="cb4-6"><a href="index.html#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="index.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb4-8"><a href="index.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cars, (<span class="fu">aes</span>(speed)))<span class="sc">+</span></span>
-<span id="cb4-9"><a href="index.html#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="index.html#cb4-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>cars, <span class="at">mapping=</span>(<span class="fu">aes</span>(<span class="at">x=</span>speed)))<span class="sc">+</span></span>
+<span id="cb4-3"><a href="index.html#cb4-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb4-4"><a href="index.html#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="index.html#cb4-5" tabindex="-1"></a><span class="do">##OR##  </span></span>
+<span id="cb4-6"><a href="index.html#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="index.html#cb4-7" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-8"><a href="index.html#cb4-8" tabindex="-1"></a><span class="fu">ggplot</span>(cars, (<span class="fu">aes</span>(speed)))<span class="sc">+</span></span>
+<span id="cb4-9"><a href="index.html#cb4-9" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <p>Throughout the document, however, we will use the longer code with all the arguments being named. Since you are learning these new functions, it would be quite a challenge to use the shorter code right from the start. But you could certainly adopt the shorter codes later on.</p>
 <p><strong>LET’S GET STARTED!</strong></p>
 
@@ -276,42 +428,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf", "_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -322,7 +474,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

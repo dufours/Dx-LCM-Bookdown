@@ -1,0 +1,27 @@
+model{
+
+#=== LIKELIHOOD	===#
+  for (i in 1:18){
+    obs[i, 1:4] ~ dmulti(p[i, 1:4], totals[i])
+    
+    p[i, 1] <- prev[i]*Se_US*Se_PAG + (1-prev[i])*(1-Sp_US)*(1-Sp_PAG)
+    p[i, 2] <- prev[i]*Se_US*(1-Se_PAG) + (1-prev[i])*(1-Sp_US)*Sp_PAG
+    p[i, 3] <- prev[i]*(1-Se_US)*Se_PAG + (1-prev[i])*Sp_US*(1-Sp_PAG)
+    p[i, 4] <- prev[i]*(1-Se_US)*(1-Se_PAG) + (1-prev[i])*Sp_US*Sp_PAG
+    
+    prev[i] ~ dbeta(alpha, beta)
+  }
+  
+#=== PRIOR	===#
+  alpha <- mu*psi      ## a parameter for the hierarchical beta distribution
+  beta <- psi*(1-mu)   ## b parameter for the hierarchical beta distribution
+  
+  mu ~ dbeta(1, 1) 	     ## Mean within-herd prevalence distribution in the source population
+  psi ~ dgamma(0.001, 0.001) 	 ## Spread of the within-herd prevalence distribution in the source population  
+
+  Se_US ~ dbeta(1, 1) 	## Prior for Se of Test A
+  Sp_US ~ dbeta(1, 1) 	## Prior for Sp of Test A
+  Se_PAG ~ dbeta(1, 1) 	## Prior for Se of Test B
+  Sp_PAG ~ dbeta(1, 1) 	## Prior for Sp of Test B
+ 
+}
